@@ -7,7 +7,7 @@ import myTheme from "./theme";
 import CustomLogin from './Login';
 
 export const App = () => (
-  <Admin layout={Layout} dataProvider={dataProvider} authProvider={authProvider} loginPage={CustomLogin} theme={myTheme}>
+  <Admin layout={Layout} dataProvider={dataProvider} authProvider={authProvider} loginPage={CustomLogin} theme={myTheme} >
     
     <Resource name="medicForm" list={ListGuesser} create={MedicFormCreate} show={ShowGuesser}/>
   </Admin>
