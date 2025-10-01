@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator }
+import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator }
     from 'react-admin';
 import { Accordion, AccordionSummary, AccordionDetails, Grid } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export const MedicFormCreate = () => {
+  const { permissions } = usePermissions(); 
+
+  if (permissions !== "paramedico") {
+    return <p>No tienes permiso para acceder a este formulario.</p>;
+  }
     const [enfermedad, setEnfermedad] = useState(false);
     const [traumatismo, setTraumatismo] = useState(false);
     const [ginecobstetricia, setGinecobstetricia] = useState(false);
