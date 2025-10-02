@@ -1,8 +1,29 @@
 import * as React from "react";
-import { Login, LoginProps } from "react-admin";
-import { Box, Paper, Typography, Divider, Avatar } from "@mui/material";
+import { useLogin, useNotify, useRedirect } from "react-admin";
+import { Box, Paper, Typography, Divider, Avatar, Button, TextField } from "@mui/material";
 
-const CustomLogin = (props: LoginProps) => {
+const CustomLogin = () => {
+  const login = useLogin();
+  const notify = useNotify();
+  const redirect = useRedirect();
+
+  const [loading, setLoading] = React.useState(false);
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const submit = (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    login({ username, password })
+      .then(() => {
+        redirect("/selector");
+      })
+      .catch(() => {
+        setLoading(false);
+        notify("Invalid username or password");
+      });
+  };
+
   return (
     <Box
       sx={{
@@ -13,7 +34,7 @@ const CustomLogin = (props: LoginProps) => {
         backgroundColor: "#f4f6f8",
       }}
     >
-      {/* Banner superior con imagen institucional y logo */}
+      
       <Box
         sx={{
           width: "100%",
@@ -22,7 +43,6 @@ const CustomLogin = (props: LoginProps) => {
           overflow: "hidden",
         }}
       >
-        {/* Imagen de fondo solo parte derecha */}
         <Box
           sx={{
             position: "absolute",
@@ -33,13 +53,12 @@ const CustomLogin = (props: LoginProps) => {
             backgroundImage: `url("https://mediaim.expedia.com/destination/9/9532ab1fa7d668bdabb3c05739b00305.jpg")`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "right center", // Mostrar solo parte derecha
-            filter: "brightness(0.6)", // Oscurece ligeramente
+            backgroundPosition: "right center",
+            filter: "brightness(0.6)",
             zIndex: 0,
           }}
         />
 
-        {/* Contenido encima del fondo */}
         <Box
           sx={{
             position: "relative",
@@ -50,7 +69,6 @@ const CustomLogin = (props: LoginProps) => {
             px: { xs: 2, md: 4 },
           }}
         >
-          {/* Logo institucional a la izquierda */}
           <Avatar
             alt="Logo Cuajimalpa"
             src="https://pbs.twimg.com/profile_images/1230210290337189888/XrPQPq_z_400x400.jpg"
@@ -78,7 +96,6 @@ const CustomLogin = (props: LoginProps) => {
 
       <Divider sx={{ borderColor: "#dddddd" }} />
 
-      {/* Zona principal para el login */}
       <Box
         sx={{
           flex: 1,
@@ -99,7 +116,7 @@ const CustomLogin = (props: LoginProps) => {
             boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
           }}
         >
-          {/* Título azul institucional */}
+
           <Box
             sx={{
               backgroundColor: "#1e3a60",
@@ -113,7 +130,6 @@ const CustomLogin = (props: LoginProps) => {
             </Typography>
           </Box>
 
-          {/* Contenido del formulario */}
           <Box sx={{ p: { xs: 3, md: 4 }, backgroundColor: "#fff" }}>
             <Typography
               variant="subtitle1"
@@ -122,12 +138,42 @@ const CustomLogin = (props: LoginProps) => {
             >
               Inicia sesión para continuar
             </Typography>
-            <Login {...props} />
+
+            <form onSubmit={submit}>
+              <TextField
+                label="Usuario"
+                variant="outlined"
+                fullWidth
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                margin="normal"
+                disabled={loading}
+              />
+              <TextField
+                label="Contraseña"
+                variant="outlined"
+                type="password"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                margin="normal"
+                disabled={loading}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                disabled={loading}
+                sx={{ mt: 2 }}
+              >
+                {loading ? "Ingresando..." : "Ingresar"}
+              </Button>
+            </form>
           </Box>
         </Paper>
       </Box>
 
-      {/* Pie de página institucional */}
       <Box
         component="footer"
         sx={{
