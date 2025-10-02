@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator }
     from 'react-admin';
-import { Accordion, AccordionSummary, AccordionDetails, Grid } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Grid, useMediaQuery } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+
+
 export const MedicFormCreate = () => {
+  const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
+
   const { permissions } = usePermissions(); 
 
   if (permissions !== "paramedico") {
@@ -19,7 +23,6 @@ export const MedicFormCreate = () => {
             <SimpleForm>
                 <TextInput source="folio" validate={required()} />
                 <Grid container spacing={2}>
-                    {/* I. Datos del Servicio */}
                     <Grid item xs={12} md={4}>
                         <Accordion defaultExpanded>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -207,7 +210,6 @@ export const MedicFormCreate = () => {
                         </Accordion>
                     </Grid>
 
-                    {/* II. Control */}
                     <Grid item xs={12} md={4}>
                         <Accordion defaultExpanded>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -223,7 +225,6 @@ export const MedicFormCreate = () => {
                         </Accordion>
                     </Grid>
 
-                    {/* III. Paciente */}
                     <Grid item xs={12} md={4}>
                         <Accordion defaultExpanded>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -252,7 +253,7 @@ export const MedicFormCreate = () => {
                 </Grid>
                 <Grid container spacing={2} sx={{ mt: 2 }}>
                     <Grid item xs={12} md={4}>
-                        {/* VII. Evaluación Inicial */}
+
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 VII. Evaluación Inicial
@@ -324,7 +325,6 @@ export const MedicFormCreate = () => {
                         </Accordion>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        {/* VIII. Evaluación Secundaria */}
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 VIII. Evaluación Secundaria
@@ -378,7 +378,6 @@ export const MedicFormCreate = () => {
                         </Accordion>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        {/* IX. Traslado */}
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 IX. Traslado
@@ -395,7 +394,6 @@ export const MedicFormCreate = () => {
                 </Grid>
                  <Grid container spacing={2} sx={{ mt: 2 }}>
                     <Grid item xs={12} md={4}>
-                        {/* X. Tratamiento */}
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 X. Tratamiento
@@ -430,7 +428,7 @@ export const MedicFormCreate = () => {
                         </Accordion>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        {/* XI. Observaciones */}
+
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 XI. Observaciones
@@ -441,7 +439,7 @@ export const MedicFormCreate = () => {
                         </Accordion>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        {/* XII. Ministerio Público */}
+
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 XII. Ministerio Público
@@ -453,7 +451,7 @@ export const MedicFormCreate = () => {
                         </Accordion>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        {/* XIII. Datos legales */}
+    
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 XIII. Datos Legales
@@ -477,3 +475,5 @@ export const MedicFormCreate = () => {
         </Create>
     );
 };
+
+ export default MedicFormCreate;
