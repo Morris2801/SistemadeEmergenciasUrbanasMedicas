@@ -5,7 +5,7 @@ export const authProvider: AuthProvider = {
         if (username === "amilka" && password === "raspy1234") {
             localStorage.setItem("username", username);
             localStorage.setItem("role", "paramedico");
-            return; // No retornes ruta aquí
+            return; 
         }
         if (username === "mau" && password === "coca1234") {
             localStorage.setItem("username", username);

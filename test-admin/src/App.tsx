@@ -26,13 +26,11 @@ export const App = () => (
     loginPage={CustomLogin}
     theme={myTheme}
   >
-    {/* 🔁 Rutas personalizadas de React Router */}
     <CustomRoutes>
       <Route path="/selector" element={<Selector />} />
       <Route path="/urban-form" element={<UrbanForm />} />
     </CustomRoutes>
 
-    {/* 📦 Recursos del Admin */}
     <Resource name="dashboard" list={Dashboard} />
     <Resource name="estadisticas" list={Estadisticas} />
     <Resource name="listado" list={Listado} />
