@@ -1,3 +1,4 @@
+// src/selector.tsx
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Typography } from '@mui/material';
 
@@ -9,10 +10,20 @@ const Selector = () => {
             <Typography variant="h4" gutterBottom>
                 Selecciona el tipo de atención
             </Typography>
-            <Button variant="contained" color="primary" onClick={() => navigate('/medicForm/create')} style={{ margin: '10px' }}>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate('/medicForm/create')}
+                style={{ margin: '10px' }}
+            >
                 Atención Prehospitalaria
             </Button>
-            <Button variant="contained" color="secondary" onClick={() => navigate('/urban-form')} style={{ margin: '10px' }}>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate('/urbanForm/create')}
+                style={{ margin: '10px' }}
+            >
                 Emergencia Urbana
             </Button>
         </Box>
@@ -20,3 +31,4 @@ const Selector = () => {
 };
 
 export default Selector;
+
