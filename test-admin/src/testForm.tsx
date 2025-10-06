@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator }
+import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator, FileInput, ImageField, }
     from 'react-admin';
 import { Accordion, AccordionSummary, AccordionDetails, Grid, Button, Box, Typography, Paper, useMediaQuery } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -469,6 +469,11 @@ export const MedicFormCreate = () => {
                     </Box>
                 </Paper>
                 {renderPage()}
+                <br></br>
+                <br></br>
+                <FileInput source="fotos" label="Al terminar, adjuntar escaneos de reportes" accept={{ 'image/*': [] }} multiple>
+                    <ImageField source="src" title="Fotografía" />
+                </FileInput>
             </SimpleForm>
         </Create>
     );

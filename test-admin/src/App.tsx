@@ -8,7 +8,7 @@ import {
 } from 'react-admin';
 import { Route } from 'react-router-dom';
 
-import { Layout } from './Layout';
+import customLayout from './Layout';
 import { dataProvider } from './dataProvider';
 import { authProvider } from './authProvider';
 import myTheme from './theme';
@@ -31,7 +31,7 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 
 export const App = () => (
     <Admin
-        layout={Layout}
+        layout={customLayout}
         dataProvider={dataProvider}
         authProvider={authProvider}
         loginPage={CustomLogin}
@@ -41,13 +41,11 @@ export const App = () => (
             <Route path="/selector" element={<Selector />} />
         </CustomRoutes>
 
-        {/* Resource registration */}
         <Resource name="dashboard" list={Dashboard} icon={DashboardIcon} />
         <Resource name="estadisticas" list={Estadisticas} icon={BarChartIcon} />
         <Resource name="listado" list={Listado} icon={ListAltIcon} />
-        <Resource name="medicForm" list={ListGuesser} create={MedicFormCreate} show={ShowGuesser} icon={MedicalInformationIcon} />
-
-        {/* Register the urbanForm resource */}
+        <Resource name="selector" list={Selector} icon={MedicalInformationIcon} />
+        <Resource name="medicForm" create={MedicFormCreate} icon={MedicalInformationIcon} />
         <Resource name="urbanForm" create={UrbanFormCreate} icon={EngineeringIcon} />
     </Admin>
 );
