@@ -2,7 +2,7 @@
 import { createTheme } from '@mui/material/styles';
 import { defaultTheme } from 'react-admin';
 
-const myTheme = createTheme({
+export const lightTheme = createTheme({
   ...defaultTheme,
   palette: {
     mode: 'light',
@@ -55,12 +55,12 @@ const myTheme = createTheme({
           fontSize: '1.2rem',
           justifyContent: 'flex-start',
           padding: '8px 16px',
-          border: '1px solid #c4c4c4', // Light border for buttons
-          borderRadius: '12px', // Rounded corners
+          border: '1px solid #c4c4c4',
+          borderRadius: '12px',
           transition: 'background-color 0.3s ease, border-color 0.3s ease',
           '&:hover': {
-            backgroundColor: '#e3f2fd', // Light blue hover effect
-            borderColor: '#1976d2', // Match primary color on hover
+            backgroundColor: '#e3f2fd',
+            borderColor: '#1976d2',
           },
         },
       },
@@ -68,17 +68,17 @@ const myTheme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          color: '#212121', // Dark text color for menu items
-          fontSize: '1.2rem', // Slightly smaller font size for sidebar buttons
-          fontWeight: 500, // Medium weight for better readability
-          border: '1px solid #c4c4c4', // Light border for menu items
-          borderRadius: '8px', // Rounded corners
-          margin: '4px 0', // Spacing between menu items
-          padding: '8px 16px', // Padding inside menu items
+          color: '#212121',
+          fontSize: '1.2rem',
+          fontWeight: 500,
+          border: '1px solid #c4c4c4',
+          borderRadius: '8px',
+          margin: '4px 0',
+          padding: '8px 16px',
           transition: 'background-color 0.3s ease, border-color 0.3s ease',
           '&:hover': {
-            backgroundColor: '#e3f2fd', // Light blue hover effect
-            borderColor: '#1976d2', // Match primary color on hover
+            backgroundColor: '#e3f2fd',
+            borderColor: '#1976d2',
           },
         },
       },
@@ -86,4 +86,89 @@ const myTheme = createTheme({
   },
 });
 
-export default myTheme;
+export const darkTheme = createTheme({
+  ...defaultTheme,
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#90caf9',
+      contrastText: '#000',
+    },
+    secondary: {
+      main: '#8fa0f4ff',
+      contrastText: '#000',
+    },
+    background: {
+      default: '#121212',
+      paper: '#1e1e1e',
+    },
+    error: {
+      main: '#f44336',
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: '#b0bec5',
+    },
+  },
+  typography: {
+    fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+    body1: {
+      fontSize: '1rem',
+      lineHeight: 1.5,
+      color: '#ffffff',
+    },
+    button: {
+      textTransform: 'none',
+      fontWeight: 600,
+      fontSize: '1rem',
+    },
+  },
+  components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px',
+          margin: '4px 0',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "#ffffff",
+          textTransform: 'none',
+          fontSize: '1.2rem',
+          justifyContent: 'flex-start',
+          padding: '8px 16px',
+          border: '1px solid #444444',
+          borderRadius: '12px',
+          transition: 'background-color 0.3s ease, border-color 0.3s ease',
+          '&:hover': {
+            backgroundColor: '#333333',
+            borderColor: '#90caf9',
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: '#ffffff',
+          backgroundColor: "#333333",
+          fontSize: '1.2rem',
+          fontWeight: 500,
+          border: '1px solid #444444',
+          borderRadius: '8px',
+          margin: '4px 0',
+          padding: '8px 16px',
+          transition: 'background-color 0.3s ease, border-color 0.3s ease',
+          '&:hover': {
+            backgroundColor: '#656565ff',
+            color: "#000000",
+            borderColor: '#90caf9',
+          },
+        },
+      },
+    },
+  },
+});

@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { AppBar } from 'react-admin';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery, Theme } from '@mui/material';
 
 const CustomAppBar = (props) => {
     const [currentTime, setCurrentTime] = React.useState(new Date());
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
+    const isMedium = useMediaQuery<Theme>((theme) => theme.breakpoints.between('sm', 'md'));
 
     React.useEffect(() => {
         const interval = setInterval(() => {
@@ -13,13 +15,36 @@ const CustomAppBar = (props) => {
     }, []);
 
     return (
-        <AppBar sx = {{ height: "7%", justifyContent: "space-between" }} {...props}>
-            <Typography sx={{ flexGrow: 1, ml: 2, letterSpacing: "0.2em", fontWeight: "700", fontSize: "2rem", color: "#ffff" }}>
+        <AppBar
+            sx={{
+                height: isSmall ? '12%' : isMedium ? '10%' : '8%', 
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: isSmall ? '8px' : '16px',
+            }}
+            {...props}
+        >
+            <Typography
+                sx={{
+                    flexGrow: 1,
+                    ml: 2,
+                    letterSpacing: isSmall ? '0.1em' : '0.2em', 
+                    fontWeight: '700',
+                    fontSize: isSmall ? '1rem' : isMedium ? '1.4rem' : '2rem', 
+                    color: '#ffff',
+                }}
+            >
                 Protección Civil - Cuajimalpa de Morelos
             </Typography>
 
-            <Box sx={{ mr: 2}}>
-                <Typography sx={{fontSize: "1.2rem", color: "#ffff"}}>
+            <Box sx={{ mr: 2 }}>
+                <Typography
+                    sx={{
+                        fontSize: isSmall ? '1rem' : '1.2rem', 
+                        color: '#ffff',
+                    }}
+                >
                     {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}
                 </Typography>
             </Box>

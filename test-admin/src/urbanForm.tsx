@@ -1,4 +1,5 @@
 // src/urbanForm.tsx
+import React from 'react';
 import {
     Create,
     SimpleForm,
@@ -9,11 +10,23 @@ import {
     FileInput,
     ImageField,
     required,
+    List,
+    SimpleList,
+    Datagrid,
+    ArrayField,
+    TextField,
+    DateField,
+    EditButton,
+    ShowButton,
+    Show,
+    Edit,
+    SimpleShowLayout,
 } from 'react-admin';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Box, Button } from '@mui/material';
+import { Typography, Box, Button, useMediaQuery, Theme } from '@mui/material';
 
-const UrbanFormCreate = () => {
+// UrbanFormCreate Component
+export const UrbanFormCreate = () => {
     const navigate = useNavigate();
 
     return (
@@ -28,27 +41,27 @@ const UrbanFormCreate = () => {
 
                     <TextInput source="folio" label="Folio" validate={required()} />
                     <DateTimeInput source="fecha_hora" label="Día, fecha y hora" validate={required()} />
-                    
+
                     <SelectInput
                         source="turno"
                         label="Turno"
                         validate={required()}
                         choices={[
-                            { id: "matutino", name: "Matutino" },
-                            { id: "vespertino", name: "Vespertino" },
-                            { id: "nocturno", name: "Nocturno" },
+                            { id: 'matutino', name: 'Matutino' },
+                            { id: 'vespertino', name: 'Vespertino' },
+                            { id: 'nocturno', name: 'Nocturno' },
                         ]}
                     />
-                    
+
                     <TextInput source="personal_a_cargo" label="Nombre del personal a cargo" validate={required()} />
-                    
+
                     <SelectInput
                         source="modo_activacion"
                         label="Modo de activación"
                         validate={required()}
                         choices={[
-                            { id: "llamada", name: "Llamada de emergencia" },
-                            { id: "oficio", name: "Seguimiento de oficio" },
+                            { id: 'llamada', name: 'Llamada de emergencia' },
+                            { id: 'oficio', name: 'Seguimiento de oficio' },
                         ]}
                     />
 
@@ -62,9 +75,9 @@ const UrbanFormCreate = () => {
                         label="Gravedad de la emergencia"
                         validate={required()}
                         choices={[
-                            { id: "baja", name: "Baja" },
-                            { id: "media", name: "Media" },
-                            { id: "alta", name: "Alta" },
+                            { id: 'baja', name: 'Baja' },
+                            { id: 'media', name: 'Media' },
+                            { id: 'alta', name: 'Alta' },
                         ]}
                     />
 
@@ -72,12 +85,7 @@ const UrbanFormCreate = () => {
                     <TextInput source="trabajos_realizados" label="Trabajos realizados" multiline fullWidth />
                     <TextInput source="observaciones" label="Observaciones" multiline fullWidth />
 
-                    <FileInput
-                        source="fotos"
-                        label="Fotografías"
-                        accept={{ 'image/*': [] }}
-                        multiple
-                    >
+                    <FileInput source="fotos" label="Fotografías" accept="image/*" multiple>
                         <ImageField source="src" title="Fotografía" />
                     </FileInput>
 
@@ -90,4 +98,94 @@ const UrbanFormCreate = () => {
     );
 };
 
-export default UrbanFormCreate;
+// UrbanFormList Component
+export const UrbanFormList = () => {
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
+
+    return (
+        <List title="Listado de Formularios Urbanos">
+            {isSmall ? (
+                <SimpleList
+                    primaryText={(record) => record.folio}
+                    secondaryText={(record) => record.fecha_hora}
+                    tertiaryText={(record) => record.personal_a_cargo}
+                />
+            ) : (
+                <Datagrid>
+                    <TextField source="folio" label="Folio" />
+                    <DateField source="fecha_hora" label="Fecha y Hora" />
+                    <TextField source="turno" label="Turno" />
+                    <TextField source="personal_a_cargo" label="Personal a Cargo" />
+                    <TextField source="tipo_servicio" label="Tipo de Servicio" />
+                    <EditButton />
+                    <ShowButton />
+                </Datagrid>
+            )}
+        </List>
+    );
+};
+
+// UrbanFormShow Component
+export const UrbanFormShow = () => (
+    <Show title="Detalles del Formulario Urbano">
+        <SimpleShowLayout>
+            <TextField source="folio" label="Folio" />
+            <DateField source="fecha_hora" label="Fecha y Hora" />
+            <TextField source="turno" label="Turno" />
+            <TextField source="personal_a_cargo" label="Personal a Cargo" />
+            <TextField source="modo_activacion" label="Modo de Activación" />
+            <TextField source="tipo_servicio" label="Tipo de Servicio" />
+            <DateField source="fecha_atencion" label="Fecha y Hora de Atención" />
+            <TextField source="tiempo_traslado" label="Tiempo de Traslado" />
+            <TextField source="ubicacion" label="Ubicación" />
+            <TextField source="gravedad" label="Gravedad" />
+            <NumberField source="km_recorridos" label="Kilómetros Recorridos" />
+            <TextField source="trabajos_realizados" label="Trabajos Realizados" />
+            <TextField source="observaciones" label="Observaciones" />
+            <ArrayField source="fotos" label="Fotografías">
+                <Datagrid>
+                    <ImageField source="src" title="Fotografía" />
+                </Datagrid>
+            </ArrayField>
+            <TextField source="conclusion" label="Conclusión" />
+            <TextField source="responsables" label="Responsables" />
+            <TextField source="autoridades_participantes" label="Autoridades Participantes" />
+        </SimpleShowLayout>
+    </Show>
+);
+
+export const UrbanFormEdit = () => (
+    <Edit title="Editar Formulario Médico">
+        <SimpleForm>
+            <TextInput source="folio" label="Folio" />
+            <DateInput source="fecha" label="Fecha" />
+            <TimeInput source="hora_llamada" label="Hora de Llamada" />
+            <TimeInput source="hora_llegada" label="Hora de Llegada" />
+            <TextInput source="paciente_nombre" label="Nombre del Paciente" />
+            <SelectInput
+                source="sexo"
+                label="Sexo"
+                choices={[
+                    { id: 'masculino', name: 'Masculino' },
+                    { id: 'femenino', name: 'Femenino' },
+                ]}
+            />
+            <NumberInput source="años" label="Edad" />
+            <TextInput source="alcaldia" label="Alcaldía" />
+            <TextInput source="telefono" label="Teléfono" />
+            <TextInput source="ocupacion" label="Ocupación" />
+            <ArrayInput source="signos_vitales" label="Signos Vitales">
+                <SimpleFormIterator>
+                    <TimeInput source="hora" label="Hora" />
+                    <NumberInput source="fr" label="FR" />
+                    <NumberInput source="fc" label="FC" />
+                    <NumberInput source="tas" label="TAS" />
+                    <NumberInput source="tad" label="TAD" />
+                    <NumberInput source="sao2" label="SaO2" />
+                    <NumberInput source="temp" label="Temp" />
+                    <NumberInput source="gluc" label="Glucosa" />
+                </SimpleFormIterator>
+            </ArrayInput>
+        </SimpleForm>
+    </Edit>
+);
