@@ -10,13 +10,13 @@ const CustomMenu = (props) => {
     const { permissions } = usePermissions(); 
 
     return (
-        <Box sx={{ backgroundColor: '#bfbfbfff', rounded: 2, height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+        <Box sx={{ backgroundColor: '#bfbfbfff', rounded: 2, height: '100%', justifyContent: 'center', alignItems: 'center', marginTop: '22px'}}>
             {/* Logo ALGUIEN CAMBIELO O LA DE FRONTEND AHEM AMILKA HAZLO MEJOR */}
             <Box sx={{ textAlign: 'center', p: 2, justifyContent: 'center', alignItems: 'center' }}>
                 <img
                     src='../src/logo.jpg'
                     alt="LogoCuaji"
-                    style={{ maxWidth: '100%', height: 'auto', borderRadius: '30px' }}
+                    style={{ maxWidth: '100%', height: 'auto', borderRadius: '30px', marginTop: '30px'}}
                 />
             </Box>
             <Menu {...props}>

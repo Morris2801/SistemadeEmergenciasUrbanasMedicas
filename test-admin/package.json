@@ -15,7 +15,7 @@
     "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
     "express": "^5.1.0",
-    "ra-data-fakerest": "^5.11.4",
+    "ra-data-fakerest": "^5.12.0",
     "ra-data-json-server": "^5.11.0",
     "react": "^19.0.0",
     "react-admin": "^5.11.0",
