@@ -12,7 +12,7 @@ import customLayout from './Layout';
 
 import { dataProvider } from './dataProvider';
 
-import { authProvider } from './authProvider';
+import authProvider  from './authProvider';
 import { lightTheme, darkTheme} from './theme';
 import CustomLogin from './Login';
 
@@ -24,6 +24,8 @@ import { MedicFormCreate, MedicFormEdit, MedicFormShow, MedicFormList } from './
 import { UserList, UserEdit, UserShow, UserCreate } from './users';
 import { UrbanFormCreate, UrbanFormShow, UrbanFormList, UrbanFormEdit} from './urbanForm';
 import Selector from './selector';
+import Registrarse from './Registrarse';
+
 
 // Iconos
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -46,6 +48,7 @@ export const App = () => (
     >
         <CustomRoutes>
             <Route path="/selector" element={<Selector />} />
+            <Route path="/registrarse" element={<Registrarse />} />
         </CustomRoutes>
         
         <Resource name="dashboard" list={Dashboard} icon={DashboardIcon} />
