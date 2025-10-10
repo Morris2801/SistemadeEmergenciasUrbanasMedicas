@@ -4,7 +4,7 @@ const Registrarse: React.FC = () => {
     const [datos, setDatos] = useState({
         username: '',
         password: '',
-        nombre: '',
+        name: '',
         turno: '',
         phone: '',
         tipo: 'paramedico',
@@ -56,12 +56,12 @@ const Registrarse: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="nombre">Nombre Completo: </label>
+                    <label htmlFor="name">Nombre Completo: </label>
                     <input
                         type="text"
-                        id="nombre"
-                        name="nombre"
-                        value={datos.nombre}
+                        id="name"
+                        name="name"
+                        value={datos.name}
                         onChange={handleChange}
                     />
                 </div>

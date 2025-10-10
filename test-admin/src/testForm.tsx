@@ -47,8 +47,10 @@ export const MedicFormCreate = () => {
                                     <TimeInput source="hora_llegada" label="Hora de Llegada" validate={required()} />
                                     <TextInput source="calle" label="Calle" validate={required()} />
                                     <TextInput source="entre" label="Entre" validate={required()} />
-                                    <TextInput source="colonia" label="Colonia" validate={required()} />
-                                    <TextInput source="alcaldia" label="Alcaldía" validate={required()} />
+                                    {/* FIX: Renamed colonia to colonia_servicio */}
+                                    <TextInput source="colonia_servicio" label="Colonia (Servicio)" validate={required()} />
+                                    {/* FIX: Renamed alcaldia to alcaldia_servicio */}
+                                    <TextInput source="alcaldia_servicio" label="Alcaldía (Servicio)" validate={required()} />
                                     <SelectInput
                                         source="lugar" label="Lugar de ocurrencia" validate={required()}
                                         choices={[
@@ -85,6 +87,7 @@ export const MedicFormCreate = () => {
                                                 <TimeInput source="hora_nacimiento" label="Hora de nacimiento" />
                                                 <TimeInput source="placenta_expulsada" label="Hora de expulsión de placenta" />
                                                 <TextInput source="lugar_nacimiento" label="Lugar de nacimiento" />
+                                                {/* FIX: Renamed sexo_nacido to sexo_paciente to avoid conflict with Parto section */}
                                                 <SelectInput source="sexo_nacido" label="Sexo del recién nacido"
                                                     choices={[
                                                         { id: "masculino", name: 'Masculino' },
@@ -182,8 +185,9 @@ export const MedicFormCreate = () => {
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <TextInput source="paciente_nombre" label="Nombre del Paciente" validate={required()} />
+                                    {/* FIX: Renamed sexo to sexo_paciente to avoid conflict with Parto section */}
                                     <SelectInput
-                                        source="sexo" label="Sexo de Paciente" validate={required()}
+                                        source="sexo_paciente" label="Sexo de Paciente" validate={required()}
                                         choices={[
                                             { id: "masculino", name: 'Masculino' },
                                             { id: "femenino", name: "Femenino" },
@@ -192,8 +196,10 @@ export const MedicFormCreate = () => {
                                     <NumberInput source="años" label="Años" validate={required()} />
                                     <NumberInput source="meses" label="Meses" validate={required()} />
                                     <TextInput source="domicilio" label="Domicilio" validate={required()} />
-                                    <TextInput source="colonia" label="Colonia" validate={required()} />
-                                    <TextInput source="alcaldia" label="Alcaldía" validate={required()} />
+                                    {/* FIX: Renamed colonia to colonia_paciente */}
+                                    <TextInput source="colonia_paciente" label="Colonia (Paciente)" validate={required()} />
+                                    {/* FIX: Renamed alcaldia to alcaldia_paciente */}
+                                    <TextInput source="alcaldia_paciente" label="Alcaldía (Paciente)" validate={required()} />
                                     <TextInput source="derechohabiencia" label="Derechohabiente a" validate={required()} />
                                     <TextInput source="telefono" label="Teléfono" validate={required()} />
                                     <TextInput source="ocupacion" label="Ocupación" validate={required()} />
@@ -287,7 +293,8 @@ export const MedicFormCreate = () => {
                                     <TextInput source="pupilas" label="Pupilas" />
                                     <ArrayInput source="signos_vitales">
                                         <SimpleFormIterator>
-                                            <TimeInput source="hora" label="Hora" />
+                                            {/* FIX: Renamed hora to hora_sv */}
+                                            <TimeInput source="hora_sv" label="Hora" />
                                             <NumberInput source="fr" label="FR" />
                                             <NumberInput source="fc" label="FC" />
                                             <NumberInput source="tas" label="TAS" />
@@ -338,11 +345,12 @@ export const MedicFormCreate = () => {
                                 <AccordionDetails>
                                     <TextInput source="institucion" label="Institución de traslado" />
                                     <TextInput source="hospital" label="Hospital" />
-                                    <TextInput source="doctor" label="Doctor" />
+                                    {/* FIX: Renamed doctor to doctor_traslado */}
+                                    <TextInput source="doctor_traslado" label="Doctor" />
                                     <TextInput source="folio_cru" label="Folio CRU" />
                                     <BooleanInput source="seNego" label="¿Se negó?" />
                                 </AccordionDetails>
-                            </Accordion>
+                            </Accordion>dont
                         </Grid>
                     </Grid>
                 );
@@ -374,11 +382,13 @@ export const MedicFormCreate = () => {
                                     />
                                     <ArrayInput source="tratamientos">
                                         <SimpleFormIterator>
-                                            <TimeInput source="hora" label="Hora" />
+                                            {/* FIX: Renamed hora to hora_trat */}
+                                            <TimeInput source="hora_trat" label="Hora" />
                                             <TextInput source="medicamento" label="Medicamento" />
                                             <TextInput source="dosis" label="Dosis" />
                                             <TextInput source="via" label="Vía Administración" />
-                                            <TextInput source="doctor" label="Dr. Tratante" />
+                                            {/* FIX: Renamed doctor to doctor_tratante */}
+                                            <TextInput source="doctor_tratante" label="Dr. Tratante" />
                                         </SimpleFormIterator>
                                     </ArrayInput>
                                 </AccordionDetails>
@@ -478,7 +488,6 @@ export const MedicFormCreate = () => {
     );
 };
 
-
 export const MedicFormEdit = () => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
     const navigate = useNavigate();
@@ -519,8 +528,10 @@ export const MedicFormEdit = () => {
                                     <TimeInput source="hora_llegada" label="Hora de Llegada" validate={required()} />
                                     <TextInput source="calle" label="Calle" validate={required()} />
                                     <TextInput source="entre" label="Entre" validate={required()} />
-                                    <TextInput source="colonia" label="Colonia" validate={required()} />
-                                    <TextInput source="alcaldia" label="Alcaldía" validate={required()} />
+                                    {/* CORRECCIÓN 1: De 'colonia' a 'servicio_colonia' */}
+                                    <TextInput source="servicio_colonia" label="Colonia (Servicio)" validate={required()} />
+                                    {/* CORRECCIÓN 2: De 'alcaldia' a 'servicio_alcaldia' */}
+                                    <TextInput source="servicio_alcaldia" label="Alcaldía (Servicio)" validate={required()} />
                                     <SelectInput
                                         source="lugar" label="Lugar de ocurrencia" validate={required()}
                                         choices={[
@@ -664,8 +675,10 @@ export const MedicFormEdit = () => {
                                     <NumberInput source="años" label="Años" validate={required()} />
                                     <NumberInput source="meses" label="Meses" validate={required()} />
                                     <TextInput source="domicilio" label="Domicilio" validate={required()} />
-                                    <TextInput source="colonia" label="Colonia" validate={required()} />
-                                    <TextInput source="alcaldia" label="Alcaldía" validate={required()} />
+                                    {/* CORRECCIÓN 3: De 'colonia' a 'paciente_colonia' */}
+                                    <TextInput source="paciente_colonia" label="Colonia (Paciente)" validate={required()} />
+                                    {/* CORRECCIÓN 4: De 'alcaldia' a 'paciente_alcaldia' */}
+                                    <TextInput source="paciente_alcaldia" label="Alcaldía (Paciente)" validate={required()} />
                                     <TextInput source="derechohabiencia" label="Derechohabiente a" validate={required()} />
                                     <TextInput source="telefono" label="Teléfono" validate={required()} />
                                     <TextInput source="ocupacion" label="Ocupación" validate={required()} />
@@ -759,7 +772,8 @@ export const MedicFormEdit = () => {
                                     <TextInput source="pupilas" label="Pupilas" />
                                     <ArrayInput source="signos_vitales">
                                         <SimpleFormIterator>
-                                            <TimeInput source="hora" label="Hora" />
+                                            {/* CORRECCIÓN 5: De 'hora' a 'sv_hora' (hora de signos vitales) */}
+                                            <TimeInput source="sv_hora" label="Hora" />
                                             <NumberInput source="fr" label="FR" />
                                             <NumberInput source="fc" label="FC" />
                                             <NumberInput source="tas" label="TAS" />
@@ -810,7 +824,8 @@ export const MedicFormEdit = () => {
                                 <AccordionDetails>
                                     <TextInput source="institucion" label="Institución de traslado" />
                                     <TextInput source="hospital" label="Hospital" />
-                                    <TextInput source="doctor" label="Doctor" />
+                                    {/* CORRECCIÓN 6: De 'doctor' a 'traslado_doctor' */}
+                                    <TextInput source="traslado_doctor" label="Doctor" />
                                     <TextInput source="folio_cru" label="Folio CRU" />
                                     <BooleanInput source="seNego" label="¿Se negó?" />
                                 </AccordionDetails>
@@ -846,11 +861,13 @@ export const MedicFormEdit = () => {
                                     />
                                     <ArrayInput source="tratamientos">
                                         <SimpleFormIterator>
-                                            <TimeInput source="hora" label="Hora" />
+                                            {/* CORRECCIÓN 7: De 'hora' a 'trat_hora' (hora de tratamiento) */}
+                                            <TimeInput source="trat_hora" label="Hora" />
                                             <TextInput source="medicamento" label="Medicamento" />
                                             <TextInput source="dosis" label="Dosis" />
                                             <TextInput source="via" label="Vía Administración" />
-                                            <TextInput source="doctor" label="Dr. Tratante" />
+                                            {/* CORRECCIÓN 8: De 'doctor' a 'trat_doctor' */}
+                                            <TextInput source="trat_doctor" label="Dr. Tratante" />
                                         </SimpleFormIterator>
                                     </ArrayInput>
                                 </AccordionDetails>
@@ -949,7 +966,6 @@ export const MedicFormEdit = () => {
         </Edit>
     );
 };
-
 
 export const MedicFormShow = () => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));

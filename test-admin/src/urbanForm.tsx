@@ -5,16 +5,20 @@ import {
     SimpleForm,
     TextInput,
     DateTimeInput,
+    DateInput,
+    TimeInput,
+    ArrayInput,
     SelectInput,
     NumberInput,
     FileInput,
     ImageField,
     required,
     List,
+    SimpleFormIterator,
     SimpleList,
     Datagrid,
     ArrayField,
-    TextField,
+    NumberField,    TextField,
     DateField,
     EditButton,
     ShowButton,
@@ -25,7 +29,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Typography, Box, Button, useMediaQuery, Theme } from '@mui/material';
 
-// UrbanFormCreate Component
 export const UrbanFormCreate = () => {
     const navigate = useNavigate();
 
@@ -98,7 +101,6 @@ export const UrbanFormCreate = () => {
     );
 };
 
-// UrbanFormList Component
 export const UrbanFormList = () => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
@@ -125,7 +127,6 @@ export const UrbanFormList = () => {
     );
 };
 
-// UrbanFormShow Component
 export const UrbanFormShow = () => (
     <Show title="Detalles del Formulario Urbano">
         <SimpleShowLayout>
@@ -184,7 +185,7 @@ export const UrbanFormEdit = () => (
                     <NumberInput source="sao2" label="SaO2" />
                     <NumberInput source="temp" label="Temp" />
                     <NumberInput source="gluc" label="Glucosa" />
-                </SimpleFormIterator>
+                </SimpleFormIterator >
             </ArrayInput>
         </SimpleForm>
     </Edit>
