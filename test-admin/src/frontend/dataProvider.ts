@@ -15,17 +15,18 @@ export const dataProvider = fakeRestDataProvider(dummyData, { logging: true });
 
 ------Profe
 */
-import {fetchUtils} from "react-admin"
+import { fetchUtils } from "react-admin";
 import jsonServerProvider from "ra-data-json-server";
 
-
-const fetchJsonUtil=(url:string, options:fetchUtils.Options={})=>{
-	if(!options.headers){
-		options.headers=new Headers({Accept: "application/json"});
-	}
-	options.headers.set("Authentication", sessionStorage.getItem("auth"));
-	return fetchUtils.fetchJson(url, options);
+const fetchJsonUtil = (url: string, options: fetchUtils.Options = {}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: "application/json" });
+    }
+    options.headers.set("Authentication", sessionStorage.getItem("auth"));
+    return fetchUtils.fetchJson(url, options);
 };
 
 export const dataProvider = jsonServerProvider(
-  import.meta.env.VITE_JSON_SERVER_URL, fetchJsonUtil);
+    "http://127.0.0.1:3000",
+    fetchJsonUtil
+);

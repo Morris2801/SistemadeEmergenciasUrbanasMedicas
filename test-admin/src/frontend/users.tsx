@@ -1,5 +1,5 @@
 import { useMediaQuery, Theme } from "@mui/material";
-import { List, SimpleList, DataTable, Edit, SimpleForm, ReferenceInput, TextInput, EditButton, Show, Create, required, SelectInput,} from "react-admin";
+import { List, SimpleList, DataTable, Edit, SimpleForm, ReferenceInput, TextField, TextInput, EditButton, Show, Create, required, SelectInput, SimpleShowLayout, SelectField } from "react-admin";
 
 export const UserList = () => {
     const isSmall = useMediaQuery<Theme>((theme) =>
@@ -9,19 +9,18 @@ export const UserList = () => {
         <List>
             {isSmall ? (
                 <SimpleList
-                    primaryText={(record) => record.name}
-                    secondaryText={(record) => record.username}
-                    tertiaryText={(record) => record.rol}
+                    primaryText={(record) => record.username}
+                    secondaryText={(record) => record.name}
+                    tertiaryText={(record) => record.tipo}
                 />
             ) : (
                 <DataTable>
                     <DataTable.Col source="id" label="ID" />
-                    <DataTable.Col source="name" label="Nombre" />
                     <DataTable.Col source="username" label="Usuario" />
-                    <DataTable.Col source="password" label="Contraseña" />
+                    <DataTable.Col source="name" label="Nombre" />
+                    <DataTable.Col source="tipo" label="Tipo" />
                     <DataTable.Col source="turno" label="Turno" />
                     <DataTable.Col source="phone" label="Teléfono" />
-                    <DataTable.Col source="rol" label="Rol"/>
                     <DataTable.Col label="Acciones">
                         <EditButton label="Editar" />
                     </DataTable.Col>
@@ -37,25 +36,40 @@ export const UserEdit = () => (
             <TextInput disabled source="id" label="ID" />
             <TextInput required source="name" label="Nombre" />
             <TextInput required source="username" label="Usuario" />
-            <TextInput required source="password" label="Contraseña" type="password" />
+            <TextInput source="password" label="Contraseña" type="password" helperText="Dejar vacío para no cambiar" />
+            <SelectInput source="tipo" label="Tipo" validate={required()}
+                choices={[
+                    { id: "admin", name: 'Administrador' },
+                    { id: "jefe", name: "Jefe de Turno" },
+                    { id: "paramedico", name: "Paramédico" },
+                    { id: "operador", name: "Operador" },
+                ]}
+            />
             <TextInput required source="turno" label="Turno" />
             <TextInput required source="phone" label="Teléfono" />
-            <TextInput required source="rol" label="Rol" />
         </SimpleForm>
     </Edit>
 );
 
 export const UserShow = () => (
     <Show>
-        <SimpleForm>
-            <TextInput disabled source="id" label="ID" />
-            <TextInput required source="name" label="Nombre" />
-            <TextInput required source="username" label="Usuario" />
-            <TextInput required source="password" label="Contraseña" type="password" />
-            <TextInput required source="turno" label="Turno" />
-            <TextInput required source="phone" label="Teléfono" />
-            <TextInput required source="rol" label="Rol" />
-        </SimpleForm>
+        <SimpleShowLayout>
+            <TextField source="id" label="ID" />
+            <TextField source="name" label="Nombre" />
+            <TextField source="username" label="Usuario" />
+            <SelectField 
+                source="tipo" 
+                label="Tipo"
+                choices={[
+                    { id: "admin", name: 'Administrador' },
+                    { id: "jefe", name: "Jefe de Turno" },
+                    { id: "paramedico", name: "Paramédico" },
+                    { id: "operador", name: "Operador" },
+                ]}
+            />
+            <TextField source="turno" label="Turno" />
+            <TextField source="phone" label="Teléfono" />
+        </SimpleShowLayout>
     </Show>
 );
 
@@ -68,9 +82,9 @@ export const UserCreate = () => (
             <TextInput required source="password" label="Contraseña" type="password" />
             <TextInput required source="turno" label="Turno" />
             <TextInput required source="phone" label="Teléfono" />
-            <SelectInput source="rol" label="Rol" validate={required()}
-                 choices={[
-                    { id: "administrador", name: 'Administrador' },
+            <SelectInput source="tipo" label="Tipo" validate={required()}
+                choices={[
+                    { id: "admin", name: 'Administrador' },
                     { id: "jefe", name: "Jefe de Turno" },
                     { id: "paramedico", name: "Paramédico" },
                     { id: "operador", name: "Operador" },

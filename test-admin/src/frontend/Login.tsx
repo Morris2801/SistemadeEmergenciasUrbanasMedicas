@@ -26,7 +26,7 @@ const CustomLogin = () => {
                 redirect("/selector");
             } 
             else if (permissions === "jefe") {
-                redirect("/selector"); // CAMBIAR CUANDO TENGAMOS LISTADO DE REPORTES
+                redirect("/medicForm"); 
             } 
             else {
                 notify("No tienes permisos");

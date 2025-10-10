@@ -71,7 +71,7 @@ const authProvider: AuthProvider = {
             sessionStorage.setItem("auth", auth.token);
             sessionStorage.setItem(
                 "identity",
-                JSON.stringify({ id: auth.id, fullName: auth.nombre, tipo: auth.tipo })
+                JSON.stringify({ id: auth.id, fullName: auth.name, tipo: auth.tipo })
             );
             return Promise.resolve();
         } catch {

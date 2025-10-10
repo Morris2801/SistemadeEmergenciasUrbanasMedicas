@@ -35,7 +35,7 @@ import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 
 import jsonServerProvider from 'ra-data-json-server';
-import dummyData from './dummyData.json';
+import dummyData from '../dummyData.json';
 
 export const App = () => (
     <Admin
