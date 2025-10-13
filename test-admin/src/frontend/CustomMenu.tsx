@@ -14,7 +14,7 @@ const CustomMenu = (props) => {
             {/* Logo ALGUIEN CAMBIELO O LA DE FRONTEND AHEM AMILKA HAZLO MEJOR */}
             <Box sx={{ textAlign: 'center', p: 2, justifyContent: 'center', alignItems: 'center' }}>
                 <img
-                    src='./src/logo.jpg'
+                    src='../../src/frontend/logo.jpg'
                     alt="LogoCuaji"
                     style={{ maxWidth: '100%', height: 'auto', borderRadius: '30px' }}
                 />
