@@ -15,13 +15,14 @@ const CustomAppBar = (props) => {
     }, []);
 
     return (
+        
         <AppBar
             sx={{
                 height: isSmall ? '12%' : isMedium ? '10%' : '8%', 
-                justifyContent: 'space-between',
+                justifyContent: 'space-between', 
                 flexDirection: 'row',
                 alignItems: 'center',
-                padding: isSmall ? '8px' : '16px',
+                padding: isSmall ? '8px' : '16px', 
             }}
             {...props}
         >
@@ -33,6 +34,8 @@ const CustomAppBar = (props) => {
                     fontWeight: '700',
                     fontSize: isSmall ? '1rem' : isMedium ? '1.4rem' : '2rem', 
                     color: '#ffff',
+                    marginRight: '120px',
+                    fontFamily: 'Roboto, sans-serif'
                 }}
             >
                 Protección Civil - Cuajimalpa de Morelos
@@ -43,6 +46,7 @@ const CustomAppBar = (props) => {
                     sx={{
                         fontSize: isSmall ? '1rem' : '1.2rem', 
                         color: '#ffff',
+                        marginRight: '120px'
                     }}
                 >
                     {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}

@@ -38,6 +38,7 @@ export const MedicFormCreate = () => {
                                     I. Datos del Servicio
                                 </AccordionSummary>
                                 <AccordionDetails>
+                                     <Box sx={{ p: 4 }}>
                                     Cronometría
                                     <DateInput source="fecha" label="Fecha" validate={required()} />
                                     <TimeInput source="hora_llamada" label="Hora de Llamada" validate={required()} />
@@ -63,6 +64,7 @@ export const MedicFormCreate = () => {
                                             { id: "otro", name: "Otro" },
                                         ]}
                                     />
+                                    </Box>
                                     <TextInput source="lugar_otro" label="Especifique otro lugar" />
                                     <BooleanInput label="Ginecobstetricia" source="ginecobstetricia" value={ginecobstetricia}
                                         onChange={e => setGinecobstetricia(e.target.checked)}
