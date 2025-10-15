@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Menu, MenuItemLink, usePermissions } from 'react-admin';
 import { Box } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -11,7 +10,6 @@ const CustomMenu = (props) => {
 
     return (
         <Box sx={{ backgroundColor: '#bfbfbfff', rounded: 2, height: '100%', justifyContent: 'center', alignItems: 'center', marginTop: '22px'}}>
-            {/* Logo ALGUIEN CAMBIELO O LA DE FRONTEND AHEM AMILKA HAZLO MEJOR */}
             <Box sx={{ textAlign: 'center', p: 2, justifyContent: 'center', alignItems: 'center' }}>
                 <img
                     src='../../src/frontend/logo.jpg'

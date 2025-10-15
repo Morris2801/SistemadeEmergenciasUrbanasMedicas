@@ -62,39 +62,37 @@ const authProvider: AuthProvider = {
             body: JSON.stringify({ username, password }),
             headers: new Headers({ "Content-Type": "application/json" }),
         });
-        try {
-            const res = await fetch(request);
-            if (res.status < 200 || res.status >= 300) {
-                throw new Error(res.statusText);
-            }
-            const auth = await res.json();
-            sessionStorage.setItem("auth", auth.token);
-            sessionStorage.setItem(
-                "identity",
-                JSON.stringify({ id: auth.id, fullName: auth.name, tipo: auth.tipo })
-            );
-            return Promise.resolve();
-        } catch {
-            throw new Error("Error en usuario o password");
-        }
+
+        const res = await fetch(request);
+        if (!res.ok) throw new Error("Login failed");
+
+        const auth = await res.json();
+
+        sessionStorage.setItem("auth", auth.token);
+        sessionStorage.setItem(
+            "identity",
+            JSON.stringify({ id: auth.id, fullName: auth.nombre, tipo: auth.tipo })
+        );
     },
+
     logout: () => {
         sessionStorage.removeItem("auth");
         sessionStorage.removeItem("identity");
         return Promise.resolve();
     },
-    checkAuth: () => {
-        return sessionStorage.getItem("auth") ? Promise.resolve() : Promise.reject();
-    },
+
+    checkAuth: () =>
+        sessionStorage.getItem("auth") ? Promise.resolve() : Promise.reject(),
+
     checkError: (error) => {
-        const status = error.status;
-        if (status === 401 || status === 403) {
+        if (error.status === 401 || error.status === 403) {
             sessionStorage.removeItem("auth");
             sessionStorage.removeItem("identity");
             return Promise.reject();
         }
         return Promise.resolve();
     },
+
     getPermissions: () => {
         const identity = sessionStorage.getItem("identity");
         return identity ? Promise.resolve(JSON.parse(identity).tipo) : Promise.reject();

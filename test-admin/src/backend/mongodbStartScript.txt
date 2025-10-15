@@ -4,7 +4,7 @@ db.medicForm.insertMany([
     // Entrada 1: Caso de Traumatismo (Accidente de Tránsito)
     {
         folio: "T-20250915-001",
-        fecha: new Date("2025-09-15T00:00:00.000Z"),
+        fecha: new Date("2025-09-15"),
         hora_llamada: "10:30",
         hora_traslado: "10:55",
         hora_salida: "11:45",
@@ -81,7 +81,7 @@ db.medicForm.insertMany([
     // Entrada 2: Caso de Enfermedad (Crisis Convulsiva)
     {
         folio: "E-20250916-002",
-        fecha: new Date("2025-09-16T00:00:00.000Z"),
+        fecha: new Date("2025-09-16"),
         hora_llamada: "08:15",
         hora_traslado: "08:30",
         hora_salida: "09:00",
@@ -158,7 +158,7 @@ db.medicForm.insertMany([
     // Entrada 3: Caso de Ginecobstetricia (Parto en Casa)
     {
         folio: "G-20250917-003",
-        fecha: new Date("2025-09-17T00:00:00.000Z"),
+        fecha: new Date("2025-09-17"),
         hora_llamada: "04:00",
         hora_traslado: "04:30",
         hora_salida: "05:15",
@@ -239,7 +239,7 @@ db.medicForm.insertMany([
     // Entrada 4: Caso de Enfermedad Crónica (Problema Respiratorio)
     {
         folio: "E-20250918-004",
-        fecha: new Date("2025-09-18T00:00:00.000Z"),
+        fecha: new Date("2025-09-18"),
         hora_llamada: "18:00",
         hora_traslado: "18:25",
         hora_salida: "19:00",
@@ -316,7 +316,7 @@ db.medicForm.insertMany([
     // Entrada 5: Caso de Traumatismo (Caída simple)
     {
         folio: "T-20250919-005",
-        fecha: new Date("2025-09-19T00:00:00.000Z"),
+        fecha: new Date("2025-09-19"),
         hora_llamada: "15:45",
         hora_traslado: "16:00",
         hora_salida: "16:40",
@@ -346,7 +346,7 @@ db.medicForm.insertMany([
         derechohabiencia: "IMSS",
         telefono: "5577665544",
         ocupacion: "Contadora",
-        agente_causal: "ser_humano", // Asumiendo que resbaló o tropezó
+        agente_causal: "ser humano", // Asumiendo que resbaló o tropezó
         agente_causal_otro: "Caída de su propia altura",
         nivel_consciencia: "verbal",
         deglucion: "presente",
@@ -425,7 +425,7 @@ db.users.insertMany([
 db.urbanForm.insertMany([
     {
         folio: "URB-2025-0001",
-        fecha_hora: new Date("2025-09-10T09:30:00Z"),
+        fecha_hora: new Date("2025-09-10 10:20"),
         turno: "matutino",
         personal_a_cargo: "Ing. Juan Pérez",
         modo_activacion: "llamada",
@@ -468,7 +468,7 @@ db.urbanForm.insertMany([
     },
     {
         folio: "URB-2025-0003",
-        fecha_hora: new Date("2025-09-11T23:10:00Z"),
+        fecha_hora: new Date("2025-09-10 10:30"),
         turno: "nocturno",
         personal_a_cargo: "Sr. Carlos Ruiz",
         modo_activacion: "llamada",
@@ -489,7 +489,7 @@ db.urbanForm.insertMany([
     },
     {
         folio: "URB-2025-0004",
-        fecha_hora: new Date("2025-09-12T07:00:00Z"),
+        fecha_hora: new Date("2025-09-10 10:50"),
         turno: "matutino",
         personal_a_cargo: "Ing. Juan Pérez",
         modo_activacion: "oficio",
@@ -508,7 +508,7 @@ db.urbanForm.insertMany([
     },
     {
         folio: "URB-2025-0005",
-        fecha_hora: new Date("2025-09-12T19:00:00Z"),
+        fecha_hora: new Date("2025-09-10 10:30"),
         turno: "vespertino",
         personal_a_cargo: "Téc. María López",
         modo_activacion: "llamada",

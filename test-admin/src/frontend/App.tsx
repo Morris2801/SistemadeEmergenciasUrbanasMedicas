@@ -54,6 +54,7 @@ export const App = () => (
         <Resource name="dashboard" list={Dashboard} icon={DashboardIcon} />
         <Resource name="users" list={UserList} show={UserShow} edit={UserEdit} create={UserCreate} />
         <Resource name="estadisticas" list={Estadisticas} icon={BarChartIcon} />
+        
         {/* <Resource name="listado" list={Listado} icon={ListAltIcon} /> */}
         <Resource name="selector" list={Selector} icon={MedicalInformationIcon} />
         <Resource name="medicForm" list={MedicFormList} create={MedicFormCreate} edit={MedicFormEdit} show={MedicFormShow} icon={MedicalInformationIcon} />
