@@ -106,7 +106,7 @@ const CustomLogin = () => {
                 </Box>
             </Box>
 
-            <Divider sx={{ borderColor: "divider" }} /> {/* Use theme divider color */}
+            <Divider sx={{ borderColor: "divider" }} /> 
 
             <Box
                 sx={{
@@ -126,13 +126,13 @@ const CustomLogin = () => {
                         borderRadius: 4,
                         overflow: "hidden",
                         boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
-                        backgroundColor: "background.paper", // Use theme paper background color
+                        backgroundColor: "background.paper", 
                     }}
                 >
                     <Box
                         sx={{
-                            backgroundColor: "primary.main", // Use theme primary color
-                            color: "primary.contrastText", // Use theme primary contrast text color
+                            backgroundColor: "primary.main", 
+                            color: "primary.contrastText", 
                             py: 3,
                             textAlign: "center",
                         }}
@@ -146,7 +146,7 @@ const CustomLogin = () => {
                         <Typography
                             variant="subtitle1"
                             align="center"
-                            sx={{ mb: 3, color: "text.secondary" }} // Use theme secondary text color
+                            sx={{ mb: 3, color: "text.secondary" }} 
                         >
                             Inicia sesión para continuar
                         </Typography>
@@ -163,10 +163,10 @@ const CustomLogin = () => {
                                 sx={{
                                     "& .MuiOutlinedInput-root": {
                                         "& fieldset": {
-                                            borderColor: "divider", // Use theme divider color
+                                            borderColor: "divider", 
                                         },
                                         "&:hover fieldset": {
-                                            borderColor: "primary.main", // Use theme primary color
+                                            borderColor: "primary.main", 
                                         },
                                     },
                                 }}
@@ -183,10 +183,10 @@ const CustomLogin = () => {
                                 sx={{
                                     "& .MuiOutlinedInput-root": {
                                         "& fieldset": {
-                                            borderColor: "divider", // Use theme divider color
+                                            borderColor: "divider",
                                         },
                                         "&:hover fieldset": {
-                                            borderColor: "primary.main", // Use theme primary color
+                                            borderColor: "primary.main", 
                                         },
                                     },
                                 }}
@@ -199,8 +199,8 @@ const CustomLogin = () => {
                                 disabled={loading}
                                 sx={{
                                     mt: 2,
-                                    textTransform: "none", // Consistent button text style
-                                    fontSize: "1rem", // Match theme typography
+                                    textTransform: "none", 
+                                    fontSize: "1rem", 
                                 }}
                             >
                                 {loading ? "Ingresando..." : "Ingresar"}
@@ -214,8 +214,8 @@ const CustomLogin = () => {
                 component="footer"
                 sx={{
                     width: "100%",
-                    backgroundColor: "primary.main", // Use theme primary color
-                    color: "primary.contrastText", // Use theme primary contrast text color
+                    backgroundColor: "primary.main", 
+                    color: "primary.contrastText", 
                     textAlign: "center",
                     px: 2,
                     py: { xs: 2, md: 3 },
