@@ -27,6 +27,5 @@ const fetchJsonUtil = (url: string, options: fetchUtils.Options = {}) => {
 };
 
 export const dataProvider = jsonServerProvider(
-    "http://127.0.0.1:3000",
-    fetchJsonUtil
+    import.meta.env.VITE_BACKEND, fetchJsonUtil
 );

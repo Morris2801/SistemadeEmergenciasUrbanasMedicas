@@ -24,7 +24,7 @@ import { MedicFormCreate, MedicFormEdit, MedicFormShow, MedicFormList } from './
 import { UserList, UserEdit, UserShow, UserCreate } from './users';
 import { UrbanFormCreate, UrbanFormShow, UrbanFormList, UrbanFormEdit} from './urbanForm';
 import Selector from './selector';
-import Registrarse from './Registrarse';
+import Registrarse from './registrarse';
 
 
 // Iconos
@@ -35,7 +35,7 @@ import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 
 import jsonServerProvider from 'ra-data-json-server';
-import dummyData from '../dummyData.json';
+import dummyData from './dummyData.json';
 
 export const App = () => (
     <Admin
