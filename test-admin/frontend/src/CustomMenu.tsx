@@ -12,7 +12,7 @@ const CustomMenu = (props) => {
         <Box sx={{ backgroundColor: '#bfbfbfff', rounded: 2, height: '100%', justifyContent: 'center', alignItems: 'center', marginTop: '22px'}}>
             <Box sx={{ textAlign: 'center', p: 2, justifyContent: 'center', alignItems: 'center' }}>
                 <img
-                    src='../../src/frontend/logo.jpg'
+                    src='../src/logo.jpg'
                     alt="LogoCuaji"
                     style={{ maxWidth: '100%', height: 'auto', borderRadius: '30px', marginTop: '30px'}}
                 />
@@ -26,9 +26,11 @@ const CustomMenu = (props) => {
                         <MenuItemLink to="/urbanForm" primaryText="UrbanForms" leftIcon={<EngineeringIcon />} />
                     </Box>
                 )}
-                {(permissions === 'admin' || permissions === 'manager') && (
+                {(permissions === 'admin' || permissions === 'jefe') && (
                     <Box>
                         <MenuItemLink to="/estadisticas" primaryText="Estadísticas" leftIcon={<BarChartIcon />} />
+                        <MenuItemLink to="/medicForm" primaryText="MedicForms" leftIcon={<MedicalInformationIcon />} />
+                        <MenuItemLink to="/urbanForm" primaryText="UrbanForms" leftIcon={<EngineeringIcon />} />
                     </Box>
                 )}
                 

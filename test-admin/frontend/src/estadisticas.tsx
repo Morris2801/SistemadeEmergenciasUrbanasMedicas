@@ -158,14 +158,14 @@ export const Estadisticas: React.FC = () => {
       }
     };
 
-    if (permissions === "admin") {
+    if (permissions === "admin" || permissions === "jefe") {
       load();
     } else if (permissions) {
       setLoading(false);
     }
   }, [permissions, dataProvider]);
 
-  if (permissions && permissions !== "admin") {
+  if (permissions && permissions !== "admin" && permissions !== "jefe") {
     return <Alert severity="error">No tienes acceso a estadísticas.</Alert>;
   }
   if (loading || !permissions) {
