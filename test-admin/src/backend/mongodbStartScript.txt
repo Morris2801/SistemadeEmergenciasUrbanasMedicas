@@ -4,7 +4,7 @@ db.medicForm.insertMany([
     // Entrada 1: Caso de Traumatismo (Accidente de Tránsito)
     {
         folio: "T-20250915-001",
-        turno: "1",
+        turno: "Lunes a Viernes 8am - 3pm",
         fecha: new Date("2025-09-15"),
         hora_llamada: "10:30",
         hora_traslado: "10:55",
@@ -82,7 +82,7 @@ db.medicForm.insertMany([
     // Entrada 2: Caso de Enfermedad (Crisis Convulsiva)
     {
         folio: "E-20250916-002",
-        turno: "2",
+        turno: "Lunes a Viernes 8am - 3pm",
         fecha: new Date("2025-09-16"),
         hora_llamada: "08:15",
         hora_traslado: "08:30",
@@ -160,7 +160,7 @@ db.medicForm.insertMany([
     // Entrada 3: Caso de Ginecobstetricia (Parto en Casa)
     {
         folio: "G-20250917-003",
-        turno: "3",
+        turno: "Lunes a Viernes 3pm - 9pm",
         fecha: new Date("2025-09-17"),
         hora_llamada: "04:00",
         hora_traslado: "04:30",
@@ -242,7 +242,7 @@ db.medicForm.insertMany([
     // Entrada 4: Caso de Enfermedad Crónica (Problema Respiratorio)
     {
         folio: "E-20250918-004",
-        turno: "4",
+        turno: "Lunes a Viernes 3pm - 9pm",
         fecha: new Date("2025-09-18"),
         hora_llamada: "18:00",
         hora_traslado: "18:25",
@@ -320,7 +320,7 @@ db.medicForm.insertMany([
     // Entrada 5: Caso de Traumatismo (Caída simple)
     {
         folio: "T-20250919-005",
-        turno: "5",
+        turno: "Lunes, Miércoles y Viernes 9pm - 8 am",
         fecha: new Date("2025-09-19"),
         hora_llamada: "15:45",
         hora_traslado: "16:00",
@@ -404,7 +404,7 @@ db.users.insertMany([
     password: '$argon2id$v=19$m=19456,t=2,p=1$GLkuIE8AN3OSioCScZcylA$uEXtXDaZ50u8DLGyWGu7G+ZXbiGvg/V8PCAMPrE3Dvs',
     name: 'Mauricio Monroy',
     tipo: 'admin',
-    turno: '6',
+    turno: "Lunes, Miércoles y Viernes 9pm - 8 am",
     phone: '5554052794'
   },
   {
@@ -412,7 +412,7 @@ db.users.insertMany([
     username: 'amilka',
     password: '$argon2id$v=19$m=19456,t=2,p=1$I6mmBvcJE5ePrGsvbTND3w$jM31uZPQIUZ0beSQ8NWiFwj5P/CwkanAl7BChw/k2sc',
     name: 'Amilka Lopez',
-    tipo: 'paramedico',
+    tipo: "Lunes, Miércoles y Viernes 9pm - 8 am",
     turno: '7',
     phone: '11111111111111'
   },
@@ -431,7 +431,7 @@ db.urbanForm.insertMany([
     {
         folio: "URB-2025-0001",
         fecha_hora: new Date("2025-09-10 10:20"),
-        turno: "9",
+        turno: "Lunes, Miércoles y Viernes 9pm - 8 am",
         personal_a_cargo: "Ing. Juan Pérez",
         modo_activacion: "llamada",
         tipo_servicio: "Derrumbe Parcial en Edificio",
@@ -453,7 +453,7 @@ db.urbanForm.insertMany([
     {
         folio: "URB-2025-0002",
         fecha_hora: new Date("2025-09-10T15:45:00Z"),
-        turno: "10",
+        turno: "Lunes, Miércoles y Viernes 9pm - 8 am",
         personal_a_cargo: "Téc. María López",
         modo_activacion: "oficio",
         tipo_servicio: "Revisión de Barda Perimetral",
@@ -474,7 +474,7 @@ db.urbanForm.insertMany([
     {
         folio: "URB-2025-0003",
         fecha_hora: new Date("2025-09-10 10:30"),
-        turno: "11",
+        turno: "Martes, Jueves y Domingo 9pm - 8am",
         personal_a_cargo: "Sr. Carlos Ruiz",
         modo_activacion: "llamada",
         tipo_servicio: "Árbol Caído sobre Vialidad",
@@ -495,7 +495,7 @@ db.urbanForm.insertMany([
     {
         folio: "URB-2025-0004",
         fecha_hora: new Date("2025-09-10 10:50"),
-        turno: "12",
+        turno: "Martes, Jueves y Domingo 9pm - 8am",
         personal_a_cargo: "Ing. Juan Pérez",
         modo_activacion: "oficio",
         tipo_servicio: "Inspección de Obra en Construcción",
@@ -514,7 +514,7 @@ db.urbanForm.insertMany([
     {
         folio: "URB-2025-0005",
         fecha_hora: new Date("2025-09-10 10:30"),
-        turno: "13",
+        turno: "Lunes a Viernes 8am - 3pm",
         personal_a_cargo: "Téc. María López",
         modo_activacion: "llamada",
         tipo_servicio: "Fuga de Gas en Vivienda",

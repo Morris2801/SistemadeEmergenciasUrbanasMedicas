@@ -6,6 +6,14 @@ import { Accordion, AccordionSummary, AccordionDetails, Grid, Button, Box, Typog
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
+const turnoChoices = [
+    { id: 'L-V_8-3', name: 'Lunes a Viernes - 8am a 3pm' },
+    { id: 'L-V_3-9', name: 'Lunes a Viernes - 3pm a 9pm' },
+    { id: 'L-Mi-V_9-8', name: 'Lunes, Miércoles y Viernes - 9pm a 8am' },
+    { id: 'Ma-Ju-Do_9-8', name: 'Martes, Jueves y Domingo - 9pm a 8am' },
+    { id: 'Sa-Do-F_8-8', name: 'Sábado, Domingo y festivos - 8am a 8pm' },
+    { id: 'Sa-Do-F_8p-8a', name: 'Sábado, Domingo y festivos - 8pm a 8am' },
+];
 
 export const MedicFormCreate = () => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
@@ -461,6 +469,15 @@ export const MedicFormCreate = () => {
                         <TextInput
                             source="folio"
                             label="Folio"
+                            validate={required()}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <SelectInput
+                            source="turno"
+                            label="Turno"
+                            choices={turnoChoices}
                             validate={required()}
                             fullWidth
                         />
