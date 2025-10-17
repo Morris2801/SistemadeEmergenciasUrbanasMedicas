@@ -1,4 +1,3 @@
-// theme.tsx
 import { createTheme } from '@mui/material/styles';
 import { defaultTheme } from 'react-admin';
 
@@ -7,23 +6,23 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1976d2',
-      contrastText: '#c1c7e4ff',
+      main: '#0d47a1', 
+      contrastText: '#ffffff',
     },
     secondary: {
-      main: '#244bf7d1',
-      contrastText: '#c1c7e4ff',
+      main: '#1565c0', 
+      contrastText: '#ffffff',
     },
     background: {
-      default: '#f4f6f8',
+      default: '#f9f9f9', 
       paper: '#ffffff',
     },
     error: {
       main: '#d32f2f',
     },
     text: {
-      primary: '#212121',
-      secondary: '#555555',
+      primary: '#000000',
+      secondary: '#333333',
     },
   },
   typography: {
@@ -31,7 +30,7 @@ export const lightTheme = createTheme({
     body1: {
       fontSize: '1rem',
       lineHeight: 1.5,
-      color: '#333333',
+      color: '#212121',
     },
     button: {
       textTransform: 'none',
@@ -52,15 +51,16 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'none',
-          fontSize: '1.2rem',
+          fontSize: '1.1rem',
           justifyContent: 'flex-start',
           padding: '8px 16px',
-          border: '1px solid #c4c4c4',
-          borderRadius: '12px',
-          transition: 'background-color 0.3s ease, border-color 0.3s ease',
+          border: '1px solid #1976d2',
+          borderRadius: '8px',
+          color: '#ffffff',
+          backgroundColor: '#1976d2',
           '&:hover': {
-            backgroundColor: '#e3f2fd',
-            borderColor: '#1976d2',
+            backgroundColor: '#115293',
+            borderColor: '#0d47a1',
           },
         },
       },
@@ -68,17 +68,14 @@ export const lightTheme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          color: '#212121',
-          fontSize: '1.2rem',
+          color: '#000000',
+          fontSize: '1.1rem',
           fontWeight: 500,
-          border: '1px solid #c4c4c4',
-          borderRadius: '8px',
+          borderRadius: '6px',
           margin: '4px 0',
           padding: '8px 16px',
-          transition: 'background-color 0.3s ease, border-color 0.3s ease',
           '&:hover': {
             backgroundColor: '#e3f2fd',
-            borderColor: '#1976d2',
           },
         },
       },
@@ -92,11 +89,11 @@ export const darkTheme = createTheme({
     mode: 'dark',
     primary: {
       main: '#90caf9',
-      contrastText: '#000',
+      contrastText: '#000000',
     },
     secondary: {
-      main: '#8fa0f4ff',
-      contrastText: '#000',
+      main: '#8fa0f4',
+      contrastText: '#000000',
     },
     background: {
       default: '#121212',
@@ -107,7 +104,7 @@ export const darkTheme = createTheme({
     },
     text: {
       primary: '#ffffff',
-      secondary: '#b0bec5',
+      secondary: '#7480a0ff',
     },
   },
   typography: {
@@ -135,17 +132,17 @@ export const darkTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          color: "#ffffff",
           textTransform: 'none',
-          fontSize: '1.2rem',
+          fontSize: '1.1rem',
           justifyContent: 'flex-start',
           padding: '8px 16px',
-          border: '1px solid #444444',
-          borderRadius: '12px',
-          transition: 'background-color 0.3s ease, border-color 0.3s ease',
+          border: '1px solid #90caf9',
+          borderRadius: '8px',
+          color: '#000000',
+          backgroundColor: '#90caf9',
           '&:hover': {
-            backgroundColor: '#333333',
-            borderColor: '#90caf9',
+            backgroundColor: '#64b5f6',
+            borderColor: '#42a5f5',
           },
         },
       },
@@ -154,18 +151,15 @@ export const darkTheme = createTheme({
       styleOverrides: {
         root: {
           color: '#ffffff',
-          backgroundColor: "#333333",
-          fontSize: '1.2rem',
+          fontSize: '1.1rem',
           fontWeight: 500,
-          border: '1px solid #444444',
-          borderRadius: '8px',
+          borderRadius: '6px',
           margin: '4px 0',
           padding: '8px 16px',
-          transition: 'background-color 0.3s ease, border-color 0.3s ease',
+          backgroundColor: 'transparent',
           '&:hover': {
-            backgroundColor: '#656565ff',
-            color: "#000000",
-            borderColor: '#90caf9',
+            backgroundColor: '#2c2c2c',
+            color: '#ffffff',
           },
         },
       },

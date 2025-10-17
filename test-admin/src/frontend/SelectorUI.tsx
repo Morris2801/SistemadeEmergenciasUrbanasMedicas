@@ -64,7 +64,7 @@ const SelectorUI: React.FC<SelectorUIProps> = ({ onNavigate }) => {
               size="large"
               startIcon={<FireTruckIcon />}
               endIcon={<ArrowForwardIosIcon />}
-              onClick={() => onNavigate('/urbanForm/create')}
+              onClick={() => onNavigate('/urbanForm')}
               sx={{ borderRadius: 3, py: 1.5, fontWeight: 600 }}
             >
               Emergencia Urbana
