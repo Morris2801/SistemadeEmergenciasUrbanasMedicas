@@ -455,8 +455,18 @@ export const MedicFormCreate = () => {
                     ← Volver
                 </Button>
             </Box>
-            <SimpleForm sx={{ width: "100%", maxWidth: "100%" }}>
-                <TextInput source="folio" validate={required()} />
+<SimpleForm sx={{ width: "100%", maxWidth: "100%" }}>
+                <Grid container spacing={2} sx={{ mb: 2 }}>
+                    <Grid item xs={12} md={6}>
+                        <TextInput
+                            source="folio"
+                            label="Folio"
+                            validate={required()}
+                            fullWidth
+                        />
+                    </Grid>
+                </Grid>
+
                 <Paper elevation={2} sx={{ p: 2, mb: 3, width: "100%", maxWidth: "100%" }}>
 
                     <Typography variant="h6" sx={{ mb: 2 }}>

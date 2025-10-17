@@ -24,7 +24,6 @@ import { MedicFormCreate, MedicFormEdit, MedicFormShow, MedicFormList } from './
 import { UserList, UserEdit, UserShow, UserCreate } from './users';
 import { UrbanFormCreate, UrbanFormShow, UrbanFormList, UrbanFormEdit} from './urbanForm';
 import Selector from './selector';
-import Registrarse from './Registrarse';
 
 
 // Iconos
@@ -36,6 +35,7 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 
 import jsonServerProvider from 'ra-data-json-server';
 import dummyData from '../dummyData.json';
+import Registrarse from './registrarse';
 
 export const App = () => (
     <Admin
@@ -58,6 +58,6 @@ export const App = () => (
         {/* <Resource name="listado" list={Listado} icon={ListAltIcon} /> */}
         <Resource name="selector" list={Selector} icon={MedicalInformationIcon} />
         <Resource name="medicForm" list={MedicFormList} create={MedicFormCreate} edit={MedicFormEdit} show={MedicFormShow} icon={MedicalInformationIcon} />
-        <Resource name="urbanForm" create={UrbanFormCreate} list={UrbanFormList} edit={UrbanFormEdit} show={UrbanFormShow} icon={EngineeringIcon} />
+        <Resource name="urbanForm" list={UrbanFormList} create={UrbanFormCreate} edit={UrbanFormEdit} show={UrbanFormShow} icon={EngineeringIcon} />
     </Admin>
 );
