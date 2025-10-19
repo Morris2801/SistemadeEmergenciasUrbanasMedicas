@@ -23,15 +23,29 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Button, useMediaQuery, Theme, Paper, Typography, Grid, Box } from '@mui/material';
 
-const turnoChoices = [
-    { id: 'L-V_8-3', name: 'Lunes a Viernes - 8am a 3pm' },
-    { id: 'L-V_3-9', name: 'Lunes a Viernes - 3pm a 9pm' },
-    { id: 'L-Mi-V_9-8', name: 'Lunes, Miércoles y Viernes - 9pm a 8am' },
-    { id: 'Ma-Ju-Do_9-8', name: 'Martes, Jueves y Domingo - 9pm a 8am' },
-    { id: 'Sa-Do-F_8-8', name: 'Sábado, Domingo y festivos - 8am a 8pm' },
-    { id: 'Sa-Do-F_8p-8a', name: 'Sábado, Domingo y festivos - 8pm a 8am' },
-];
+const formatDateTime = (date?: string | Date) => {
+  if (!date) return 'Sin fecha';
+  const d = new Date(date);
+  const isValid = !isNaN(d.getTime());
+  if (!isValid) return 'Fecha inválida';
 
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  const hh = String(d.getHours()).padStart(2, '0');
+  const min = String(d.getMinutes()).padStart(2, '0');
+
+  return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+};
+
+const turnoChoices = [
+    { id: 'Lunes a Viernes - 8am a 3pm', name: 'Lunes a Viernes - 8am a 3pm' },
+    { id: 'Lunes a Viernes - 3pm a 9pm', name: 'Lunes a Viernes - 3pm a 9pm' },
+    { id: 'Lunes, Miércoles y Viernes - 9pm a 8am', name: 'Lunes, Miércoles y Viernes - 9pm a 8am' },
+    { id: 'Martes, Jueves y Domingo - 9pm a 8am' , name: 'Martes, Jueves y Domingo - 9pm a 8am' },
+    { id: 'Sábado, Domingo y festivos - 8am a 8pm', name: 'Sábado, Domingo y festivos - 8am a 8pm' },
+    { id: 'Sábado, Domingo y festivos - 8pm a 8am', name: 'Sábado, Domingo y festivos - 8pm a 8am' },
+];
 
 const UrbanFormImproved = () => {
   const navigate = useNavigate();
@@ -43,7 +57,6 @@ const UrbanFormImproved = () => {
           ← Volver
         </Button>
       </Box>
-
       <Paper variant="outlined" sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
           Información General
@@ -62,7 +75,6 @@ const UrbanFormImproved = () => {
               />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <DateTimeInput source="fecha_hora" label="Día, fecha y hora" validate={required()} fullWidth />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextInput source="personal_a_cargo" label="Nombre del personal a cargo" validate={required()} fullWidth />
@@ -229,15 +241,10 @@ export const UrbanFormCreate = () => (
 
 export const UrbanFormList = () => {
   const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
-  const navigate = useNavigate();
 
   return (
     <>
-      <Box mb={2} sx={{ p: 1 }}>
-        <Button variant="outlined" color="secondary" onClick={() => navigate('/selector')}>
-          ← Volver 
-        </Button>
-      </Box>
+
       <List title="Listado de Formularios Urbanos">
         {isSmall ? (
           <SimpleList
