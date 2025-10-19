@@ -19,6 +19,8 @@ import {
   ImageField,
   useRecordContext,
   required,
+  useNotify,
+  useRedirect,
 } from 'react-admin';
 import { useNavigate } from 'react-router-dom';
 import { Button, useMediaQuery, Theme, Paper, Typography, Grid, Box } from '@mui/material';
@@ -233,11 +235,26 @@ const UrbanFormShowImproved = () => {
   );
 };
 
-export const UrbanFormCreate = () => (
-  <Create resource="urbanForm">
+export const UrbanFormCreate = () => {
+  const notify = useNotify();
+  const redirect = useRedirect();
+
+  return (
+  <Create resource="urbanForm"
+  
+  mutationOptions={{
+        onSuccess: () => {
+          notify('Reporte guardado', { type: 'success' });
+          redirect('/selector');
+        },
+        onError: () => {
+          notify('Error al guardar el reporte', { type: 'warning' });
+        },
+      }}>
     <UrbanFormImproved />
   </Create>
 );
+};
 
 export const UrbanFormList = () => {
   const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));

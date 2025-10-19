@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator, FileInput, ImageField, Edit, Show, TextField, DateField, Datagrid, List, DataTable, EditButton, SimpleList, EmailField }
+import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator, FileInput, ImageField, Edit, Show, TextField, DateField, Datagrid, List, DataTable, EditButton, SimpleList, EmailField , useNotify, useRedirect }
     from 'react-admin';
 import { Accordion, AccordionSummary, AccordionDetails, Grid, Button, Box, Typography, Paper, useMediaQuery } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -22,6 +22,8 @@ export const MedicFormCreate = () => {
     const [enfermedad, setEnfermedad] = useState(false);
     const [traumatismo, setTraumatismo] = useState(false);
     const [ginecobstetricia, setGinecobstetricia] = useState(false);
+    const notify = useNotify();
+    const redirect = useRedirect();
 
     if (permissions !== "paramedico" && permissions !== "admin" && permissions !== "jefe") {
         return <p>No tienes permiso para acceder a este formulario.</p>;
@@ -456,7 +458,17 @@ export const MedicFormCreate = () => {
         }
     };
     return (
-        <Create sx={{ width: "100%", maxWidth: "none" }} >
+        <Create sx={{ width: "100%", maxWidth: "none" }} 
+            mutationOptions={{
+                onSuccess: () => {
+                    notify('Reporte guardado correctamente', { type: 'success' });
+                    redirect('/selector'); 
+                },
+                onError: () => {
+                    notify('Error al guardar el reporte', { type: 'warning' });
+                },
+                }}
+    >
             <Box sx={{ mb: 2 }}>
                 <Button variant="outlined" color="secondary" onClick={() => navigate('../../selector')} sx={{ mb: 2 }}>
                     ← Volver
