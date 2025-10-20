@@ -55,34 +55,26 @@ export const Estadisticas: React.FC = () => {
         const medic = medicRes.data;
         const urban = urbanRes.data;
 
-        const turnos = ["matutino", "vespertino", "nocturno"];
+     const operadoresPorTurnoSet: Record<string, Set<string>> = {};
 
-        const operadoresPorTurnoSet: Record<string, Set<string>> = {
-          matutino: new Set(),
-          vespertino: new Set(),
-          nocturno: new Set(),
-        };
+    urban.forEach((m: any) => {
+      const turno = m.turno;
+      const operador = m.operador || "Desconocido";
 
-        urban.forEach((m: any) => {
-          const turno = (m.turno || "").toLowerCase();
-          const operador = m.operador || "Desconocido";
+      if (!turno) return;
 
-          if (turnos.includes(turno)) {
-            operadoresPorTurnoSet[turno].add(operador);
-          }
-        });
+      if (!operadoresPorTurnoSet[turno]) {
+        operadoresPorTurnoSet[turno] = new Set();
+      }
 
-        const operadoresPorTurnoCount: Record<string, number> = {
-          matutino: 0,
-          vespertino: 0,
-          nocturno: 0,
-        };
+      operadoresPorTurnoSet[turno].add(operador);
+    });
 
-        turnos.forEach((turno) => {
-          operadoresPorTurnoCount[turno] = operadoresPorTurnoSet[turno].size;
-        });
+    const operadoresPorTurnoCount: Record<string, number> = {};
 
-        // tiempo de respuesta promedio (hora_llamada → hora_llegada)
+Object.entries(operadoresPorTurnoSet).forEach(([turno, set]) => {
+  operadoresPorTurnoCount[turno] = set.size;
+});
         const tiempos: number[] = medic
           .map((m: any) => {
             if (m.hora_llamada && m.hora_llegada) {
@@ -99,11 +91,9 @@ export const Estadisticas: React.FC = () => {
             ? tiempos.reduce((a, b) => a + b, 0) / tiempos.length
             : 0;
 
-        // tickets totales
         const totalTicketsMedic = medicRes.total || 0;
         const totalTicketsUrban = urbanRes.total || 0;
 
-        // tipos de accidente rankeados
         const tipoCount: Record<string, number> = {};
         medic.forEach((m: any) => {
           const tipo = m.agente_causal || m.agente_causal_otro || "Desconocido";
@@ -113,21 +103,18 @@ export const Estadisticas: React.FC = () => {
           .sort((a, b) => b[1] - a[1])
           .map(([tipo, cnt]) => `${tipo} (${cnt})`);
 
-        // casos por prioridad
         const casosPorPrioridad: Record<string, number> = {};
         medic.forEach((m: any) => {
           const p = m.prioridad || "N/A";
           casosPorPrioridad[p] = (casosPorPrioridad[p] || 0) + 1;
         });
-
-        // casos críticos
+        
         const casosCriticos = medic.filter(
           (m: any) =>
             m.condicion?.toLowerCase() === "critico" ||
             m.prioridad?.toLowerCase() === "rojo"
         ).length;
 
-        // Urban stats additions
         const kmRecorridosTotales = urban.reduce(
           (acc: number, cur: any) => acc + (cur.km_recorridos || 0),
           0

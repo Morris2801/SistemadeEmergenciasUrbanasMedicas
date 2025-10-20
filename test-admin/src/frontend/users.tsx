@@ -1,5 +1,14 @@
 import { useMediaQuery, Theme } from "@mui/material";
-import { List, SimpleList, DataTable, Edit, SimpleForm, ReferenceInput, TextField, TextInput, EditButton, Show, Create, required, SelectInput, SimpleShowLayout, SelectField } from "react-admin";
+import { List, SimpleList, DataTable, Edit, SimpleForm, TextField, TextInput, EditButton, Show, Create, required, SelectInput, SimpleShowLayout, SelectField } from "react-admin";
+
+const turnoChoices = [
+    { id: 'Lunes a Viernes - 8am a 3pm', name: 'Lunes a Viernes - 8am a 3pm' },
+    { id: 'Lunes a Viernes - 3pm a 9pm', name: 'Lunes a Viernes - 3pm a 9pm' },
+    { id: 'Lunes, Miércoles y Viernes - 9pm a 8am', name: 'Lunes, Miércoles y Viernes - 9pm a 8am' },
+    { id: 'Martes, Jueves y Domingo - 9pm a 8am' , name: 'Martes, Jueves y Domingo - 9pm a 8am' },
+    { id: 'Sábado, Domingo y festivos - 8am a 8pm', name: 'Sábado, Domingo y festivos - 8am a 8pm' },
+    { id: 'Sábado, Domingo y festivos - 8pm a 8am', name: 'Sábado, Domingo y festivos - 8pm a 8am' },
+];
 
 export const UserList = () => {
     const isSmall = useMediaQuery<Theme>((theme) =>
@@ -57,6 +66,7 @@ export const UserShow = () => (
             <TextField source="id" label="ID" />
             <TextField source="name" label="Nombre" />
             <TextField source="username" label="Usuario" />
+
             <SelectField 
                 source="tipo" 
                 label="Tipo"
@@ -67,7 +77,13 @@ export const UserShow = () => (
                     { id: "operador", name: "Operador" },
                 ]}
             />
-            <TextField source="turno" label="Turno" />
+
+            <SelectField
+                source="turno"
+                label="Turno"
+                choices={turnoChoices}
+            />
+
             <TextField source="phone" label="Teléfono" />
         </SimpleShowLayout>
     </Show>
@@ -80,7 +96,13 @@ export const UserCreate = () => (
             <TextInput required source="name" label="Nombre" />
             <TextInput required source="username" label="Usuario" />
             <TextInput required source="password" label="Contraseña" type="password" />
-            <TextInput required source="turno" label="Turno" />
+            <SelectInput
+                source="turno"
+                label="Turno"
+                choices={turnoChoices}
+                validate={required()}
+                fullWidth
+              />
             <TextInput required source="phone" label="Teléfono" />
             <SelectInput source="tipo" label="Tipo" validate={required()}
                 choices={[
