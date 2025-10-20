@@ -21,6 +21,12 @@ import {
   required,
   useNotify,
   useRedirect,
+  TopToolbar,
+  ExportButton,
+  defaultExporter,
+  DataTable,
+  usePermissions,
+  DateInput
 } from 'react-admin';
 import { useNavigate } from 'react-router-dom';
 import { Button, useMediaQuery, Theme, Paper, Typography, Grid, Box } from '@mui/material';
@@ -244,9 +250,84 @@ export const UrbanFormCreate = () => {
 );
 };
 
+const UrbanFormFilters = [
+  <TextInput
+    key="q"
+    label="Buscar por folio o personal"
+    source="q"
+    alwaysOn
+    sx={{ minWidth: 220 }}
+  />,
+  <SelectInput
+    key="turno"
+    label="Turno"
+    source="turno"
+    alwaysOn
+    choices={[
+      { id: "L-V_8-3", name: "Lunes a Viernes (8-3)" },
+      { id: "L-V_3-9", name: "Lunes a Viernes (3-9)" },
+      { id: "L-Mi-V_9-8", name: "Lunes, Miércoles y Viernes (9-8)" },
+      { id: "Ma-Ju-Do_9-8", name: "Martes, Jueves y Domingo (9-8)" },
+      { id: "Sa-Do-F_8-8", name: "Sábado, Domingo y Festivos (8-8)" },
+      { id: "Sa-Do-F_8p-8a", name: "Sábado, Domingo y Festivos (8p-8a)" },
+    ]}
+    sx={{ minWidth: 180 }}
+  />,
+  <SelectInput
+    key="gravedad"
+    label="Gravedad"
+    source="gravedad"
+    alwaysOn
+    choices={[
+      { id: "baja", name: "Baja" },
+      { id: "media", name: "Media" },
+      { id: "alta", name: "Alta" },
+    ]}
+    sx={{ minWidth: 150 }}
+  />,
+  <SelectInput
+    key="modo_activacion"
+    label="Modo de activación"
+    source="modo_activacion"
+    alwaysOn
+    choices={[
+      { id: "llamada", name: "Llamada de emergencia" },
+      { id: "oficio", name: "Seguimiento de oficio" },
+    ]}
+    sx={{ minWidth: 180 }}
+  />,
+  <DateInput
+    key="fecha_hora"
+    label="Fecha del servicio"
+    source="fecha_hora"
+    alwaysOn
+    sx={{ minWidth: 180 }}
+  />,
+];
+
+const ListActions = () => (
+  <TopToolbar sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
+    <ExportButton
+      label="Exportar CSV"
+      sx={{
+        backgroundColor: "#1976d2",
+        color: "#fff",
+        textTransform: "none",
+        fontWeight: 600,
+        borderRadius: "6px",
+        px: 2,
+        "&:hover": { backgroundColor: "#1565c0" },
+      }}
+    />
+  </TopToolbar>
+);
+
 export const UrbanFormList = () => {
   const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
   const navigate = useNavigate();
+  const { permissions, isLoading } = usePermissions();
+
+  if (isLoading) return <p>Cargando permisos...</p>;
 
   return (
     <>
@@ -255,7 +336,26 @@ export const UrbanFormList = () => {
           ← Volver 
         </Button>
       </Box>
-      <List title="Listado de Formularios Urbanos">
+      <List title="Listado de Formularios Urbanos"
+      filters={UrbanFormFilters}
+        actions={<ListActions />}
+        exporter={defaultExporter}
+        perPage={25}
+        sort={{ field: "fecha_hora", order: "DESC" }}
+        sx={{
+          "& .RaFilterForm-root": {
+            backgroundColor: "#f5f5f5",
+            padding: "12px 16px",
+            borderRadius: "8px",
+            marginBottom: "12px",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "12px",
+          },
+          "& .RaList-main": {
+            width: "100%",
+          },
+        }}>
         {isSmall ? (
           <SimpleList
             primaryText={(record) => record.folio}
@@ -263,14 +363,47 @@ export const UrbanFormList = () => {
             tertiaryText={(record) => record.personal_a_cargo}
           />
         ) : (
-          <Datagrid>
-            <TextField source="folio" label="Folio" />
-            <DateField source="fecha_hora" label="Fecha y Hora" />
-            <TextField source="turno" label="Turno" />
-            <TextField source="personal_a_cargo" label="Personal a Cargo" />
-            <TextField source="tipo_servicio" label="Tipo de Servicio" />
-            <EditButton />
-          </Datagrid>
+          
+          <DataTable
+            sx={{
+              width: "100%",
+              "& .RaDataTable-table": {
+                tableLayout: "auto",
+                width: "100%",
+              },
+              "& th, & td": {
+                textAlign: "center",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                padding: "8px",
+              },
+              "& th": {
+                fontWeight: "bold",
+                backgroundColor: "#f5f5f5",
+              },
+            }}
+          >
+            <DataTable.Col source="folio" label="Folio" />
+            <DataTable.Col source="fecha_hora" label="Fecha y Hora" />
+            <DataTable.Col source="turno" label="Turno" />
+            <DataTable.Col source="personal_a_cargo" label="Personal a Cargo" />
+            <DataTable.Col source="tipo_servicio" label="Tipo de Servicio" />
+            <DataTable.Col label="Acciones">
+              <ShowButton
+                label="Ver"
+                sx={{
+                  backgroundColor: "#1976d2",
+                  color: "#fff",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  borderRadius: "6px",
+                  px: 2,
+                  "&:hover": { backgroundColor: "#1565c0" },
+                }}
+              />
+            </DataTable.Col>
+          </DataTable>
         )}
       </List>
     </>

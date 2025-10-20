@@ -5,7 +5,6 @@ import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput,
 import { Accordion, AccordionSummary, AccordionDetails, Grid, Button, Box, Typography, Paper, useMediaQuery , Dialog, DialogTitle, DialogContent } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import FilterListIcon from "@mui/icons-material/FilterList";
 
 const turnoChoices = [
     { id: 'L-V_8-3', name: 'Lunes a Viernes - 8am a 3pm' },
@@ -1552,7 +1551,7 @@ const MedicFormFilters = [
 ];
 
 
-// 🔹 Solo botón de exportar CSV
+
 const ListActions = () => (
     <TopToolbar sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
         <ExportButton
@@ -1570,7 +1569,7 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-// 🔹 Listado principal con filtros arriba
+
 export const MedicFormList = () => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
     const { permissions, isLoading } = usePermissions();
