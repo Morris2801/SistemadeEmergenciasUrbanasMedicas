@@ -9,6 +9,8 @@ import { Route } from 'react-router-dom';
 import customLayout from './Layout';
 
 import { dataProvider } from './dataProvider';
+import polyglotI18nProvider from 'ra-i18n-polyglot';
+import mensajesEspanol from './traduccion';
 
 import authProvider  from './authProvider';
 import { lightTheme, darkTheme} from './theme';
@@ -32,6 +34,8 @@ import PeopleIcon from '@mui/icons-material/People';
 
 import Registrarse from './registrarse';
 
+const proveedorIdioma = polyglotI18nProvider(() => mensajesEspanol, 'es');
+
 export const App = () => (
     <Admin
         layout={customLayout}
@@ -40,6 +44,7 @@ export const App = () => (
         loginPage={CustomLogin}
         theme={lightTheme }
         darkTheme={darkTheme}
+        i18nProvider={proveedorIdioma}
     >
         <CustomRoutes>
             <Route path="/selector" element={<Selector />} />

@@ -39,7 +39,7 @@ async function ToLog(sujeto, objeto, accion) {
 app.get("/medicForm", async (req, res) => {
     try {
         let token = req.get("Authentication");
-        let verifiedToken = await jwt.verify(token, "secretKey");
+        let verifiedToken = await jwt.verify(token, await process.env.JWTKEY);
         let user = verifiedToken.username;
         const { _start, _end, _sort, _order, q } = req.query;
         const collection = db.collection("medicForm");

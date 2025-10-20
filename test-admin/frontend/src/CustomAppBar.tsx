@@ -32,9 +32,9 @@ const CustomAppBar = (props) => {
                     ml: 2,
                     letterSpacing: isSmall ? '0.1em' : '0.2em', 
                     fontWeight: '700',
-                    fontSize: isSmall ? '1rem' : isMedium ? '1.2rem' : '1.5rem', 
+                    fontSize: isSmall ? '0.8rem' : isMedium ? '1.0rem' : '1.5rem', 
                     color: '#ffff',
-                    marginRight: '120px',
+                    marginRight: '10px',
                     fontFamily: 'Roboto, sans-serif'
                 }}
             >
@@ -46,7 +46,7 @@ const CustomAppBar = (props) => {
                     sx={{
                         fontSize: isSmall ? '1rem' : '1.2rem', 
                         color: '#ffff',
-                        marginRight: '240px'
+                        marginRight: '10px'
                     }}
                 >
                     {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}

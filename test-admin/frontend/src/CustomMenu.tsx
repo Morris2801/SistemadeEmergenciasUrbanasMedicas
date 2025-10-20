@@ -1,6 +1,7 @@
 import { Menu, MenuItemLink, usePermissions } from 'react-admin';
 import { Box } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import UserIcon from '@mui/icons-material/Group';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import EngineeringIcon from '@mui/icons-material/Engineering';
@@ -21,16 +22,17 @@ const CustomMenu = (props) => {
                 {permissions === 'admin' && (
                     <Box>
                         <MenuItemLink to="/dashboard" primaryText="Dashboard" leftIcon={<DashboardIcon />} />
-                        <MenuItemLink to="/users" primaryText="Users" leftIcon={<DashboardIcon />} />
-                        <MenuItemLink to="/medicForm" primaryText="MedicForms" leftIcon={<MedicalInformationIcon />} />
-                        <MenuItemLink to="/urbanForm" primaryText="UrbanForms" leftIcon={<EngineeringIcon />} />
+                        <MenuItemLink to="/users" primaryText="Usuarios" leftIcon={<UserIcon />} />
+                        <MenuItemLink to="/medicForm" primaryText="Em. Prehospitalarias" leftIcon={<MedicalInformationIcon />} />
+                        <MenuItemLink to="/urbanForm" primaryText="Em. Urbanas" leftIcon={<EngineeringIcon />} />
+                        <MenuItemLink to="/estadisticas" primaryText="Estadísticas" leftIcon={<BarChartIcon />} />
                     </Box>
                 )}
-                {(permissions === 'admin' || permissions === 'jefe') && (
+                {(permissions === 'jefe') && (
                     <Box>
                         <MenuItemLink to="/estadisticas" primaryText="Estadísticas" leftIcon={<BarChartIcon />} />
-                        <MenuItemLink to="/medicForm" primaryText="MedicForms" leftIcon={<MedicalInformationIcon />} />
-                        <MenuItemLink to="/urbanForm" primaryText="UrbanForms" leftIcon={<EngineeringIcon />} />
+                        <MenuItemLink to="/medicForm" primaryText="Em. Prehospitalarias" leftIcon={<MedicalInformationIcon />} />
+                        <MenuItemLink to="/urbanForm" primaryText="Em. Urbanas" leftIcon={<EngineeringIcon />} />
                     </Box>
                 )}
                 

@@ -1,5 +1,3 @@
-version 2
-
 db.medicForm.insertMany([
     // Entrada 1: Caso de Traumatismo (Accidente de Tránsito)
     {
@@ -811,7 +809,63 @@ db.users.insertMany([
     tipo: 'jefe',
     turno: 'Sábado, Domingo y festivos 8pm a 8am',
     phone: '2222222222222'
-  }
+  }, 
+  {
+  username: 'juanp',
+  password: '$argon2id$v=19$m=19456,t=2,p=1$dE2nS9+/GJj7tXxkNn4Z4g$+XzM2M7+5QypJ4xGuoPzW1r9l/9WZ+xwAos7OBglsmk',
+  name: 'Juan Pérez',
+  tipo: 'operador',
+  turno: 'Lunes a Viernes 8am - 3pm',
+  phone: '2212345678901'
+},
+{
+  username: 'anag',
+  password: '$argon2id$v=19$m=19456,t=2,p=1$sd9X2Yu6cST3OTLaDB2myg$NXcKhZ5zS1MWufnECv5wK7Jyf7VOMc6DEx+euwO98sU',
+  name: 'Ana Gómez',
+  tipo: 'paramédico',
+  turno: 'Lunes a Viernes 3pm - 9pm',
+  phone: '2233334444555'
+},
+{
+  username: 'carlosr',
+  password: '$argon2id$v=19$m=19456,t=2,p=1$3HfL5P+qQk+yVJCS8M29oQ$0Uq16h3pmG9Hj3SLckvK9TtCEo3EqbXrJxfF3OvWZ9s',
+  name: 'Carlos Ramírez',
+  tipo: 'operador',
+  turno: 'Lunes Miércoles y Viernes 9pm - 8am',
+  phone: '2299911122233'
+},
+{
+  username: 'sofiab',
+  password: '$argon2id$v=19$m=19456,t=2,p=1$Sk2Bf9QShyxUPduvXwKFlA$paEx0bEYN9vobqzHzXkZWqNRCKVAI8LBdR0mNNdkew4',
+  name: 'Sofía Blanco',
+  tipo: 'jefe',
+  turno: 'Martes Jueves y Domingo 9pm - 8am',
+  phone: '2277778888999'
+},
+{
+  username: 'diegoz',
+  password: '$argon2id$v=19$m=19456,t=2,p=1$a2yU81EToWAde60Unzq23A$eS8hkb3b0Z4Z5yqSmB14nWJYZCaxKkTQDoLt23rHndA',
+  name: 'Diego Zamora',
+  tipo: 'operador',
+  turno: 'Sábado Domingo y días festivos 8am - 8pm',
+  phone: '2266665555444'
+},
+{
+  username: 'marianam',
+  password: '$argon2id$v=19$m=19456,t=2,p=1$ZVWjUvK0pQYxnN80gR+aUQ$9f7/1b7dEWrQ7xrOp1G7prBz3EK3dcI0SS0MTVskMF4',
+  name: 'Mariana Méndez',
+  tipo: 'paramédico',
+  turno: 'Sábado Domingo y días festivos 8pm - 8am',
+  phone: '2244443333222'
+},
+{
+  username: 'pablot',
+  password: '$argon2id$v=19$m=19456,t=2,p=1$84vbKjv0bz4C19eJXWxMug$OYQRM2YXJtSLNRDwBYjZFS+eIvf8m9xq7h8XNqg7OeY',
+  name: 'Pablo Torres',
+  tipo: 'operador',
+  turno: 'Lunes a Viernes 8am - 3pm',
+  phone: '2288887777666'
+}
 ])
 
 db.urbanForm.insertMany([
