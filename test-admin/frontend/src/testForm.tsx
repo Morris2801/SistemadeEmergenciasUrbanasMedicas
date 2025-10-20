@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator, FileInput, ImageField, Edit, Show, TextField, DateField, Datagrid, List, DataTable, EditButton, SimpleList, EmailField }
+import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator, FileInput, ImageField, Edit, Show, TextField, DateField, Datagrid, List, DataTable, EditButton, SimpleList, EmailField , useNotify, useRedirect }
     from 'react-admin';
 import { Accordion, AccordionSummary, AccordionDetails, Grid, Button, Box, Typography, Paper, useMediaQuery } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-
+const turnoChoices = [
+    { id: 'Lunes a Viernes - 8am a 3pm', name: 'Lunes a Viernes - 8am a 3pm' },
+    { id: 'Lunes a Viernes - 3pm a 9pm', name: 'Lunes a Viernes - 3pm a 9pm' },
+    { id: 'Lunes, Miércoles y Viernes - 9pm a 8am', name: 'Lunes, Miércoles y Viernes - 9pm a 8am' },
+    { id: 'Martes, Jueves y Domingo - 9pm a 8am' , name: 'Martes, Jueves y Domingo - 9pm a 8am' },
+    { id: 'Sábado, Domingo y festivos - 8am a 8pm', name: 'Sábado, Domingo y festivos - 8am a 8pm' },
+    { id: 'Sábado, Domingo y festivos - 8pm a 8am', name: 'Sábado, Domingo y festivos - 8pm a 8am' },
+];
 
 export const MedicFormCreate = () => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
@@ -15,6 +22,8 @@ export const MedicFormCreate = () => {
     const [enfermedad, setEnfermedad] = useState(false);
     const [traumatismo, setTraumatismo] = useState(false);
     const [ginecobstetricia, setGinecobstetricia] = useState(false);
+    const notify = useNotify();
+    const redirect = useRedirect();
 
     if (permissions !== "paramedico" && permissions !== "admin" && permissions !== "jefe") {
         return <p>No tienes permiso para acceder a este formulario.</p>;
@@ -449,14 +458,43 @@ export const MedicFormCreate = () => {
         }
     };
     return (
-        <Create sx={{ width: "100%", maxWidth: "none" }} >
+        <Create sx={{ width: "100%", maxWidth: "none" }} 
+            mutationOptions={{
+                onSuccess: () => {
+                    notify('Reporte guardado correctamente', { type: 'success' });
+                    redirect('/selector'); 
+                },
+                onError: () => {
+                    notify('Error al guardar el reporte', { type: 'warning' });
+                },
+                }}
+    >
             <Box sx={{ mb: 2 }}>
                 <Button variant="outlined" color="secondary" onClick={() => navigate('../../selector')} sx={{ mb: 2 }}>
                     ← Volver
                 </Button>
             </Box>
-            <SimpleForm sx={{ width: "100%", maxWidth: "100%" }}>
-                <TextInput source="folio" validate={required()} />
+<SimpleForm sx={{ width: "100%", maxWidth: "100%" }}>
+                <Grid container spacing={2} sx={{ mb: 2 }}>
+                    <Grid item xs={12} md={6}>
+                        <TextInput
+                            source="folio"
+                            label="Folio"
+                            validate={required()}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <SelectInput
+                            source="turno"
+                            label="Turno"
+                            choices={turnoChoices}
+                            validate={required()}
+                            fullWidth
+                        />
+                    </Grid>
+                </Grid>
+
                 <Paper elevation={2} sx={{ p: 2, mb: 3, width: "100%", maxWidth: "100%" }}>
 
                     <Typography variant="h6" sx={{ mb: 2 }}>

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { usePermissions, useDataProvider } from "react-admin";
+import { Radar } from 'react-chartjs-2';
+import { RadarController, RadialLinearScale } from 'chart.js';
+
+ChartJS.register(RadarController, RadialLinearScale);
+
 import {
     Card,
     CardHeader,
@@ -48,7 +53,9 @@ ChartJS.register(
     ArcElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    RadarController,
+    RadialLinearScale
 );
 
 interface DashboardStats {
@@ -74,6 +81,15 @@ const formatDateTime = (date?: string | Date) => {
   const min = String(d.getMinutes()).padStart(2, '0');
 
   return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+};
+
+const countByTurno = (forms: any[]) => {
+  const counts: Record<string, number> = {};
+  forms.forEach((form) => {
+    const rawTurno = form.turno || "Desconocido";
+    counts[rawTurno] = (counts[rawTurno] || 0) + 1;
+  });
+  return counts;
 };
 
 
@@ -112,20 +128,34 @@ export const Dashboard: React.FC = () => {
                 const promises: Promise<any>[] = [];
                 
                 promises.push(
-                    dataProvider.getList('medicForm', { pagination: { page: 1, perPage: 5 }, sort: { field: 'fecha', order: 'DESC' }, filter: {} }),
-                    dataProvider.getList('urbanForm', { pagination: { page: 1, perPage: 5 }, sort: { field: 'fecha', order: 'DESC' }, filter: {} }),
+                    dataProvider.getList('medicForm', { pagination: { page: 1, perPage: 1000 }, sort: { field: 'fecha', order: 'DESC' }, filter: {} }),
+                    dataProvider.getList('urbanForm', { pagination: { page: 1, perPage: 1000 }, sort: { field: 'fecha', order: 'DESC' }, filter: {} }),
                     dataProvider.getList('users', { pagination: { page: 1, perPage: 10 }, sort: { field: 'username', order: 'ASC' }, filter: {} })
                 );
 
                 const [medicForms, urbanForms, users] = await Promise.all(promises);
 
-                const today = new Date().toISOString().split('T')[0];
-                const todayMedicForms = medicForms.data.filter((form: any) => 
-                    form.fechaCronometria?.startsWith(today) || form.fecha?.startsWith(today)
+                const isToday = (inputDate: any) => {
+                    if (!inputDate) return false;
+
+                    const date = new Date(inputDate); 
+                    if (isNaN(date.getTime())) return false;
+
+                    const now = new Date();
+
+                    return (
+                        date.getFullYear() === now.getFullYear() &&
+                        date.getMonth() === now.getMonth() &&
+                        date.getDate() === now.getDate()
+                    );
+                };
+
+                const todayMedicForms = medicForms.data.filter((form: any) =>
+                    isToday(form.fecha)
                 ).length;
-                
-                const todayUrbanForms = urbanForms.data.filter((form: any) => 
-                    form.fecha?.startsWith(today)
+
+                const todayUrbanForms = urbanForms.data.filter((form: any) =>
+                    isToday(form.fecha_hora) || isToday(form.fecha_atencion)
                 ).length;
 
                 const criticalCases = medicForms.data.filter((form: any) => 
@@ -475,7 +505,7 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
               <Box sx={{ width: 500, height: 500 }}>
                 <Pie
                     data={{
-                        labels: ["Rojo", "Amarillo", "Verde", "Negro", "Desconocido"],
+                        labels: ["Rojo", "Amarillo", "Verde", "Desconocido"],
                         datasets: [
                             {
                                 label: "Prioridad",
@@ -484,7 +514,6 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
                                     "rgba(255, 99, 132, 0.7)",
                                     "rgba(255, 206, 86, 0.7)",
                                     "rgba(75, 192, 192, 0.7)",
-                                    "rgba(54, 162, 235, 0.7)",
                                     "rgba(201, 203, 207, 0.7)",
                                 ],
                                 borderColor: "rgba(255,255,255,1)",
@@ -505,7 +534,7 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
         </Card>
     </Grid>
     
-    <Grid item xs={12} md={12}>
+    <Grid item xs={12} md={4}>
         <Card>
             <CardHeader title="Casos Críticos vs No Críticos en Reportes Médicos" />
             <CardContent>
@@ -543,6 +572,90 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
                 </CardContent>
         </Card>
     </Grid>
+
+<Grid item xs={12} md={6}>
+    <Card>
+        <CardHeader title="Distribución de Turnos en Emergencias Urbanas (Radar)" />
+        <CardContent>
+            <Box sx={{ width: '100%', height: 400 }}>
+                <Radar
+                    data={{
+                        labels: Object.keys(countByTurno(stats?.recentUrbanForms || [])),
+                        datasets: [
+                            {
+                                label: 'Ocurrencias',
+                                data: Object.values(countByTurno(stats?.recentUrbanForms || [])),
+                                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                borderColor: 'rgba(153, 102, 255, 1)',
+                                pointBackgroundColor: 'rgba(153, 102, 255, 1)',
+                            },
+                        ],
+                    }}
+                    options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1,
+                                },
+                            },
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Turnos con Más Ocurrencias (Radar)',
+                            },
+                        },
+                    }}
+                />
+            </Box>
+        </CardContent>
+    </Card>
+</Grid>
+
+<Grid item xs={12} md={6}>
+    <Card>
+        <CardHeader title="Distribución de Turnos en Reportes Médicos (Radar)" />
+        <CardContent>
+            <Box sx={{ width: '100%', height: 400 }}>
+                <Radar
+                    data={{
+                        labels: Object.keys(countByTurno(stats?.recentMedicForms || [])),
+                        datasets: [
+                            {
+                                label: 'Ocurrencias',
+                                data: Object.values(countByTurno(stats?.recentMedicForms || [])),
+                                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                                borderColor: 'rgba(255, 159, 64, 1)',
+                                pointBackgroundColor: 'rgba(255, 159, 64, 1)',
+                            },
+                        ],
+                    }}
+                    options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1,
+                                },
+                            },
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Turnos con Más Ocurrencias (Radar)',
+                            },
+                        },
+                    }}
+                />
+            </Box>
+        </CardContent>
+    </Card>
+</Grid>
 
 </Grid>
         </Box>

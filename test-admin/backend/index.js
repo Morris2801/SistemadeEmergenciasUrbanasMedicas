@@ -18,22 +18,33 @@ function mapMongoToReactAdmin(doc) {
     return { ...doc, id: doc._id.toString(), _id: undefined };
 }
 
-async function log(sujeto, objeto, accion) {
-    toLog = {};
-    toLog["timestamp"] = new Date();
-    toLog["sujeto"] = sujeto;
-    toLog["objeto"] = objeto;
-    toLog["accion"] = accion;
-    await db.collection("logMedic").insertOne(toLog);
+// ---------------------- FUNCION DE LOG ----------------------
+async function ToLog(sujeto, objeto, accion) {
+    try {
+        if (!sujeto) sujeto = "desconocido";
+        const registro = {
+            timestamp: new Date(),
+            sujeto,
+            objeto,
+            accion,
+        };
+        await db.collection("logMedic").insertOne(registro);
+    } catch (err) {
+        console.error("Error al registrar log:", err);
+    }
 }
-// ------------------------- 	medicForm
+// ------------------------------------------------------------
+
+// ------------------------- medicForm -------------------------
 app.get("/medicForm", async (req, res) => {
     try {
         let token = req.get("Authentication");
-        let verifiedToken = await jwt.verify(token, await process.env.JWTKEY);
+        let verifiedToken = await jwt.verify(token, "secretKey");
         let user = verifiedToken.username;
         const { _start, _end, _sort, _order, q } = req.query;
         const collection = db.collection("medicForm");
+
+        // CONSTRUIR FILTRO PARA FECHAS Y UBICACIONES
         const filter = q
             ? { $or: [{ paciente_nombre: { $regex: q, $options: "i" } }, { calle: { $regex: q, $options: "i" } }] }
             : {};
@@ -50,21 +61,19 @@ app.get("/medicForm", async (req, res) => {
             .limit(parseInt(_end) - parseInt(_start) || 10)
             .toArray();
         const formatted = reports.map(mapMongoToReactAdmin);
-
+        
         res.set("Access-Control-Expose-Headers", "X-Total-Count");
         res.set("X-Total-Count", total.toString());
 
-        log(user, "medicForm", "leer lista");
+        await ToLog(user, "medicForm", "leer lista");
         res.json(formatted);
-
     } catch (error) {
         console.error("Error fetching medicForm:", error);
         res.sendStatus(401);
     }
 });
 
-
-//getOne
+// getOne
 app.get("/medicForm/:id", async (req, res) => {
     try {
         let token = req.get("Authentication");
@@ -73,10 +82,10 @@ app.get("/medicForm/:id", async (req, res) => {
 
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid ID format" });
-
         const report = await db.collection("medicForm").findOne({ _id: new ObjectId(id) });
-
         if (!report) return res.status(404).json({ error: "Report not found" });
+
+        await ToLog(user, "medicForm", "leer uno");
         res.json(mapMongoToReactAdmin(report));
     } catch (error) {
         console.error("Error fetching medicForm report:", error);
@@ -84,7 +93,7 @@ app.get("/medicForm/:id", async (req, res) => {
     }
 });
 
-//createOne
+// createOne
 app.post("/medicForm", async (req, res) => {
     try {
         let token = req.get("Authentication");
@@ -96,9 +105,9 @@ app.post("/medicForm", async (req, res) => {
         delete newReport._id;
         const result = await db.collection("medicForm").insertOne(newReport);
         const createdReport = await db.collection("medicForm").findOne({ _id: result.insertedId });
-        if (!createdReport) {
-            return res.status(500).json({ error: "Failed to retrieve created report" });
-        }
+        if (!createdReport) return res.status(500).json({ error: "Failed to retrieve created report" });
+
+        await ToLog(user, "medicForm", "crear");
         res.status(201).json(mapMongoToReactAdmin(createdReport));
     } catch (error) {
         console.error("Error creating report:", error);
@@ -106,7 +115,7 @@ app.post("/medicForm", async (req, res) => {
     }
 });
 
-//deleteOne
+// deleteOne
 app.delete("/medicForm/:id", async (req, res) => {
     try {
         let token = req.get("Authentication");
@@ -117,6 +126,8 @@ app.delete("/medicForm/:id", async (req, res) => {
         if (!ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid ID" });
         const result = await db.collection("medicForm").deleteOne({ _id: new ObjectId(id) });
         if (result.deletedCount === 0) return res.status(404).json({ error: "Report not found" });
+
+        await ToLog(user, "medicForm", "eliminar");
         res.json({ id });
     } catch (error) {
         console.error("Error deleting report:", error);
@@ -124,7 +135,7 @@ app.delete("/medicForm/:id", async (req, res) => {
     }
 });
 
-//updateOne
+// updateOne
 app.put("/medicForm/:id", async (req, res) => {
     try {
         let token = req.get("Authentication");
@@ -133,19 +144,14 @@ app.put("/medicForm/:id", async (req, res) => {
 
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid ID" });
-
         const updatedData = { ...req.body };
         delete updatedData.id;
         delete updatedData._id;
-
-        const result = await db.collection("medicForm").updateOne(
-            { _id: new ObjectId(id) },
-            { $set: updatedData }
-        );
-
+        const result = await db.collection("medicForm").updateOne({ _id: new ObjectId(id) }, { $set: updatedData });
         if (result.matchedCount === 0) return res.status(404).json({ error: "Report not found" });
         const report = await db.collection("medicForm").findOne({ _id: new ObjectId(id) });
-        if (!report) return res.status(404).json({ error: "Report not found after update" });
+
+        await ToLog(user, "medicForm", "actualizar");
         res.json(mapMongoToReactAdmin(report));
     } catch (error) {
         console.error("Error updating report:", error);
@@ -180,22 +186,22 @@ app.post("/registrarse", async (req, res) => {
 })
 
 // --------------------- urbanForms|
+// --------------------- urbanForm ---------------------
 app.get("/urbanForm", async (req, res) => {
     try {
         let token = req.get("Authentication");
         let verifiedToken = await jwt.verify(token, await process.env.JWTKEY);
         let user = verifiedToken.username;
+
         const { _start, _end, _sort, _order, q } = req.query;
         const collection = db.collection("urbanForm");
         const filter = q
             ? { $or: [{ folio: { $regex: q, $options: "i" } }, { personal_a_cargo: { $regex: q, $options: "i" } }] }
             : {};
-
         const sort = {};
         if (_sort && _order) sort[_sort] = _order === "ASC" ? 1 : -1;
-
         const total = await collection.countDocuments(filter);
-
+        
         const reports = await collection
             .find(filter)
             .sort(sort)
@@ -206,9 +212,8 @@ app.get("/urbanForm", async (req, res) => {
         res.set("Access-Control-Expose-Headers", "X-Total-Count");
         res.set("X-Total-Count", total.toString());
 
-        log(user, "urbanForm", "leer lista");
+        await ToLog(user, "urbanForm", "leer lista");
         res.json(formatted);
-
     } catch (error) {
         console.error("Error fetching urbanForm list:", error);
         res.sendStatus(401);
@@ -220,12 +225,13 @@ app.get("/urbanForm/:id", async (req, res) => {
         let token = req.get("Authentication");
         let verifiedToken = await jwt.verify(token, await process.env.JWTKEY);
         let user = verifiedToken.username;
+
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid ID format" });
         const report = await db.collection("urbanForm").findOne({ _id: new ObjectId(id) });
-
         if (!report) return res.status(404).json({ error: "Report not found" });
 
+        await ToLog(user, "urbanForm", "leer uno");
         res.json(mapMongoToReactAdmin(report));
     } catch (error) {
         console.error("Error fetching urbanForm report:", error);
@@ -238,14 +244,15 @@ app.post("/urbanForm", async (req, res) => {
         let token = req.get("Authentication");
         let verifiedToken = await jwt.verify(token, await process.env.JWTKEY);
         let user = verifiedToken.username;
+
         const newReport = req.body;
         delete newReport.id;
         delete newReport._id;
         const result = await db.collection("urbanForm").insertOne(newReport);
         const createdReport = await db.collection("urbanForm").findOne({ _id: result.insertedId });
-        if (!createdReport) {
-            return res.status(500).json({ error: "Failed to retrieve created report" });
-        }
+        if (!createdReport) return res.status(500).json({ error: "Failed to retrieve created report" });
+
+        await ToLog(user, "urbanForm", "crear");
         res.status(201).json(mapMongoToReactAdmin(createdReport));
     } catch (error) {
         console.error("Error creating urbanForm report:", error);
@@ -264,15 +271,11 @@ app.put("/urbanForm/:id", async (req, res) => {
         const updatedData = { ...req.body };
         delete updatedData.id;
         delete updatedData._id;
-
-        const result = await db.collection("urbanForm").updateOne(
-            { _id: new ObjectId(id) },
-            { $set: updatedData }
-        );
+        const result = await db.collection("urbanForm").updateOne({ _id: new ObjectId(id) }, { $set: updatedData });
         if (result.matchedCount === 0) return res.status(404).json({ error: "Report not found" });
         const report = await db.collection("urbanForm").findOne({ _id: new ObjectId(id) });
 
-        if (!report) return res.status(404).json({ error: "Report not found after update" });
+        await ToLog(user, "urbanForm", "actualizar");
         res.json(mapMongoToReactAdmin(report));
     } catch (error) {
         console.error("Error updating urbanForm report:", error);
@@ -290,6 +293,8 @@ app.delete("/urbanForm/:id", async (req, res) => {
         if (!ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid ID" });
         const result = await db.collection("urbanForm").deleteOne({ _id: new ObjectId(id) });
         if (result.deletedCount === 0) return res.status(404).json({ error: "Report not found" });
+
+        await ToLog(user, "urbanForm", "eliminar");
         res.json({ id });
     } catch (error) {
         console.error("Error deleting urbanForm report:", error);
@@ -297,7 +302,7 @@ app.delete("/urbanForm/:id", async (req, res) => {
     }
 });
 
-// ----------------------------- USUARIOS
+// ----------------------------- USERS -----------------------------
 app.get("/users", async (req, res) => {
     try {
         let token = req.get("Authentication");
@@ -312,7 +317,12 @@ app.get("/users", async (req, res) => {
         const sort = {};
         if (_sort && _order) sort[_sort] = _order === "ASC" ? 1 : -1;
         const total = await collection.countDocuments(filter);
-        const users = await collection.find(filter).sort(sort).skip(parseInt(_start) || 0).limit(parseInt(_end) - parseInt(_start) || 10).toArray();
+        const users = await collection
+            .find(filter)
+            .sort(sort)
+            .skip(parseInt(_start) || 0)
+            .limit(parseInt(_end) - parseInt(_start) || 10)
+            .toArray();
         const formatted = users.map((u) => ({
             id: u._id.toString(),
             username: u.username,
@@ -323,6 +333,7 @@ app.get("/users", async (req, res) => {
         }));
         res.set("Access-Control-Expose-Headers", "X-Total-Count");
         res.set("X-Total-Count", total.toString());
+        await ToLog("sistema", "users", "leer lista");
         res.json(formatted);
     } catch (error) {
         console.error("Error fetching users:", error);
@@ -338,10 +349,10 @@ app.get("/users/:id", async (req, res) => {
 
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid ID format" });
-        const user = await db.collection("users").findOne({ _id: new ObjectId(id) });
-
+                const user = await db.collection("users").findOne({ _id: new ObjectId(id) });
+        
         if (!user) return res.status(404).json({ error: "User not found" });
-
+        await ToLog("sistema", "users", "leer uno");
         res.json({
             id: user._id.toString(),
             username: user.username,
@@ -364,9 +375,7 @@ app.post("/users", async (req, res) => {
 
         const { username, password, name, tipo, turno, phone } = req.body;
         const existingUser = await db.collection("users").findOne({ username });
-        if (existingUser) {
-            return res.status(400).json({ error: "Username already exists" });
-        }
+        if (existingUser) return res.status(400).json({ error: "Username already exists" });
         const hashedPassword = await argon2.hash(password, {
             type: argon2.argon2id,
             memoryCost: 19 * 1024,
@@ -376,6 +385,7 @@ app.post("/users", async (req, res) => {
         });
         const newUser = { username, password: hashedPassword, name, tipo, turno, phone };
         const result = await db.collection("users").insertOne(newUser);
+        await ToLog(username, "users", "crear");
         res.status(201).json({ id: result.insertedId.toString(), ...newUser, password: undefined });
     } catch (error) {
         console.error("Error creating user:", error);
@@ -391,7 +401,6 @@ app.put("/users/:id", async (req, res) => {
 
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid ID" });
-
         const updated = { ...req.body };
         delete updated.id;
         delete updated._id;
@@ -406,16 +415,11 @@ app.put("/users/:id", async (req, res) => {
         } else {
             delete updated.password;
         }
-
-        const result = await db.collection("users").updateOne(
-            { _id: new ObjectId(id) },
-            { $set: updated }
-        );
-
+        const result = await db.collection("users").updateOne({ _id: new ObjectId(id) }, { $set: updated });
         if (result.matchedCount === 0) return res.status(404).json({ error: "User not found" });
 
         const user = await db.collection("users").findOne({ _id: new ObjectId(id) });
-
+        await ToLog(user.username, "users", "actualizar");
         res.json({
             id: user._id.toString(),
             username: user.username,
@@ -438,10 +442,9 @@ app.delete("/users/:id", async (req, res) => {
 
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ error: "Invalid ID" });
-
         const result = await db.collection("users").deleteOne({ _id: new ObjectId(id) });
         if (result.deletedCount === 0) return res.status(404).json({ error: "User not found" });
-
+        await ToLog("sistema", "users", "eliminar");
         res.json({ id });
     } catch (error) {
         console.error("Error deleting user:", error);
