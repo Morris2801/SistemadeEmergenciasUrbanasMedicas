@@ -216,24 +216,53 @@ export const Dashboard: React.FC = () => {
         return <Alert severity="error">{error}</Alert>;
     }
 
+// const StatCard = ({ title, value, icon, color = "primary" }: any) => (
+//     <Card>
+//         <CardContent>
+//             <Box display="flex" alignItems="center" justifyContent="space-between">
+//                 <Box>
+//                     <Typography color="textSecondary" gutterBottom variant="body2">
+//                         {title}
+//                     </Typography>
+//                     <Typography variant="h4" component="div">
+//                         {value}
+//                     </Typography>
+//                 </Box>
+//                 <Box sx={{ color: `${color}.main` }}>
+//                     {icon}
+//                 </Box>
+//             </Box>
+//         </CardContent>
+//     </Card>
+// );
+
 const StatCard = ({ title, value, icon, color = "primary" }: any) => (
-    <Card>
-        <CardContent>
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-                <Box>
-                    <Typography color="textSecondary" gutterBottom variant="body2">
-                        {title}
-                    </Typography>
-                    <Typography variant="h4" component="div">
-                        {value}
-                    </Typography>
-                </Box>
-                <Box sx={{ color: `${color}.main` }}>
-                    {icon}
-                </Box>
-            </Box>
-        </CardContent>
-    </Card>
+  <Card
+    role="region"
+    aria-label={`Tarjeta ${title}`}
+    elevation={3}
+    sx={{
+      borderRadius: 3,
+      transition: "0.2s ease-in-out",
+      "&:hover": { boxShadow: 6 },
+    }}
+  >
+    <CardContent>
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box>
+          <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
+            {title}
+          </Typography>
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>
+            {value}
+          </Typography>
+        </Box>
+        <Box sx={{ color: `${color}.main` }} aria-hidden="true">
+          {icon}
+        </Box>
+      </Box>
+    </CardContent>
+  </Card>
 );
 
     const getPriorityColor = (priority: string) => {
@@ -248,8 +277,11 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
 
     return (
         <Box sx={{ flexGrow: 1, p: 3 }}>
-            <Typography variant="h4" gutterBottom>
-                Panel de Control - Administrador
+            <Typography variant="h4" gutterBottom aria-label="Panel principal de emergencias">
+                Panel de Control del Sistema
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            Visualiza la actividad reciente y los reportes registrados por el personal médico y urbano.
             </Typography>
 
             {/* Statistics Cards */}

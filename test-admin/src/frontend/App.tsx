@@ -46,13 +46,49 @@ export const App = () => (
             <Route path="/registrarse" element={<Registrarse />} />
         </CustomRoutes>
         
-        <Resource name="dashboard" list={Dashboard} icon={DashboardIcon} />
-        <Resource name="users" list={UserList} show={UserShow} edit={UserEdit} create={UserCreate} icon={PeopleIcon}/>
-        <Resource name="estadisticas" list={Estadisticas} icon={BarChartIcon} />
-        
-        {/* <Resource name="listado" list={Listado} icon={ListAltIcon} /> */}
-        <Resource name="selector" list={Selector} icon={MedicalInformationIcon} />
-        <Resource name="medicForm" list={MedicFormList} create={MedicFormCreate} edit={MedicFormEdit} show={MedicFormShow} icon={MedicalInformationIcon} />
-        <Resource name="urbanForm" list={UrbanFormList} create={UrbanFormCreate} edit={UrbanFormEdit} show={UrbanFormShow} icon={EngineeringIcon} />
+        <Resource
+        name="dashboard"
+        list={Dashboard}
+        options={{ label: "Panel de Control" }}
+        icon={DashboardIcon}
+        />
+
+        <Resource
+        name="users"
+        list={UserList}
+        show={UserShow}
+        edit={UserEdit}
+        create={UserCreate}
+        options={{ label: "Usuarios" }}
+        icon={PeopleIcon}
+        />
+
+        <Resource
+        name="estadisticas"
+        list={Estadisticas}
+        options={{ label: "Estadísticas" }}
+        icon={BarChartIcon}
+        />
+
+        <Resource
+        name="medicForm"
+        list={MedicFormList}
+        create={MedicFormCreate}
+        edit={MedicFormEdit}
+        show={MedicFormShow}
+        options={{ label: "Reportes Médicos" }}
+        icon={MedicalInformationIcon}
+        />
+
+        <Resource
+        name="urbanForm"
+        list={UrbanFormList}
+        create={UrbanFormCreate}
+        edit={UrbanFormEdit}
+        show={UrbanFormShow}
+        options={{ label: "Emergencias Urbanas" }}
+        icon={EngineeringIcon}
+        />
+
     </Admin>
 );

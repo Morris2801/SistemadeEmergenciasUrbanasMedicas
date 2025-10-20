@@ -8,19 +8,30 @@ const customLayout = (props) => (
     menu={CustomMenu}
     appBar={CustomAppBar}
     sx={{
+      // "& .RaLayout-content": {
+      //   marginTop: "64px",
+      //  borderRadius: "50px",
+
+      //      marginLeft: "30px",
+      //   marginRight: "30px",
+      // // Responsive styles for small screens
+      //   "@media (max-width:600px)": {
+      //     marginLeft: "10px",
+      //     marginRight: "10px",
+      //     borderRadius: "10px",
+      //   },
+      // },
+
       "& .RaLayout-content": {
         marginTop: "64px",
-        marginLeft: "30px",
-        marginRight: "30px",
-        borderRadius: "50px",
-
-        // Responsive styles for small screens
-        "@media (max-width:600px)": {
-          marginLeft: "10px",
-          marginRight: "10px",
-          borderRadius: "10px",
-        },
+        marginLeft: { xs: "8px", sm: "16px", md: "24px" },
+        marginRight: { xs: "8px", sm: "16px", md: "24px" },
+        borderRadius: "20px",
+        padding: "16px",
+        backgroundColor: "background.paper",
+        boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
       },
+
       "& .RaLayout-sidebar": {
         width: "240px",
         top: "64px",

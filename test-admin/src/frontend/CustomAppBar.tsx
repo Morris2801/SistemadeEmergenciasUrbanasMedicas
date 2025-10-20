@@ -23,10 +23,14 @@ const CustomAppBar = (props) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 padding: isSmall ? '8px' : '16px', 
+                background: 'linear-gradient(90deg, #0d47a1 0%, #1565c0 100%)',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
             }}
             {...props}
         >
             <Typography
+                component="h1"
+                aria-label="Barra superior de Protección Civil Cuajimalpa"
                 sx={{
                     flexGrow: 1,
                     ml: 2,

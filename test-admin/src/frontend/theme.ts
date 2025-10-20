@@ -6,77 +6,44 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#0d47a1', 
+      main: '#0d47a1',
+      dark: '#0b3c8c',
+      light: '#1565c0',
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#1565c0', 
+      main: '#1976d2',
       contrastText: '#ffffff',
     },
     background: {
-      default: '#f9f9f9', 
+      default: '#f5f7fa',
       paper: '#ffffff',
     },
-    error: {
-      main: '#d32f2f',
-    },
     text: {
-      primary: '#000000',
-      secondary: '#333333',
+      primary: '#111111',
+      secondary: '#424242',
     },
   },
   typography: {
     fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
-    body1: {
-      fontSize: '1rem',
-      lineHeight: 1.5,
-      color: '#212121',
-    },
-    button: {
-      textTransform: 'none',
-      fontWeight: 600,
-      fontSize: '1rem',
-    },
+    h4: { fontWeight: 700 },
+    h5: { fontWeight: 600 },
+    button: { textTransform: 'none', fontWeight: 600 },
   },
   components: {
-    MuiButtonBase: {
+    MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: '8px',
-          margin: '4px 0',
+          borderRadius: 16,
+          boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
         },
       },
     },
-    MuiButton: {
+    MuiChip: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          fontSize: '1.1rem',
-          justifyContent: 'flex-start',
-          padding: '8px 16px',
-          border: '1px solid #1976d2',
-          borderRadius: '8px',
-          color: '#ffffff',
-          backgroundColor: '#1976d2',
-          '&:hover': {
-            backgroundColor: '#115293',
-            borderColor: '#0d47a1',
-          },
-        },
-      },
-    },
-    MuiMenuItem: {
-      styleOverrides: {
-        root: {
-          color: '#000000',
-          fontSize: '1.1rem',
           fontWeight: 500,
-          borderRadius: '6px',
-          margin: '4px 0',
-          padding: '8px 16px',
-          '&:hover': {
-            backgroundColor: '#e3f2fd',
-          },
+          fontSize: '0.9rem',
         },
       },
     },
@@ -129,24 +96,44 @@ export const darkTheme = createTheme({
         },
       },
     },
-    MuiButton: {
+    MuiCard: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          fontSize: '1.1rem',
-          justifyContent: 'flex-start',
-          padding: '8px 16px',
-          border: '1px solid #90caf9',
-          borderRadius: '8px',
-          color: '#000000',
-          backgroundColor: '#90caf9',
-          '&:hover': {
-            backgroundColor: '#64b5f6',
-            borderColor: '#42a5f5',
-          },
+          borderRadius: 16,
+          backgroundColor: '#1f1f1f',
+          boxShadow: '0 2px 6px rgba(255,255,255,0.05)',
         },
       },
     },
+    MuiChip: {
+    styleOverrides: {
+      root: {
+        fontWeight: 500,
+        fontSize: '0.9rem',
+        color: '#e0e0e0',
+        backgroundColor: '#2c2c2c',
+        '&:hover': {
+          backgroundColor: '#424242',
+        },
+      },
+    },
+  },
+  MuiButton: {
+    styleOverrides: {
+      root: {
+        borderRadius: '8px',
+        fontSize: '1.1rem',
+        padding: '8px 16px',
+        textTransform: 'none',
+        border: '1px solid #90caf9',
+        backgroundColor: '#1565c0',
+        color: '#ffffff',
+        '&:hover': {
+          backgroundColor: '#0d47a1',
+        },
+      },
+    },
+  },
     MuiMenuItem: {
       styleOverrides: {
         root: {
