@@ -22,7 +22,7 @@ const CustomLogin = () => {
             if (permissions === "admin") {
                 redirect("/dashboard");
             } 
-            else if (permissions === "paramedico" || permissions === "urbano") {
+            else if (permissions === "paramedico" || permissions === "operador") {
                 redirect("/selector");
             } 
             else if (permissions === "jefe") {
