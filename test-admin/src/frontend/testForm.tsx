@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator, FileInput, ImageField, Edit, Show, TextField, DateField, Datagrid, List, DataTable, EditButton, SimpleList, EmailField , useNotify, useRedirect }
+import { usePermissions, TextInput, DateInput, TimeInput, required, SelectInput, BooleanInput, SimpleForm, NumberInput, Create, ArrayInput, SimpleFormIterator, FileInput, ImageField, Edit, Show, TextField, DateField, Datagrid, List, DataTable, EditButton, SimpleList, EmailField , useNotify, useRedirect , Theme,  TopToolbar, ExportButton, FilterButton , CreateButton, ShowButton, SimpleShowLayout , useListContext, defaultExporter}
     from 'react-admin';
-import { Accordion, AccordionSummary, AccordionDetails, Grid, Button, Box, Typography, Paper, useMediaQuery } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Grid, Button, Box, Typography, Paper, useMediaQuery , Dialog, DialogTitle, DialogContent } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 const turnoChoices = [
     { id: 'L-V_8-3', name: 'Lunes a Viernes - 8am a 3pm' },
@@ -1479,29 +1480,170 @@ export const MedicFormShow = () => {
     );
 };
 
+const MedicFormFilters = [
+    <TextInput
+        key="q"
+        label="Buscar por folio o paciente"
+        source="q"
+        alwaysOn
+        sx={{ minWidth: 220 }}
+    />,
+    <SelectInput
+        key="operador"
+        label="Operador"
+        source="operador"
+        alwaysOn
+        choices={[
+            { id: "Juan Pérez", name: "Juan Pérez" },
+            { id: "Sofía Hernández", name: "Sofía Hernández" },
+            { id: "Roberto García", name: "Roberto García" },
+            { id: "Pedro Chávez", name: "Pedro Chávez" },
+            { id: "Jesús Ochoa", name: "Jesús Ochoa" },
+        ]}
+        sx={{ minWidth: 180 }}
+    />,
+    <SelectInput
+        key="socorrista"
+        label="Paramédico"
+        source="socorrista"
+        alwaysOn
+        choices={[
+            { id: "María López", name: "María López" },
+            { id: "Carlos Ruiz", name: "Carlos Ruiz" },
+            { id: "Laura Montes", name: "Laura Montes" },
+            { id: "Ana Torres", name: "Ana Torres" },
+            { id: "Mónica Gil", name: "Mónica Gil" },
+        ]}
+        sx={{ minWidth: 180 }}
+    />,
+    <SelectInput
+        key="condicion"
+        label="Condición"
+        source="condicion"
+        alwaysOn
+        choices={[
+            { id: "critico", name: "Crítico" },
+            { id: "no_critico", name: "No Crítico" },
+            { id: "estable", name: "Estable" },
+            { id: "inestable", name: "Inestable" },
+        ]}
+        sx={{ minWidth: 160 }}
+    />,
+    <SelectInput
+        key="prioridad"
+        label="Prioridad"
+        source="prioridad"
+        alwaysOn
+        choices={[
+            { id: "rojo", name: "Rojo" },
+            { id: "amarillo", name: "Amarillo" },
+            { id: "verde", name: "Verde" },
+            { id: "negro", name: "Negro" },
+        ]}
+        sx={{ minWidth: 160 }}
+    />,
+    <DateInput
+        key="fecha"
+        label="Fecha del servicio"
+        source="fecha"
+        alwaysOn
+        sx={{ minWidth: 180 }}
+    />,
+];
 
+
+// 🔹 Solo botón de exportar CSV
+const ListActions = () => (
+    <TopToolbar sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
+        <ExportButton
+            label="Exportar CSV"
+            sx={{
+                backgroundColor: "#1976d2",
+                color: "#fff",
+                textTransform: "none",
+                fontWeight: 600,
+                borderRadius: "6px",
+                px: 2,
+                "&:hover": { backgroundColor: "#1565c0" },
+            }}
+        />
+    </TopToolbar>
+);
+
+// 🔹 Listado principal con filtros arriba
 export const MedicFormList = () => {
-    const isSmall = useMediaQuery<Theme>((theme) =>
-        theme.breakpoints.down("sm")
-    );
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
+    const { permissions, isLoading } = usePermissions();
+
+    if (isLoading) return <p>Cargando permisos...</p>;
+
     return (
-        <List>
+        <List
+            title="Reportes de Emergencia Médica - Atención Prehospitalaria"
+            filters={MedicFormFilters}
+            actions={<ListActions />}
+            exporter={defaultExporter}
+            perPage={25}
+            sort={{ field: "fecha", order: "DESC" }}
+            sx={{
+                "& .RaList-main": {
+                    width: "100%",
+                },
+            }}
+        >
             {isSmall ? (
                 <SimpleList
                     primaryText={(record) => record.folio}
                     secondaryText={(record) => record.fecha}
-                    tertiaryText={(record) => record.nombre}
+                    tertiaryText={(record) => record.paciente_nombre}
                 />
             ) : (
-                <DataTable>
+                <DataTable
+                    sx={{
+                        width: "100%",
+                        "& .RaDataTable-table": {
+                            tableLayout: "fixed",
+                            width: "100%",
+                        },
+                        "& th, & td": {
+                            textAlign: "center",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            padding: "8px",
+                        },
+                        "& th": {
+                            fontWeight: "bold",
+                            backgroundColor: "#f5f5f5",
+                        },
+                    }}
+                >
                     <DataTable.Col source="folio" label="Folio" />
                     <DataTable.Col source="fecha" label="Fecha" />
                     <DataTable.Col source="turno" label="Turno" />
                     <DataTable.Col source="operador" label="Operador" />
-                    <DataTable.Col source="paciente_nombre" label="Nombre del Paciente" />
-                    <DataTable.Col source="telefono" label="Teléfono" />
+                    <DataTable.Col source="socorrista" label="Paramédico" />
+                    <DataTable.Col source="paciente_nombre" label="Paciente" />
+                    <DataTable.Col source="sexo_paciente" label="Sexo" />
+                    <DataTable.Col source="años" label="Edad (años)" />
+                    <DataTable.Col source="colonia_servicio" label="Colonia (Servicio)" />
+                    <DataTable.Col source="hospital" label="Hospital" />
+                    <DataTable.Col source="condicion" label="Condición" />
+                    <DataTable.Col source="prioridad" label="Prioridad" />
                     <DataTable.Col label="Acciones">
-                        <EditButton label="Editar" />
+                        <ShowButton
+                            label="Ver"
+                            icon={<VisibilityIcon sx={{ mr: 0.5 }} />}
+                            sx={{
+                                backgroundColor: "#1976d2",
+                                color: "#fff",
+                                textTransform: "none",
+                                fontWeight: 600,
+                                borderRadius: "6px",
+                                px: 2,
+                                "&:hover": { backgroundColor: "#1565c0" },
+                            }}
+                        />
                     </DataTable.Col>
                 </DataTable>
             )}
