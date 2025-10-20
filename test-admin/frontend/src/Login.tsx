@@ -96,7 +96,7 @@ const CustomLogin = () => {
                     <Typography
                         variant="h4"
                         sx={{
-                            color: "text.primary",
+                            color: "common.white",
                             fontWeight: 700,
                             fontSize: { xs: "1.8rem", md: "2.4rem" },
                         }}
