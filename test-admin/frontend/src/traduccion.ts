@@ -50,6 +50,9 @@ const mensajesEspanol = {
             skip_nav: 'Ir al contenido',
             no_results: 'No se encontraron resultados',
             no_more_results: 'La página número %{page} está fuera de rango. Intenta la anterior.',
+            'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
+            'Clear filters': 'Limpiar filtros',
+        
         },
         message: {
             yes: 'Sí',
@@ -63,6 +66,9 @@ const mensajesEspanol = {
             delete_content: '¿Está seguro que desea eliminar este elemento?',
             bulk_delete_title: 'Eliminar %{name} |||| Eliminar %{smart_count} %{name}',
             bulk_delete_content: '¿Está seguro que desea eliminar este %{name}? |||| ¿Está seguro que desea eliminar estos %{smart_count} elementos?',
+            'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
+            'Clear filters': 'Limpiar filtros',
+        
         },
         input: {
             file: {
@@ -106,6 +112,12 @@ const mensajesEspanol = {
             email: 'Debe ser un email válido',
             oneOf: 'Debe ser uno de: %{options}',
             regex: 'Debe coincidir con un formato específico (regexp): %{pattern}',
+        },
+        filter: {
+            clear: 'Limpiar filtros',
+            no_results: 'No se encontraron resultados con los filtros actuales.',
+            'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
+            'Clear filters': 'Limpiar filtros',
         },
     },
 };

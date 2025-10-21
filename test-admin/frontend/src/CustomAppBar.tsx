@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { AppBar, CustomRoutes, Admin, DataProvider } from 'react-admin';
-import { Box, Typography, useMediaQuery, IconButton, Tooltip } from '@mui/material';
+import { Box, useMediaQuery, IconButton, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useNavigate } from 'react-router-dom';
 import ManualUsuario from './ManualUsuario';
+import logoHorizontal from "./assets/logo-horizontal-blanco.png";
 
 const CustomAppBar = (props) => {
     const [currentTime, setCurrentTime] = React.useState(new Date());
@@ -20,60 +21,68 @@ const CustomAppBar = (props) => {
     }, []);
 
     return (
-        
         <AppBar
             sx={{
-                height: isSmall ? '12%' : isMedium ? '10%' : '8%', 
-                justifyContent: 'space-between', 
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: isSmall ? '8px' : '16px', 
-            }}
+            height: isSmall ? '12%' : isMedium ? '10%' : '8%',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            alignItems: 'center',
+            display: 'flex',
+            padding: isSmall ? '8px' : '16px',
+            width: '100%',
+            '& .RaAppBar-toolbar': {
+                width: '85%',
+                minHeight: 'inherit',
+                padding: 1, 
+                justifyContent: 'space-between',
+            }
+        }}
             {...props}
         >
-            <Typography
-                sx={{
-                    flexGrow: 1,
-                    ml: 2,
-                    letterSpacing: isSmall ? '0.1em' : '0.2em', 
-                    fontWeight: '700',
-                    fontSize: isSmall ? '0.8rem' : isMedium ? '1.0rem' : '1.5rem', 
-                    color: '#ffff',
-                    marginRight: '10px',
-                    fontFamily: 'Roboto, sans-serif'
-                }}
-            >
-                Protección Civil - Cuajimalpa de Morelos
-            </Typography>
-
-            <Box sx={{ mr: 2 }}>
-                <Typography
+            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', minWidth: '100%' }}>
+                {/* Logo horizontal */}
+                <Box
+                    component="img"
+                    src={logoHorizontal}
+                    alt="Logo Cuajimalpa"
                     sx={{
-                        fontSize: isSmall ? '1rem' : '1.2rem', 
-                        color: '#ffff',
-                        marginRight: '10px'
+                        height: isSmall ? 30 : isMedium ? 40 : 50,
+                        width: 'auto',
+                        ml: 2,
+                        flexShrink: 0,
                     }}
-                >
-                    {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}
-                </Typography>
+                />
+                {/* Reloj */}
+                <Box sx={{ mr: 2 }}>
+                    <Box
+                        sx={{
+                            fontSize: isSmall ? '1rem' : '1.2rem',
+                            color: '#ffffff',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
+                        {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}
+                    </Box>
+                </Box>
+                <Box sx={{ mr: 1 }}>
+                    <Tooltip title="Manual de Usuario">
+                        <IconButton
+                            color="inherit"
+                            onClick={() => navigate('/manual')}
+                            sx={{
+                                backgroundColor: '#1976d2',
+                                color: '#fff',
+                                '&:hover': { backgroundColor: '#1565c0' },
+                                borderRadius: '10px',
+                                p: '6px',
+                            }}
+                        >
+                            <HelpOutlineIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
             </Box>
-
-            <Tooltip title="Manual de Usuario">
-          <IconButton
-            color="inherit"
-            onClick={() => navigate('/manual')}
-            sx={{
-              backgroundColor: '#1976d2',
-              color: '#fff',
-              '&:hover': { backgroundColor: '#1565c0' },
-              borderRadius: '10px',
-              p: '6px',
-            }}
-          >
-            <HelpOutlineIcon />
-          </IconButton>
-        </Tooltip>
-        </AppBar>
+        </AppBar >
     );
 };
 
