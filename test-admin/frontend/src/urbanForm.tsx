@@ -64,14 +64,13 @@ const formatDateYMD = (date?: string | Date) => {
 
   return `${yyyy}-${month}-${dd}`;
 };
-
 const turnoChoices = [
-    { id: 'Lunes a Viernes - 8am a 3pm', name: 'Lunes a Viernes - 8am a 3pm' },
-    { id: 'Lunes a Viernes - 3pm a 9pm', name: 'Lunes a Viernes - 3pm a 9pm' },
-    { id: 'Lunes, Miércoles y Viernes - 9pm a 8am', name: 'Lunes, Miércoles y Viernes - 9pm a 8am' },
-    { id: 'Martes, Jueves y Domingo - 9pm a 8am' , name: 'Martes, Jueves y Domingo - 9pm a 8am' },
-    { id: 'Sábado, Domingo y festivos - 8am a 8pm', name: 'Sábado, Domingo y festivos - 8am a 8pm' },
-    { id: 'Sábado, Domingo y festivos - 8pm a 8am', name: 'Sábado, Domingo y festivos - 8pm a 8am' },
+    { id: 'Lunes a Viernes 8am - 3pm', name: 'Lunes a Viernes 8am - 3pm' },
+    { id: 'Lunes a Viernes 3pm - 9pm', name: 'Lunes a Viernes 3pm - 9pm' },
+    { id: 'Lunes, Miércoles y Viernes 9pm - 8 am', name: 'Lunes, Miércoles y Viernes 9pm - 8 am' },
+    { id: 'Martes, Jueves y Domingo 9pm - 8am', name: 'Martes, Jueves y Domingo 9pm - 8am' },
+    { id: 'Sábado, Domingo y festivos 8am a 8pm', name: 'Sábado, Domingo y festivos 8am - 8pm' },
+    { id: 'Sábado, Domingo y días festivos 8pm - 8am', name: 'Sábado, Domingo y días festivos 8pm - 8am' },
 ];
 
 const UrbanFormImproved = () => {
@@ -292,14 +291,14 @@ const UrbanFormFilters = [
     alwaysOn
     sx={{ minWidth: 220 }}
   />,
-  <SelectInput
-    key="turno"
-    label="Turno"
-    source="turno"
-    alwaysOn
-    choices={turnoChoices}
-    sx={{ minWidth: 180 }}
-  />,
+ <SelectInput
+        key="turno"
+        label="Turno"
+        source="turno"
+        alwaysOn
+        choices={turnoChoices}
+        sx={{ minWidth: 200 }}
+    />,
   <SelectInput
     key="gravedad"
     label="Gravedad"
@@ -321,13 +320,6 @@ const UrbanFormFilters = [
       { id: "llamada", name: "Llamada de emergencia" },
       { id: "oficio", name: "Seguimiento de oficio" },
     ]}
-    sx={{ minWidth: 180 }}
-  />,
-  <DateInput
-    key="fecha_hora"
-    label="Fecha del servicio"
-    source="fecha_hora"
-    alwaysOn
     sx={{ minWidth: 180 }}
   />,
 ];

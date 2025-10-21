@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { usePermissions, useDataProvider } from "react-admin";
+import {useMediaQuery, Theme} from '@mui/material'
 import {
   Card,
   CardHeader,
@@ -28,6 +29,7 @@ interface Stats {
 }
 
 export const Estadisticas: React.FC = () => {
+  const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
   const { permissions } = usePermissions();
   const dataProvider = useDataProvider();
 

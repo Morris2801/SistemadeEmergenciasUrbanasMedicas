@@ -532,7 +532,6 @@ app.post("/login", async (req, res) => {
         res.sendStatus(401);
     }
 })
-
 /*
 app.listen(PORT, () => {
     connectToDB();

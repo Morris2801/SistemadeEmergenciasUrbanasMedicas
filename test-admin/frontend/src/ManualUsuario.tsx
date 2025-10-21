@@ -14,8 +14,10 @@ import {
   Alert, useTheme
 } from "@mui/material";
 import { usePermissions } from "react-admin";
+import {useMediaQuery, Theme} from '@mui/material'
 
 const ManualUsuario: React.FC = () => {
+  const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
   const { permissions, isLoading } = usePermissions();
   const theme = useTheme();
 

@@ -17,6 +17,9 @@ const mensajesEspanol = {
             add_filter: 'Agregar filtro',
             remove_filter: 'Quitar filtro',
             clear_input_value: 'Limpiar valor',
+            toggle_theme: 'Cambiar tema',
+            remove_all_filters: 'Quitar filtros',
+            save_query: 'Guardar consulta actual como...'
         },
         boolean: {
             true: 'Sí',
@@ -114,11 +117,16 @@ const mensajesEspanol = {
             regex: 'Debe coincidir con un formato específico (regexp): %{pattern}',
         },
         filter: {
-            clear: 'Limpiar filtros',
-            no_results: 'No se encontraron resultados con los filtros actuales.',
-            'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
-            'Clear filters': 'Limpiar filtros',
+      no_results: 'No se encontraron resultados con los filtros actuales.',
+      clear: 'Limpiar filtros',
+      'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
+      'Clear filters': 'Limpiar filtros',
+
         },
+
+        auth: {
+            user_menu: 'Perfil',
+        }
     },
 };
 
