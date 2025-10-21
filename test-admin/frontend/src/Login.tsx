@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useLogin, useNotify, useRedirect, useTheme } from "react-admin";
-import { Box, Paper, Typography, Divider, Avatar, Button, TextField } from "@mui/material";
+import { useLogin, useNotify, useRedirect } from "react-admin";
+import { Box, Paper, Typography, Button, TextField } from "@mui/material";
+import logoHorizontal from "./assets/logo-horizontal-blanco.png";
 
 const CustomLogin = () => {
     const login = useLogin();
@@ -19,208 +20,177 @@ const CustomLogin = () => {
             const identity = JSON.parse(sessionStorage.getItem("identity") || "{}");
             const permissions = identity.tipo;
 
-            if (permissions === "admin") {
-                redirect("/dashboard");
-            } 
-            else if (permissions === "paramedico" || permissions === "operador") {
-                redirect("/selector");
-            } 
-            else if (permissions === "jefe") {
-                redirect("/medicForm"); 
-            } 
-            else {
-                notify("No tienes permisos");
-            }
-        } 
-        catch (error) {
+            if (permissions === "admin") redirect("/dashboard");
+            else if (permissions === "paramedico" || permissions === "operador") redirect("/selector");
+            else if (permissions === "jefe") redirect("/medicForm");
+            else notify("No tienes permisos");
+        } catch (error) {
             setLoading(false);
-            notify("Invalid username or password");
+            notify("Usuario o contraseña inválidos");
         }
     };
 
-     return (
+    return (
         <Box
             sx={{
                 minHeight: "100vh",
                 width: "100vw",
                 display: "flex",
                 flexDirection: "column",
-                backgroundColor: "background.default", 
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundImage: `
+                    url("https://cuajimalpa.gob.mx/wp-content/uploads/2025/01/wmark.png"),
+                    linear-gradient(180deg, #0075c5 0%, #003383 100%)
+                `,
+                backgroundSize: "contain, cover",
+                backgroundRepeat: "repeat, no-repeat",
+                backgroundPosition: "center",
             }}
         >
-            <Box
-                sx={{
-                    width: "100%",
-                    height: { xs: 180, md: 240 },
-                    position: "relative",
-                    overflow: "hidden",
-                }}
-            >
+            {/* Logo principal */}
+            <Box sx={{ textAlign: "center", mb: 3 }}>
                 <Box
-                    sx={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundImage: `url("https://mediaim.expedia.com/destination/9/9532ab1fa7d668bdabb3c05739b00305.jpg")`,
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "right center",
-                        filter: "brightness(0.6)",
-                        zIndex: 0,
-                    }}
-                />
-                <Box
-                    sx={{
-                        position: "relative",
-                        zIndex: 1,
-                        height: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        px: { xs: 2, md: 4 },
-                    }}
-                >
-                    <Avatar
-                        alt="Logo Cuajimalpa"
-                        src="https://pbs.twimg.com/profile_images/1230210290337189888/XrPQPq_z_400x400.jpg"
-                        variant="square"
-                        sx={{
-                            width: { xs: 80, md: 120 },
-                            height: { xs: 80, md: 120 },
-                            border: "2px solid white",
-                            mr: 2,
-                            boxShadow: 3,
-                        }}
-                    />
-                    <Typography
-                        variant="h4"
-                        sx={{
-                            color: "common.white",
-                            fontWeight: 700,
-                            fontSize: { xs: "1.8rem", md: "2.4rem" },
-                        }}
-                    >
-                        Delegación Cuajimalpa
-                    </Typography>
-                </Box>
-            </Box>
-
-            <Divider sx={{ borderColor: "divider" }} /> 
-
-            <Box
-                sx={{
-                    flex: 1,
-                    display: "flex",
-                    justifyContent: "center",
-                    px: 2,
-                    pt: 4,
-                    pb: 8,
-                }}
-            >
-                <Paper
-                    elevation={8}
+                    component="img"
+                    src={logoHorizontal}
+                    alt="Logo Cuajimalpa"
                     sx={{
                         width: "100%",
-                        maxWidth: 440,
-                        borderRadius: 4,
-                        overflow: "hidden",
-                        boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
-                        backgroundColor: "background.paper", 
+                        maxWidth: 480,
+                        minWidth: 280,
+                        height: "auto",
                     }}
-                >
-                    <Box
-                        sx={{
-                            backgroundColor: "primary.main", 
-                            color: "primary.contrastText", 
-                            py: 3,
-                            textAlign: "center",
-                        }}
-                    >
-                        <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                            Portal Administrativo
-                        </Typography>
-                    </Box>
-
-                    <Box sx={{ p: { xs: 3, md: 4 }, backgroundColor: "background.paper" }}>
-                        <Typography
-                            variant="subtitle1"
-                            align="center"
-                            sx={{ mb: 3, color: "text.secondary" }} 
-                        >
-                            Inicia sesión para continuar
-                        </Typography>
-
-                        <form onSubmit={submit}>
-                            <TextField
-                                label="Usuario"
-                                variant="outlined"
-                                fullWidth
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                margin="normal"
-                                disabled={loading}
-                                sx={{
-                                    "& .MuiOutlinedInput-root": {
-                                        "& fieldset": {
-                                            borderColor: "divider", 
-                                        },
-                                        "&:hover fieldset": {
-                                            borderColor: "primary.main", 
-                                        },
-                                    },
-                                }}
-                            />
-                            <TextField
-                                label="Contraseña"
-                                variant="outlined"
-                                type="password"
-                                fullWidth
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                margin="normal"
-                                disabled={loading}
-                                sx={{
-                                    "& .MuiOutlinedInput-root": {
-                                        "& fieldset": {
-                                            borderColor: "divider",
-                                        },
-                                        "&:hover fieldset": {
-                                            borderColor: "primary.main", 
-                                        },
-                                    },
-                                }}
-                            />
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                disabled={loading}
-                                sx={{
-                                    mt: 2,
-                                    textTransform: "none", 
-                                    fontSize: "1rem", 
-                                }}
-                            >
-                                {loading ? "Ingresando..." : "Ingresar"}
-                            </Button>
-                        </form>
-                    </Box>
-                </Paper>
+                />
             </Box>
 
+
+            {/* contenedor del login */}
+            <Paper
+                elevation={8}
+                sx={{
+                    width: "100%",
+                    maxWidth: 420,
+                    borderRadius: 3,
+                    p: { xs: 3, md: 4 },
+                    backgroundColor: "white",
+                    textAlign: "center",
+                }}
+            >
+                <Typography
+                    variant="h5"
+                    sx={{
+                        fontWeight: 700,
+                        color: "#003383",
+                        mb: 1,
+                    }}
+                >
+                    Portal Administrativo
+                </Typography>
+
+                <Typography
+                    variant="subtitle1"
+                    sx={{
+                        mb: 3,
+                        color: "text.secondary",
+                    }}
+                >
+                    Inicia sesión para continuar
+                </Typography>
+
+                <form onSubmit={submit}>
+                    <TextField
+                    label="Usuario"
+                    variant="outlined"
+                    fullWidth
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    margin="normal"
+                    disabled={loading}
+                    sx={{
+                        input: {
+                            color: "#1b1b1b",
+                        },
+                        "& .MuiInputLabel-root": {
+                            color: "#1b1b1b", // color del label
+                        },
+                        "& .MuiOutlinedInput-root": {
+                            backgroundColor: "#ffffff", // fondo
+                            "& fieldset": {
+                                borderColor: "#0078D4", // principal
+                            },
+                            "&:hover fieldset": {
+                                borderColor: "#1B2845", // al pasar el mouse
+                            },
+                            "&.Mui-focused fieldset": {
+                                borderColor: "#0078D4", // al enfocar
+                            },
+                        },
+                    }}
+                />
+
+                <TextField
+                    label="Contraseña"
+                    variant="outlined"
+                    type="password"
+                    fullWidth
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    margin="normal"
+                    disabled={loading}
+                    sx={{
+                        input: {
+                            color: "#1b1b1b",
+                        },
+                        "& .MuiInputLabel-root": {
+                            color: "#1b1b1b",
+                        },
+                        "& .MuiOutlinedInput-root": {
+                            backgroundColor: "#ffffff",
+                            "& fieldset": {
+                                borderColor: "#0078D4",
+                            },
+                            "&:hover fieldset": {
+                                borderColor: "#1B2845",
+                            },
+                            "&.Mui-focused fieldset": {
+                                borderColor: "#0078D4",
+                            },
+                        },
+                    }}
+                />
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        disabled={loading}
+                        sx={{
+                            mt: 2,
+                            py: 1.2,
+                            textTransform: "none",
+                            fontSize: "1rem",
+                            fontWeight: 600,
+                            backgroundColor: "#0075c5",
+                            "&:hover": {
+                                backgroundColor: "#005fa3",
+                            },
+                        }}
+                    >
+                        {loading ? "Ingresando..." : "Ingresar"}
+                    </Button>
+                </form>
+            </Paper>
+
+            {/* footer */}
             <Box
                 component="footer"
                 sx={{
-                    width: "100%",
-                    backgroundColor: "primary.main", 
-                    color: "primary.contrastText", 
+                    mt: 5,
                     textAlign: "center",
-                    px: 2,
-                    py: { xs: 2, md: 3 },
+                    color: "white",
                     fontSize: { xs: 13, md: 15 },
-                    lineHeight: 1.5,
+                    lineHeight: 1.6,
+                    px: 2,
+                    pb: 2,
                 }}
             >
                 <Typography variant="body2">
@@ -230,8 +200,18 @@ const CustomLogin = () => {
                     Av. Juárez S/N, Cuajimalpa de Morelos, 05000 CDMX, México
                 </Typography>
             </Box>
+
+            {/* franjita */}
+            <Box
+                sx={{
+                    width: "100%",
+                    height: "20px",
+                    backgroundColor: "white",
+                }}
+            />
         </Box>
     );
 };
 
 export default CustomLogin;
+

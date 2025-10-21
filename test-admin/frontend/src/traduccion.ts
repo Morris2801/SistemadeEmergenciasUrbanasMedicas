@@ -94,6 +94,7 @@ const mensajesEspanol = {
             i18n_error: 'No se pueden cargar las traducciones para el idioma especificado',
             canceled: 'Acción cancelada',
             logged_out: 'Su sesión ha terminado, por favor vuelva a conectarse.',
+            'Invalid username or password:': 'Nombre de usuario o contraseña inválidos',
         },
         validation: {
             required: 'Requerido',
