@@ -57,7 +57,8 @@ import { AuthProvider } from "react-admin";
 
 const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
-        const request = new Request("http://127.0.0.1:3000/login", {
+        console.log(import.meta.env.VITE_BACKEND)
+        const request=new Request(import.meta.env.VITE_BACKEND+"/login",{
             method: "POST",
             body: JSON.stringify({ username, password }),
             headers: new Headers({ "Content-Type": "application/json" }),

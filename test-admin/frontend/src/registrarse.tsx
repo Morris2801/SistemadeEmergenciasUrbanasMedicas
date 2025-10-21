@@ -14,8 +14,24 @@ const Registrarse: React.FC = () => {
         setDatos({ ...datos, [event.target.name]: event.target.value });
     };
 
+    const validarPassword = (password: string) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{9,}$/;
+        return regex.test(password);
+    };
+
     const handleSendData = async () => {
-        const request = new Request('http://127.0.0.1:3000/registrarse', {
+        if (!datos.username || !datos.password || !datos.name) {
+            alert('Por favor completa todos los campos obligatorios');
+            return;
+        }
+
+        if (!validarPassword(datos.password)) {
+            alert('La contraseña debe tener al menos 9 caracteres, una mayúscula, una minúscula y un número.');
+            return;
+        }
+        
+        console.log(import.meta.env.VITE_BACKEND)
+        const request=await new Request(import.meta.env.VITE_BACKEND+"/registrarse",{
             method: 'POST',
             body: JSON.stringify(datos),
             headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -36,7 +52,7 @@ const Registrarse: React.FC = () => {
             <h2>Registro de nuevos usuarios</h2>
             <form>
                 <div>
-                    <label htmlFor="username">Usuario: </label>
+                    <label>Usuario: </label>
                     <input
                         type="text"
                         id="username"
@@ -46,7 +62,7 @@ const Registrarse: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Contraseña: </label>
+                    <label>Contraseña: </label>
                     <input
                         type="password"
                         id="password"
@@ -56,7 +72,7 @@ const Registrarse: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="name">Nombre Completo: </label>
+                    <label>Nombre Completo: </label>
                     <input
                         type="text"
                         id="name"
@@ -66,7 +82,7 @@ const Registrarse: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="tipo">Tipo de usuario:</label>
+                    <label>Tipo de usuario:</label>
                     <select id="tipo" name="tipo" value={datos.tipo} onChange={handleChange}>
                         <option value="paramedico">Paramédico</option>
                         <option value="urbano">Respondiente de emergencias urbanas</option>
@@ -75,7 +91,7 @@ const Registrarse: React.FC = () => {
                     </select>
                 </div>
                 <div>
-                    <label htmlFor="turno">Turno: </label>
+                    <label>Turno: </label>
                     <input
                         type="text"
                         id="turno"
@@ -85,7 +101,7 @@ const Registrarse: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="phone">Teléfono: </label>
+                    <label>Teléfono: </label>
                     <input
                         type="text"
                         id="phone"

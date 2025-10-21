@@ -2,8 +2,6 @@
 import {
     Admin,
     Resource,
-    ListGuesser,
-    ShowGuesser,
     CustomRoutes,
 } from 'react-admin';
 import { Route } from 'react-router-dom';
@@ -11,6 +9,8 @@ import { Route } from 'react-router-dom';
 import customLayout from './Layout';
 
 import { dataProvider } from './dataProvider';
+import polyglotI18nProvider from 'ra-i18n-polyglot';
+import mensajesEspanol from './traduccion';
 
 import authProvider  from './authProvider';
 import { lightTheme, darkTheme} from './theme';
@@ -18,24 +18,24 @@ import CustomLogin from './Login';
 
 // Recursos
 import { Dashboard } from './dashboard';
-// import { Listado } from './listado';
 import { Estadisticas } from './estadisticas';
 import { MedicFormCreate, MedicFormEdit, MedicFormShow, MedicFormList } from './testForm';
 import { UserList, UserEdit, UserShow, UserCreate } from './users';
 import { UrbanFormCreate, UrbanFormShow, UrbanFormList, UrbanFormEdit} from './urbanForm';
 import Selector from './selector';
+import ManualUsuario from './ManualUsuario';
 
 
 // Iconos
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import ListAltIcon from '@mui/icons-material/ListAlt';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import EngineeringIcon from '@mui/icons-material/Engineering';
+import PeopleIcon from '@mui/icons-material/People';
 
-import jsonServerProvider from 'ra-data-json-server';
-import dummyData from '../dummyData.json';
 import Registrarse from './registrarse';
+
+const proveedorIdioma = polyglotI18nProvider(() => mensajesEspanol, 'es');
 
 export const App = () => (
     <Admin
@@ -45,14 +45,16 @@ export const App = () => (
         loginPage={CustomLogin}
         theme={lightTheme }
         darkTheme={darkTheme}
+        i18nProvider={proveedorIdioma}
     >
         <CustomRoutes>
             <Route path="/selector" element={<Selector />} />
             <Route path="/registrarse" element={<Registrarse />} />
+            <Route path="/manual" element={<ManualUsuario />} /> 
         </CustomRoutes>
         
         <Resource name="dashboard" list={Dashboard} icon={DashboardIcon} />
-        <Resource name="users" list={UserList} show={UserShow} edit={UserEdit} create={UserCreate} />
+        <Resource name="users" list={UserList} show={UserShow} edit={UserEdit} create={UserCreate} icon={PeopleIcon}/>
         <Resource name="estadisticas" list={Estadisticas} icon={BarChartIcon} />
         
         {/* <Resource name="listado" list={Listado} icon={ListAltIcon} /> */}

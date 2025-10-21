@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { usePermissions, useDataProvider } from "react-admin";
+import { Radar } from 'react-chartjs-2';
+import { RadarController, RadialLinearScale } from 'chart.js';
+import {useMediaQuery, Theme} from '@mui/material'
+
+ChartJS.register(RadarController, RadialLinearScale);
+
 import {
     Card,
     CardHeader,
@@ -48,7 +54,9 @@ ChartJS.register(
     ArcElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    RadarController,
+    RadialLinearScale
 );
 
 interface DashboardStats {
@@ -60,6 +68,24 @@ interface DashboardStats {
     todayForms: number;
     criticalCases: number;
 }
+
+const countBySex = (forms: any[]) => {
+  const counts = {
+    masculino: 0,
+    femenino: 0,
+    otro: 0,
+  };
+
+  forms.forEach((form) => {
+    const sexo = (form.sexo_paciente || '').toLowerCase();
+
+    if (sexo === 'masculino') counts.masculino++;
+    else if (sexo === 'femenino') counts.femenino++;
+    else counts.otro++;
+  });
+
+  return counts;
+};
 
 const formatDateTime = (date?: string | Date) => {
   if (!date) return 'Sin fecha';
@@ -74,6 +100,15 @@ const formatDateTime = (date?: string | Date) => {
   const min = String(d.getMinutes()).padStart(2, '0');
 
   return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+};
+
+const countByTurno = (forms: any[]) => {
+  const counts: Record<string, number> = {};
+  forms.forEach((form) => {
+    const rawTurno = form.turno || "Desconocido";
+    counts[rawTurno] = (counts[rawTurno] || 0) + 1;
+  });
+  return counts;
 };
 
 
@@ -98,6 +133,7 @@ const countCriticalConditions = (forms: any[]) => {
 };
 
 export const Dashboard: React.FC = () => {
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
     const { permissions } = usePermissions();
     const dataProvider = useDataProvider();
     const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -112,20 +148,34 @@ export const Dashboard: React.FC = () => {
                 const promises: Promise<any>[] = [];
                 
                 promises.push(
-                    dataProvider.getList('medicForm', { pagination: { page: 1, perPage: 5 }, sort: { field: 'fecha', order: 'DESC' }, filter: {} }),
-                    dataProvider.getList('urbanForm', { pagination: { page: 1, perPage: 5 }, sort: { field: 'fecha', order: 'DESC' }, filter: {} }),
+                    dataProvider.getList('medicForm', { pagination: { page: 1, perPage: 1000 }, sort: { field: 'fecha', order: 'DESC' }, filter: {} }),
+                    dataProvider.getList('urbanForm', { pagination: { page: 1, perPage: 1000 }, sort: { field: 'fecha', order: 'DESC' }, filter: {} }),
                     dataProvider.getList('users', { pagination: { page: 1, perPage: 10 }, sort: { field: 'username', order: 'ASC' }, filter: {} })
                 );
 
                 const [medicForms, urbanForms, users] = await Promise.all(promises);
 
-                const today = new Date().toISOString().split('T')[0];
-                const todayMedicForms = medicForms.data.filter((form: any) => 
-                    form.fechaCronometria?.startsWith(today) || form.fecha?.startsWith(today)
+                const isToday = (inputDate: any) => {
+                    if (!inputDate) return false;
+
+                    const date = new Date(inputDate); 
+                    if (isNaN(date.getTime())) return false;
+
+                    const now = new Date();
+
+                    return (
+                        date.getFullYear() === now.getFullYear() &&
+                        date.getMonth() === now.getMonth() &&
+                        date.getDate() === now.getDate()
+                    );
+                };
+
+                const todayMedicForms = medicForms.data.filter((form: any) =>
+                    isToday(form.fecha)
                 ).length;
-                
-                const todayUrbanForms = urbanForms.data.filter((form: any) => 
-                    form.fecha?.startsWith(today)
+
+                const todayUrbanForms = urbanForms.data.filter((form: any) =>
+                    isToday(form.fecha_hora) || isToday(form.fecha_atencion)
                 ).length;
 
                 const criticalCases = medicForms.data.filter((form: any) => 
@@ -270,11 +320,54 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
                 </Grid>
             </Grid>
 
+            <Typography variant="h4" gutterBottom>
+                Gestionamiento
+            </Typography>
+ {/* Quick Actions */}
+                <Grid item xs={12}>
+                    <Card>
+                        <CardHeader title="Acciones Rápidas" />
+                        <CardContent>
+                            <Box display="flex" gap={2} flexWrap="wrap" box = '80%' alignItems={'center'}>
+                                <Chip 
+                                    label="Nuevo Reporte Médico" 
+                                    color="primary" 
+                                    onClick={() => window.location.href = '/#/medicForm/create'}
+                                    clickable
+                                />
+                                <Chip 
+                                    label="Nueva Emergencia Urbana" 
+                                    color="secondary" 
+                                    onClick={() => window.location.href = '/#/urbanForm/create'}
+                                    clickable
+                                />
+                                <Chip 
+                                    label="Gestionar Usuarios" 
+                                    color="info" 
+                                    onClick={() => window.location.href = '/#/users'}
+                                    clickable
+                                />
+                                <Chip 
+                                    label="Ver Estadísticas" 
+                                    color="success" 
+                                    onClick={() => window.location.href = '/#/estadisticas'}
+                                    clickable
+                                />
+                            </Box>
+                            
+                        </CardContent>
+                    </Card>
+                </Grid>
+                
+            <Typography variant="h4" gutterBottom>
+                Panel de Control - Atención Prehospitalaria
+            </Typography>
+
             {/* Recent Activity */}
             <Grid container spacing={3}>
                 {/* Recent Medical Forms */}
                 {stats?.recentMedicForms && stats.recentMedicForms.length > 0 && (
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={4}>
                         <Card>
                             <CardHeader title="Reportes Médicos Recientes" />
                             <CardContent>
@@ -311,6 +404,209 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
                     </Grid>
                 )}
 
+                    <Grid item xs={12} md={6}>
+        <Card>
+            <CardHeader title="Tendencia de Reportes Médicos" />
+            <CardContent>
+              <Box sx={{ width: 400, height: 225 }}>
+                <Line
+                    data={{
+                        labels: stats?.recentMedicForms.map((form) =>
+                           formatDateTime(form.fechaCronometria || form.fecha || '')
+                        ) || [],
+                        datasets: [
+                            {
+                                label: 'Reportes por Día',
+                                data: stats?.recentMedicForms.map((_, i) => i + 1) || [],
+                                fill: false,
+                                borderColor: 'rgba(53, 162, 235, 0.8)',
+                                tension: 0.3,
+                            },
+                        ],
+                    }}
+                    options={{
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Reportes Médicos Recientes (Simulado)',
+                            },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { stepSize: 1 },
+                            },
+                        },
+                    }}
+                />
+                </Box>
+            </CardContent>
+        </Card>
+    </Grid>
+      {/* 3. Pie Chart: Priority Distribution */}
+    <Grid item xs={12} md={6}>
+        <Card>
+            <CardHeader title="Distribución de Prioridades en Reportes Médicos" />
+            <CardContent>
+              <Box sx={{ width: 500, height: 500 }}>
+                <Pie
+                    data={{
+                        labels: ["Rojo", "Amarillo", "Verde", "Desconocido"],
+                        datasets: [
+                            {
+                                label: "Prioridad",
+                                data: Object.values(countByPriority(stats?.recentMedicForms || [])),
+                                backgroundColor: [
+                                    "rgba(255, 99, 132, 0.7)",
+                                    "rgba(255, 206, 86, 0.7)",
+                                    "rgba(75, 192, 192, 0.7)",
+                                    "rgba(201, 203, 207, 0.7)",
+                                ],
+                                borderColor: "rgba(255,255,255,1)",
+                                borderWidth: 1,
+                            },
+                        ],
+                    }}
+                    options={{
+                        responsive: true,
+                        plugins: {
+                            legend: { position: "right" },
+                            title: { display: true, text: "Prioridades en reportes médicos" },
+                        },
+                    }}
+                />          
+                </Box>  
+                </CardContent>
+        </Card>
+    </Grid>
+
+<Grid item xs={12} md={6}>
+  <Card>
+    <CardHeader title="Reportes Médicos por Sexo del Paciente" />
+    <CardContent>
+      <Box sx={{ width: '100%', height: 500, display: 'flex', alignItems: 'center', alignContent: 'center' }}>
+        <Bar
+          data={{
+            labels: ['Masculino', 'Femenino', 'Otro / No Especificado'],
+            datasets: [
+              {
+                label: 'Cantidad',
+                data: Object.values(countBySex(stats?.recentMedicForms || [])),
+                backgroundColor: [
+                  'rgba(54, 162, 235, 0.7)',    
+                  'rgba(255, 99, 132, 0.7)',   
+                  'rgba(201, 203, 207, 0.7)',   
+                ],
+                borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(201, 203, 207, 1)',
+                ],
+                borderWidth: 1,
+              },
+            ],
+          }}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              title: { display: true, text: 'Reportes por Sexo del Paciente' },
+            },
+            scales: {
+              y: { beginAtZero: true, ticks: { stepSize: 1 } },
+            },
+          }}
+        />
+      </Box>
+    </CardContent>
+  </Card>
+</Grid>
+
+<Grid item xs={12} md={4}>
+        <Card>
+            <CardHeader title="Casos Críticos vs No Críticos en Reportes Médicos" />
+            <CardContent>
+                <Bar
+                    data={{
+                        labels: ["Críticos", "No Críticos"],
+                        datasets: [
+                            {
+                                label: "Cantidad",
+                                data: Object.values(countCriticalConditions(stats?.recentMedicForms || [])),
+                                backgroundColor: [
+                                    "rgba(255, 99, 132, 0.7)",
+                                    "rgba(75, 192, 192, 0.7)",
+                                ],
+                                borderColor: [
+                                    "rgba(255, 99, 132, 1)",
+                                    "rgba(75, 192, 192, 1)",
+                                ],
+                                borderWidth: 1,
+                            },
+                        ],
+                    }}
+                    options={{
+                        indexAxis: "y",
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            title: { display: true, text: "Casos Críticos vs No Críticos" },
+                        },
+                        scales: {
+                            x: { beginAtZero: true, ticks: { stepSize: 1 } },
+                        },
+                    }}
+                />
+                </CardContent>
+        </Card>
+    </Grid>
+
+<Grid item xs={12} md={6}>
+    <Card>
+        <CardHeader title="Distribución de Turnos en Reportes Médicos (Radar)" />
+        <CardContent>
+            <Box sx={{ width: '100%', height: 300 }}>
+                <Radar
+                    data={{
+                        labels: Object.keys(countByTurno(stats?.recentMedicForms || [])),
+                        datasets: [
+                            {
+                                label: 'Ocurrencias',
+                                data: Object.values(countByTurno(stats?.recentMedicForms || [])),
+                                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                                borderColor: 'rgba(255, 159, 64, 1)',
+                                pointBackgroundColor: 'rgba(255, 159, 64, 1)',
+                            },
+                        ],
+                    }}
+                    options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1,
+                                },
+                            },
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Turnos con Más Ocurrencias (Radar)',
+                            },
+                        },
+                    }}
+                />
+            </Box>
+        </CardContent>
+    </Card>
+</Grid>
+          <Typography variant="h4" gutterBottom>
+                Panel de Control - Emergencia Urbana
+            </Typography>
+
                 {/* Recent Urban Forms */}
                 {stats?.recentUrbanForms && stats.recentUrbanForms.length > 0 && (
                     <Grid item xs={12} md={6}>
@@ -344,42 +640,6 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
                     </Grid>
                 )}
 
-                {/* Quick Actions */}
-                <Grid item xs={12}>
-                    <Card>
-                        <CardHeader title="Acciones Rápidas" />
-                        <CardContent>
-                            <Box display="flex" gap={2} flexWrap="wrap">
-                                <Chip 
-                                    label="Nuevo Reporte Médico" 
-                                    color="primary" 
-                                    onClick={() => window.location.href = '/#/medicForm/create'}
-                                    clickable
-                                />
-                                <Chip 
-                                    label="Nueva Emergencia Urbana" 
-                                    color="secondary" 
-                                    onClick={() => window.location.href = '/#/urbanForm/create'}
-                                    clickable
-                                />
-                                <Chip 
-                                    label="Gestionar Usuarios" 
-                                    color="info" 
-                                    onClick={() => window.location.href = '/#/users'}
-                                    clickable
-                                />
-                                <Chip 
-                                    label="Ver Estadísticas" 
-                                    color="success" 
-                                    onClick={() => window.location.href = '/#/estadisticas'}
-                                    clickable
-                                />
-                            </Box>
-                            
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
             <Grid container spacing={3} sx={{ mt: 3 }}>
     <Grid item xs={12} md={6}>
         <Card>
@@ -427,122 +687,51 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
         </Card>
     </Grid>
 
-    <Grid item xs={12} md={6}>
-        <Card>
-            <CardHeader title="Tendencia de Reportes Médicos" />
-            <CardContent>
-              <Box sx={{ width: 400, height: 300 }}>
-                <Line
+    
+
+<Grid item xs={12} md={6}>
+    <Card>
+        <CardHeader title="Distribución de Turnos en Emergencias Urbanas (Radar)" />
+        <CardContent>
+            <Box sx={{ width: '100%', height: 300 }}>
+                <Radar
                     data={{
-                        labels: stats?.recentMedicForms.map((form) =>
-                            (form.fechaCronometria || form.fecha || '').split('T')[0]
-                        ) || [],
+                        labels: Object.keys(countByTurno(stats?.recentUrbanForms || [])),
                         datasets: [
                             {
-                                label: 'Reportes por Día',
-                                data: stats?.recentMedicForms.map((_, i) => i + 1) || [],
-                                fill: false,
-                                borderColor: 'rgba(53, 162, 235, 0.8)',
-                                tension: 0.3,
+                                label: 'Ocurrencias',
+                                data: Object.values(countByTurno(stats?.recentUrbanForms || [])),
+                                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                borderColor: 'rgba(153, 102, 255, 1)',
+                                pointBackgroundColor: 'rgba(153, 102, 255, 1)',
                             },
                         ],
                     }}
                     options={{
                         responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1,
+                                },
+                            },
+                        },
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Reportes Médicos Recientes (Simulado)',
-                            },
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: { stepSize: 1 },
+                                text: 'Turnos con Más Ocurrencias (Radar)',
                             },
                         },
                     }}
                 />
-                </Box>
-            </CardContent>
-        </Card>
-    </Grid>
-      {/* 3. Pie Chart: Priority Distribution */}
-    <Grid item xs={12} md={6}>
-        <Card>
-            <CardHeader title="Distribución de Prioridades en Reportes Médicos" />
-            <CardContent>
-              <Box sx={{ width: 500, height: 500 }}>
-                <Pie
-                    data={{
-                        labels: ["Rojo", "Amarillo", "Verde", "Negro", "Desconocido"],
-                        datasets: [
-                            {
-                                label: "Prioridad",
-                                data: Object.values(countByPriority(stats?.recentMedicForms || [])),
-                                backgroundColor: [
-                                    "rgba(255, 99, 132, 0.7)",
-                                    "rgba(255, 206, 86, 0.7)",
-                                    "rgba(75, 192, 192, 0.7)",
-                                    "rgba(54, 162, 235, 0.7)",
-                                    "rgba(201, 203, 207, 0.7)",
-                                ],
-                                borderColor: "rgba(255,255,255,1)",
-                                borderWidth: 1,
-                            },
-                        ],
-                    }}
-                    options={{
-                        responsive: true,
-                        plugins: {
-                            legend: { position: "right" },
-                            title: { display: true, text: "Prioridades en reportes médicos" },
-                        },
-                    }}
-                />          
-                </Box>  
-                </CardContent>
-        </Card>
-    </Grid>
-    
-    <Grid item xs={12} md={12}>
-        <Card>
-            <CardHeader title="Casos Críticos vs No Críticos en Reportes Médicos" />
-            <CardContent>
-                <Bar
-                    data={{
-                        labels: ["Críticos", "No Críticos"],
-                        datasets: [
-                            {
-                                label: "Cantidad",
-                                data: Object.values(countCriticalConditions(stats?.recentMedicForms || [])),
-                                backgroundColor: [
-                                    "rgba(255, 99, 132, 0.7)",
-                                    "rgba(75, 192, 192, 0.7)",
-                                ],
-                                borderColor: [
-                                    "rgba(255, 99, 132, 1)",
-                                    "rgba(75, 192, 192, 1)",
-                                ],
-                                borderWidth: 1,
-                            },
-                        ],
-                    }}
-                    options={{
-                        indexAxis: "y",
-                        responsive: true,
-                        plugins: {
-                            legend: { display: false },
-                            title: { display: true, text: "Casos Críticos vs No Críticos" },
-                        },
-                        scales: {
-                            x: { beginAtZero: true, ticks: { stepSize: 1 } },
-                        },
-                    }}
-                />
-                </CardContent>
-        </Card>
-    </Grid>
+            </Box>
+        </CardContent>
+    </Card>
+</Grid>
+
+            </Grid>
 
 </Grid>
         </Box>
