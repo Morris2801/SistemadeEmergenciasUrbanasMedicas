@@ -62,7 +62,7 @@ const CustomLogin = () => {
                 backgroundPosition: "center",
             }}
         >
-            {/* Logo principal */}
+            {/* logo principal */}
             <Box sx={{ textAlign: "center", mb: 3 }}>
                 <Box
                     component="img"
@@ -181,6 +181,7 @@ const CustomLogin = () => {
                             mt: 2,
                             py: 1.2,
                             textTransform: "none",
+                            color: "#FFFFFF",
                             fontSize: "1rem",
                             fontWeight: 600,
                             backgroundColor: "#0075c5",
