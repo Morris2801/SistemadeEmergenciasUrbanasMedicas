@@ -28,13 +28,14 @@ const CustomMenu = (props) => {
             <Menu {...props}>
                 {permissions === 'admin' && (
                     <Box>
-                        <Box sx={{ mb: 2, padding: 1}}>
+                        <Box sx={{ mb: 2, padding: 1, }}>
                             <MenuItemLink
                                 to="/dashboard"
                                 primaryText="Dashboard"
                                 leftIcon={<DashboardIcon sx={{ color: textoBlanco }} />}
                                 sx={{
                                     color: textoBlanco,
+                                    height: '10%',
                                     '&.Mui-selected': {
                                         backgroundColor: azulClaro,
                                         color: textoBlanco,
