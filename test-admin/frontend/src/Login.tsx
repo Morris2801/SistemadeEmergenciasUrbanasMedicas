@@ -11,9 +11,23 @@ const CustomLogin = () => {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
 
+    const validarPassword = (password: string) => {
+        const regex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{9,}$/;
+        return regex.test(password);
+    };
+
     const submit = async (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
+        if (!validarPassword(password)) {
+            setLoading(false);
+            notify(
+                "La contraseña debe tener al menos 9 caracteres, una mayúscula, una minúscula y un número.",
+                { type: "warning" }
+            );
+            return;
+        }
         try {
             await login({ username, password });
             const identity = JSON.parse(sessionStorage.getItem("identity") || "{}");

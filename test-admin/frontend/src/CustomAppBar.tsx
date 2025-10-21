@@ -1,11 +1,16 @@
 import * as React from 'react';
-import { AppBar } from 'react-admin';
-import { Box, Typography, useMediaQuery, Theme } from '@mui/material';
+import { AppBar, CustomRoutes, Admin, DataProvider } from 'react-admin';
+import { Box, Typography, useMediaQuery, IconButton, Tooltip } from '@mui/material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { useNavigate } from 'react-router-dom';
+import ManualUsuario from './ManualUsuario';
 
 const CustomAppBar = (props) => {
     const [currentTime, setCurrentTime] = React.useState(new Date());
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
     const isMedium = useMediaQuery<Theme>((theme) => theme.breakpoints.between('sm', 'md'));
+
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         const interval = setInterval(() => {
@@ -52,6 +57,22 @@ const CustomAppBar = (props) => {
                     {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}
                 </Typography>
             </Box>
+
+            <Tooltip title="Manual de Usuario">
+          <IconButton
+            color="inherit"
+            onClick={() => navigate('/manual')}
+            sx={{
+              backgroundColor: '#1976d2',
+              color: '#fff',
+              '&:hover': { backgroundColor: '#1565c0' },
+              borderRadius: '10px',
+              p: '6px',
+            }}
+          >
+            <HelpOutlineIcon />
+          </IconButton>
+        </Tooltip>
         </AppBar>
     );
 };
