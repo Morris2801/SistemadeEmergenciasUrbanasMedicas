@@ -24,7 +24,6 @@ export const UserList = () => {
                 />
             ) : (
                 <DataTable>
-                    <DataTable.Col source="id" label="ID" />
                     <DataTable.Col source="username" label="Usuario" />
                     <DataTable.Col source="name" label="Nombre" />
                     <DataTable.Col source="tipo" label="Tipo" />

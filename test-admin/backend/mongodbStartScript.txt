@@ -395,7 +395,7 @@ db.medicForm.insertMany([
     {
     folio: "T‑20250920‑006",
     turno: "Martes, Jueves y Sábado 9pm ‑ 8 am",
-    fecha: new Date("2025‑09‑20"),
+    fecha: new Date("2025-09-20"),
     hora_llamada: "21:10",
     hora_traslado: "21:35",
     hora_salida: "22:20",
@@ -471,7 +471,7 @@ db.medicForm.insertMany([
   {
     folio: "E‑20250921‑007",
     turno: "Lunes a Viernes 8am ‑ 3pm",
-    fecha: new Date("2025‑09‑21"),
+    fecha: new Date("2025-09-21"),
     hora_llamada: "11:05",
     hora_traslado: "11:20",
     hora_salida: "11:50",
@@ -629,7 +629,7 @@ db.medicForm.insertMany([
   {
     folio: "E‑20250923‑009",
     turno: "Lunes a Viernes 3pm ‑ 9pm",
-    fecha: new Date("2025‑09‑23"),
+    fecha: new Date("2025-09-23"),
     hora_llamada: "15:40",
     hora_traslado: "16:00",
     hora_salida: "16:40",
@@ -706,7 +706,7 @@ db.medicForm.insertMany([
   {
     folio: "T‑20250924‑010",
     turno: "Miércoles y Viernes 8am ‑ 3pm",
-    fecha: new Date("2025‑09‑24"),
+    fecha: new Date("2025-09-24"),
     hora_llamada: "10:20",
     hora_traslado: "10:40",
     hora_salida: "11:30",
@@ -985,7 +985,7 @@ db.urbanForm.insertMany([
 
     {
     folio: "URB‑2025‑0006",
-    fecha_hora: new Date("2025‑09‑11T14:30:00Z"),
+    fecha_hora: new Date("2025-09-11"),
     turno: "Lunes, Miércoles y Viernes 9pm ‑ 8 am",
     personal_a_cargo: "Ing. María Hernández",
     modo_activacion: "llamada",
@@ -1007,7 +1007,7 @@ db.urbanForm.insertMany([
   },
   {
     folio: "URB‑2025‑0007",
-    fecha_hora: new Date("2025‑09‑12T09:15:00Z"),
+    fecha_hora: new Date("2025-09-12"),
     turno: "Lunes a Viernes 8am ‑ 3pm",
     personal_a_cargo: "Téc. Carlos Martínez",
     modo_activacion: "oficio",
@@ -1028,7 +1028,7 @@ db.urbanForm.insertMany([
   },
   {
     folio: "URB‑2025‑0008",
-    fecha_hora: new Date("2025‑09‑13T22:40:00Z"),
+    fecha_hora: new Date("2025-09-13"),
     turno: "Martes, Jueves y Domingo 9pm ‑ 8am",
     personal_a_cargo: "Ing. José Almagro",
     modo_activacion: "llamada",
@@ -1050,7 +1050,7 @@ db.urbanForm.insertMany([
   },
   {
     folio: "URB‑2025‑0009",
-    fecha_hora: new Date("2025‑09‑14T13:05:00Z"),
+    fecha_hora: new Date("2025-09-14"),
     turno: "Lunes a Viernes 3pm ‑ 9pm",
     personal_a_cargo: "Téc. Sofía Vargas",
     modo_activacion: "oficio",
@@ -1071,7 +1071,7 @@ db.urbanForm.insertMany([
   },
   {
     folio: "URB‑2025‑0010",
-    fecha_hora: new Date("2025‑09‑15T17:20:00Z"),
+    fecha_hora: new Date("2025-09-15"),
     turno: "Lunes, Miércoles y Viernes 9pm ‑ 8 am",
     personal_a_cargo: "Ing. Mariana Soto",
     modo_activacion: "llamada",
