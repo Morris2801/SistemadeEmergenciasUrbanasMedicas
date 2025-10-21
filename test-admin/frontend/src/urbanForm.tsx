@@ -26,11 +26,13 @@ import {
   defaultExporter,
   DataTable,
   usePermissions,
-  DateInput
+  DateInput,
+  FunctionField
 } from 'react-admin';
 import { useNavigate } from 'react-router-dom';
 import { Button, useMediaQuery, Theme, Paper, Typography, Grid, Box } from '@mui/material';
 
+// Formato completo: YYYY-MM-DD HH:mm
 const formatDateTime = (date?: string | Date) => {
   if (!date) return 'Sin fecha';
   const d = new Date(date);
@@ -44,6 +46,23 @@ const formatDateTime = (date?: string | Date) => {
   const min = String(d.getMinutes()).padStart(2, '0');
 
   return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+};
+
+const formatDateYMD = (date?: string | Date) => {
+  if (!date) return 'Sin fecha';
+  const d = new Date(date);
+  const isValid = !isNaN(d.getTime());
+  if (!isValid) return 'Fecha inválida';
+
+  const yyyy = d.getFullYear();
+  const monthNames = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ];
+  const month = monthNames[d.getMonth()];
+  const dd = String(d.getDate()).padStart(2, '0');
+
+  return `${yyyy}-${month}-${dd}`;
 };
 
 const turnoChoices = [
@@ -73,16 +92,16 @@ const UrbanFormImproved = () => {
           <Grid item xs={12} sm={6}>
             <TextInput source="folio" label="Folio" validate={required()} fullWidth />
           </Grid>
-          <Grid item xs={12} md={6}>
-              <SelectInput
-                source="turno"
-                label="Turno"
-                choices={turnoChoices}
-                validate={required()}
-                fullWidth
-              />
+          <Grid item xs={12} sm={6}>
           </Grid>
           <Grid item xs={12} sm={6}>
+            <SelectInput
+              source="turno"
+              label="Turno"
+              choices={turnoChoices}
+              validate={required()}
+              fullWidth
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextInput source="personal_a_cargo" label="Nombre del personal a cargo" validate={required()} fullWidth />
@@ -175,7 +194,10 @@ const UrbanFormShowImproved = () => {
           <Typography><strong>Folio:</strong> {record.folio}</Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Typography><strong>Día, fecha y hora:</strong> {new Date(record.fecha_hora).toLocaleString()}</Typography>
+          <Typography><strong>Día, fecha y hora:</strong> {formatDateYMD(record.fecha_hora)}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography><strong>Turno:</strong> {record.turno}</Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography><strong>Nombre del personal a cargo:</strong> {record.personal_a_cargo}</Typography>
@@ -219,7 +241,7 @@ const UrbanFormShowImproved = () => {
             <Grid container spacing={1}>
               {record.fotos.map((foto: any, index: number) => (
                 <Grid item key={index}>
-                  <img src={foto.src} alt={`Foto ${index}`} style={{ maxHeight: 150 }} />
+                  <img src={foto.src} />
                 </Grid>
               ))}
             </Grid>
@@ -246,9 +268,8 @@ export const UrbanFormCreate = () => {
   const redirect = useRedirect();
 
   return (
-  <Create resource="urbanForm"
-  
-  mutationOptions={{
+    <Create resource="urbanForm"
+      mutationOptions={{
         onSuccess: () => {
           notify('Reporte guardado', { type: 'success' });
           redirect('/selector');
@@ -257,9 +278,9 @@ export const UrbanFormCreate = () => {
           notify('Error al guardar el reporte', { type: 'warning' });
         },
       }}>
-    <UrbanFormImproved />
-  </Create>
-);
+      <UrbanFormImproved />
+    </Create>
+  );
 };
 
 const UrbanFormFilters = [
@@ -275,14 +296,7 @@ const UrbanFormFilters = [
     label="Turno"
     source="turno"
     alwaysOn
-    choices={[
-      { id: "L-V_8-3", name: "Lunes a Viernes (8-3)" },
-      { id: "L-V_3-9", name: "Lunes a Viernes (3-9)" },
-      { id: "L-Mi-V_9-8", name: "Lunes, Miércoles y Viernes (9-8)" },
-      { id: "Ma-Ju-Do_9-8", name: "Martes, Jueves y Domingo (9-8)" },
-      { id: "Sa-Do-F_8-8", name: "Sábado, Domingo y Festivos (8-8)" },
-      { id: "Sa-Do-F_8p-8a", name: "Sábado, Domingo y Festivos (8p-8a)" },
-    ]}
+    choices={turnoChoices}
     sx={{ minWidth: 180 }}
   />,
   <SelectInput
@@ -343,13 +357,9 @@ export const UrbanFormList = () => {
 
   return (
     <>
-      <Box mb={2} sx={{ p: 1 }}>
-        <Button variant="outlined" color="secondary" onClick={() => navigate('/selector')}>
-          ← Volver 
-        </Button>
-      </Box>
-      <List title="Listado de Formularios Urbanos"
-      filters={UrbanFormFilters}
+      <List 
+        title="Listado de Formularios Urbanos"
+        filters={UrbanFormFilters}
         actions={<ListActions />}
         exporter={defaultExporter}
         perPage={25}
@@ -371,11 +381,10 @@ export const UrbanFormList = () => {
         {isSmall ? (
           <SimpleList
             primaryText={(record) => record.folio}
-            secondaryText={(record) => new Date(record.fecha_hora).toLocaleString()}
+            secondaryText={(record) => formatDateYMD(record.fecha_hora)}
             tertiaryText={(record) => record.personal_a_cargo}
           />
         ) : (
-          
           <DataTable
             sx={{
               width: "100%",
@@ -397,7 +406,9 @@ export const UrbanFormList = () => {
             }}
           >
             <DataTable.Col source="folio" label="Folio" />
-            <DataTable.Col source="fecha_hora" label="Fecha y Hora" />
+            <DataTable.Col label="Fecha y Hora">
+              <FunctionField render={(record: any) => formatDateYMD(record.fecha_hora)} />
+            </DataTable.Col>
             <DataTable.Col source="turno" label="Turno" />
             <DataTable.Col source="personal_a_cargo" label="Personal a Cargo" />
             <DataTable.Col source="tipo_servicio" label="Tipo de Servicio" />

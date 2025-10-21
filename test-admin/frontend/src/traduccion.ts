@@ -50,6 +50,12 @@ const mensajesEspanol = {
             skip_nav: 'Ir al contenido',
             no_results: 'No se encontraron resultados',
             no_more_results: 'La página número %{page} está fuera de rango. Intenta la anterior.',
+<<<<<<< HEAD
+=======
+            'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
+            'Clear filters': 'Limpiar filtros',
+        
+>>>>>>> d17412464299edbfbfac2d8a286d0447e5b90f02
         },
         message: {
             yes: 'Sí',
@@ -63,6 +69,12 @@ const mensajesEspanol = {
             delete_content: '¿Está seguro que desea eliminar este elemento?',
             bulk_delete_title: 'Eliminar %{name} |||| Eliminar %{smart_count} %{name}',
             bulk_delete_content: '¿Está seguro que desea eliminar este %{name}? |||| ¿Está seguro que desea eliminar estos %{smart_count} elementos?',
+<<<<<<< HEAD
+=======
+            'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
+            'Clear filters': 'Limpiar filtros',
+        
+>>>>>>> d17412464299edbfbfac2d8a286d0447e5b90f02
         },
         input: {
             file: {
@@ -94,6 +106,7 @@ const mensajesEspanol = {
             i18n_error: 'No se pueden cargar las traducciones para el idioma especificado',
             canceled: 'Acción cancelada',
             logged_out: 'Su sesión ha terminado, por favor vuelva a conectarse.',
+            "Invalid username or password": "Usuario o contraseña inválidos"
         },
         validation: {
             required: 'Requerido',
@@ -105,6 +118,12 @@ const mensajesEspanol = {
             email: 'Debe ser un email válido',
             oneOf: 'Debe ser uno de: %{options}',
             regex: 'Debe coincidir con un formato específico (regexp): %{pattern}',
+        },
+        filter: {
+            clear: 'Limpiar filtros',
+            no_results: 'No se encontraron resultados con los filtros actuales.',
+            'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
+            'Clear filters': 'Limpiar filtros',
         },
     },
 };

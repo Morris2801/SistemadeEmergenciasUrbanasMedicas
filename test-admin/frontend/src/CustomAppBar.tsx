@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppBar, CustomRoutes, Admin, DataProvider } from 'react-admin';
-import { Box, Typography, useMediaQuery, IconButton, Tooltip } from '@mui/material';
+import { Box, useMediaQuery, IconButton, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useNavigate } from 'react-router-dom';
 import ManualUsuario from './ManualUsuario';

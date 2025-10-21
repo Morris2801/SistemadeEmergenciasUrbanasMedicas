@@ -395,7 +395,7 @@ db.medicForm.insertMany([
     {
     folio: "T‑20250920‑006",
     turno: "Martes, Jueves y Sábado 9pm ‑ 8 am",
-    fecha: new Date("2025‑09‑20"),
+    fecha: new Date("2025-09-20"),
     hora_llamada: "21:10",
     hora_traslado: "21:35",
     hora_salida: "22:20",
@@ -471,7 +471,7 @@ db.medicForm.insertMany([
   {
     folio: "E‑20250921‑007",
     turno: "Lunes a Viernes 8am ‑ 3pm",
-    fecha: new Date("2025‑09‑21"),
+    fecha: new Date("2025-09-21"),
     hora_llamada: "11:05",
     hora_traslado: "11:20",
     hora_salida: "11:50",
@@ -629,7 +629,7 @@ db.medicForm.insertMany([
   {
     folio: "E‑20250923‑009",
     turno: "Lunes a Viernes 3pm ‑ 9pm",
-    fecha: new Date("2025‑09‑23"),
+    fecha: new Date("2025-09-23"),
     hora_llamada: "15:40",
     hora_traslado: "16:00",
     hora_salida: "16:40",
@@ -706,7 +706,7 @@ db.medicForm.insertMany([
   {
     folio: "T‑20250924‑010",
     turno: "Miércoles y Viernes 8am ‑ 3pm",
-    fecha: new Date("2025‑09‑24"),
+    fecha: new Date("2025-09-24"),
     hora_llamada: "10:20",
     hora_traslado: "10:40",
     hora_salida: "11:30",
@@ -783,32 +783,41 @@ db.medicForm.insertMany([
 
 
 db.users.insertMany([
+   {
+    _id: ObjectId('68f6e265d8552917ed3f705b'),
+    username: 'amilkis',
+    password: '$argon2id$v=19$m=19456,t=2,p=1$QQ6E+yioOY1JsQl0mFA1fQ$/OrU0F11hP7TgtSsA/2+VOZFNZIFR9sIL+PWkeOjJ/s',
+    name: 'Amilka Daniela Lopez',
+    tipo: 'paramedico',
+    turno: 'Lunes a Viernes - 8am a 3pm',
+    phone: '5555555555'
+  },
   {
-    _id: ObjectId('68e8607c1343ac03563780dd'),
-    username: 'mau',
-    password: '$argon2id$v=19$m=19456,t=2,p=1$GLkuIE8AN3OSioCScZcylA$uEXtXDaZ50u8DLGyWGu7G+ZXbiGvg/V8PCAMPrE3Dvs',
-    name: 'Mauricio Monroy',
+    _id: ObjectId('68f6e2c1d8552917ed3f705c'),
+    username: 'maurice',
+    password: '$argon2id$v=19$m=19456,t=2,p=1$RVrWH3CL2ZY21iR6u6/Z8w$B38DAQomXRQLOroGsk3+c/9woc8g1iYDni+LNaivA3U',
+    name: 'Mauricio Emilio Monroy ',
     tipo: 'admin',
-    turno: "Lunes, Miércoles y Viernes 9pm - 8 am",
-    phone: '5554052794'
+    turno: 'Lunes a Viernes - 8am a 3pm',
+    phone: '1111111111'
   },
   {
-    _id: ObjectId('68e860c41343ac03563780de'),
-    username: 'amilka',
-    password: '$argon2id$v=19$m=19456,t=2,p=1$I6mmBvcJE5ePrGsvbTND3w$jM31uZPQIUZ0beSQ8NWiFwj5P/CwkanAl7BChw/k2sc',
-    name: 'Amilka Lopez',
-    tipo: "paramedico",
-    turno: 'Sábado, Domingo y festivos 8 am a 8pm',
-    phone: '11111111111111'
-  },
-  {
-    _id: ObjectId('68e875bc1ab23f6559828354'),
-    username: 'maria',
-    password: '$argon2id$v=19$m=19456,t=2,p=1$6eYtXI6o5AAjiuvNl49JIA$k8kaFBQX8F9mnPFq6E7mea6Vwz3Auk5jCuD9vKuyV10',
-    name: 'María Rivera',
+    _id: ObjectId('68f6e400d8552917ed3f7077'),
+    username: 'maryyyy',
+    password: '$argon2id$v=19$m=19456,t=2,p=1$6NbT1tKF7+CDP56Mkidw5A$2l5jiaj6bRPmAT5mAvkpuFnMndGfYnjskugboui8yhw',
+    name: 'Maria Rivera',
     tipo: 'jefe',
-    turno: 'Sábado, Domingo y festivos 8pm a 8am',
-    phone: '2222222222222'
+    turno: 'Lunes a Viernes - 8am a 3pm',
+    phone: '2222222222'
+  },
+  {
+    _id: ObjectId('68f6e78dd8552917ed3f7079'),
+    username: 'johnny',
+    password: '$argon2id$v=19$m=19456,t=2,p=1$v+UYCJOYDXu7CvhMmCwYDA$9OczTL4WvdIXiHGI2w+DyHsPr5and4VzirGsU2XEcDE',
+    name: 'Jonathan Vazquez',
+    tipo: 'paramedico',
+    turno: 'Lunes a Viernes - 8am a 3pm',
+    phone: '8888888888'
   }, 
   {
   username: 'juanp',
@@ -976,7 +985,7 @@ db.urbanForm.insertMany([
 
     {
     folio: "URB‑2025‑0006",
-    fecha_hora: new Date("2025‑09‑11T14:30:00Z"),
+    fecha_hora: new Date("2025-09-11"),
     turno: "Lunes, Miércoles y Viernes 9pm ‑ 8 am",
     personal_a_cargo: "Ing. María Hernández",
     modo_activacion: "llamada",
@@ -998,7 +1007,7 @@ db.urbanForm.insertMany([
   },
   {
     folio: "URB‑2025‑0007",
-    fecha_hora: new Date("2025‑09‑12T09:15:00Z"),
+    fecha_hora: new Date("2025-09-12"),
     turno: "Lunes a Viernes 8am ‑ 3pm",
     personal_a_cargo: "Téc. Carlos Martínez",
     modo_activacion: "oficio",
@@ -1019,7 +1028,7 @@ db.urbanForm.insertMany([
   },
   {
     folio: "URB‑2025‑0008",
-    fecha_hora: new Date("2025‑09‑13T22:40:00Z"),
+    fecha_hora: new Date("2025-09-13"),
     turno: "Martes, Jueves y Domingo 9pm ‑ 8am",
     personal_a_cargo: "Ing. José Almagro",
     modo_activacion: "llamada",
@@ -1041,7 +1050,7 @@ db.urbanForm.insertMany([
   },
   {
     folio: "URB‑2025‑0009",
-    fecha_hora: new Date("2025‑09‑14T13:05:00Z"),
+    fecha_hora: new Date("2025-09-14"),
     turno: "Lunes a Viernes 3pm ‑ 9pm",
     personal_a_cargo: "Téc. Sofía Vargas",
     modo_activacion: "oficio",
@@ -1062,7 +1071,7 @@ db.urbanForm.insertMany([
   },
   {
     folio: "URB‑2025‑0010",
-    fecha_hora: new Date("2025‑09‑15T17:20:00Z"),
+    fecha_hora: new Date("2025-09-15"),
     turno: "Lunes, Miércoles y Viernes 9pm ‑ 8 am",
     personal_a_cargo: "Ing. Mariana Soto",
     modo_activacion: "llamada",

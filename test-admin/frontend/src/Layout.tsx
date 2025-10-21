@@ -13,6 +13,7 @@ const customLayout = (props) => (
         marginLeft: "30px",
         marginRight: "30px",
         borderRadius: "50px",
+        width: "100%",
 
         // Responsive styles for small screens
         "@media (max-width:600px)": {

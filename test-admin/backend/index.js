@@ -41,16 +41,45 @@ app.get("/medicForm", async (req, res) => {
         let token = req.get("Authentication");
         let verifiedToken = await jwt.verify(token, await process.env.JWTKEY);
         let user = verifiedToken.username;
-        const { _start, _end, _sort, _order, q } = req.query;
+        const { _start, _end, _sort, _order, q, ...otherFilters } = req.query;
         const collection = db.collection("medicForm");
 
         // CONSTRUIR FILTRO PARA FECHAS Y UBICACIONES
-        const filter = q
-            ? { $or: [{ paciente_nombre: { $regex: q, $options: "i" } }, { calle: { $regex: q, $options: "i" } }] }
-            : {};
+        let filter = {};
+        
+        if (q) {
+            filter.$or = [
+                { folio: { $regex: q, $options: "i" } },
+                { paciente_nombre: { $regex: q, $options: "i" } },
+                { calle: { $regex: q, $options: "i" } },
+                { personal_a_cargo: { $regex: q, $options: "i" } }
+            ];
+        }
+        
+        Object.keys(otherFilters).forEach(key => {
+            if (otherFilters[key] && otherFilters[key] !== '') {
+                if (key.includes('fecha') || key.includes('hora')) {
+                    const dateValue = new Date(otherFilters[key]);
+                    if (!isNaN(dateValue.getTime())) {
+                        filter[key] = {
+                            $gte: new Date(dateValue.setHours(0, 0, 0, 0)),
+                            $lt: new Date(dateValue.setHours(23, 59, 59, 999))
+                        };
+                    }
+                } else {
+                    filter[key] = { $regex: otherFilters[key], $options: "i" };
+                }
+            }
+        });
 
         const sort = {};
-        if (_sort && _order) sort[_sort] = _order === "ASC" ? 1 : -1;
+        if (_sort && _order) {
+            sort[_sort] = _order.toLowerCase() === "asc" ? 1 : -1;
+        } else {
+            // Default sort
+            sort.fecha = -1; 
+        }
+
 
         const total = await collection.countDocuments(filter);
 
@@ -186,18 +215,37 @@ app.post("/registrarse", async (req, res) => {
 })
 
 // --------------------- urbanForms|
-// --------------------- urbanForm ---------------------
 app.get("/urbanForm", async (req, res) => {
     try {
         let token = req.get("Authentication");
         let verifiedToken = await jwt.verify(token, await process.env.JWTKEY);
         let user = verifiedToken.username;
 
-        const { _start, _end, _sort, _order, q } = req.query;
+        const { _start, _end, _sort, _order, q, turno, gravedad, modo_activacion, fecha_hora } = req.query;
+        
         const collection = db.collection("urbanForm");
-        const filter = q
-            ? { $or: [{ folio: { $regex: q, $options: "i" } }, { personal_a_cargo: { $regex: q, $options: "i" } }] }
-            : {};
+        let filter = {};
+        
+        // Text search
+        if (q) {
+            filter.$or = [
+                { folio: { $regex: q, $options: "i" } },
+                { personal_a_cargo: { $regex: q, $options: "i" } },
+                { tipo_servicio: { $regex: q, $options: "i" } }
+            ];
+        }
+        if (turno) filter.turno = { $regex: turno, $options: "i" };
+        if (gravedad) filter.gravedad = { $regex: gravedad, $options: "i" };
+        if (modo_activacion) filter.modo_activacion = { $regex: modo_activacion, $options: "i" };
+        if (fecha_hora) {
+            const dateValue = new Date(fecha_hora);
+            if (!isNaN(dateValue.getTime())) {
+                filter.fecha_hora = {
+                    $gte: new Date(dateValue.setHours(0, 0, 0, 0)),
+                    $lt: new Date(dateValue.setHours(23, 59, 59, 999))
+                };
+            }
+        }
         const sort = {};
         if (_sort && _order) sort[_sort] = _order === "ASC" ? 1 : -1;
         const total = await collection.countDocuments(filter);
@@ -308,14 +356,31 @@ app.get("/users", async (req, res) => {
         let token = req.get("Authentication");
         let verifiedToken = await jwt.verify(token, await process.env.JWTKEY);
         let user = verifiedToken.username;
-
-        const { _start, _end, _sort, _order, q } = req.query;
+const { _start, _end, _sort, _order, q, tipo, turno } = req.query;
         const collection = db.collection("users");
-        const filter = q
-            ? { $or: [{ username: { $regex: q, $options: "i" } }, { name: { $regex: q, $options: "i" } }] }
-            : {};
+        
+        let filter = {};
+        if (q) {
+            filter.$or = [
+                { username: { $regex: q, $options: "i" } }, 
+                { name: { $regex: q, $options: "i" } }
+            ];
+        }
+        
+        if (tipo) {
+            filter.tipo = tipo;
+        }
+        if (turno) {
+            filter.turno = turno;
+        }
+
         const sort = {};
-        if (_sort && _order) sort[_sort] = _order === "ASC" ? 1 : -1;
+        if (_sort && _order) {
+            sort[_sort] = _order === "ASC" ? 1 : -1;
+        } else {
+            sort.name = 1; 
+        }
+
         const total = await collection.countDocuments(filter);
         const users = await collection
             .find(filter)

@@ -6,6 +6,7 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
+<<<<<<< HEAD
       main: '#0d47a1', 
       contrastText: '#ffffff',
     },
@@ -16,13 +17,34 @@ export const lightTheme = createTheme({
     background: {
       default: '#f9f9f9', 
       paper: '#ffffff',
+=======
+      main: '#0078D4',        // azul principal (header, botones importantes)
+      contrastText: '#ffffff', 
+    },
+    secondary: {
+      main: '#1B2845',        // azul oscuro (menu, hover)
+      contrastText: '#ffffff',
+    },
+    warning: {
+      main: '#EEA243',        // amarillo para botones resaltantes
+      contrastText: '#000000',
+    },
+    background: {
+      default: '#f2f2f2',     // gris claro para fondos
+      paper: '#ffffff',        // blanco para cards, paneles, ventanas
+>>>>>>> d17412464299edbfbfac2d8a286d0447e5b90f02
     },
     error: {
       main: '#d32f2f',
     },
     text: {
+<<<<<<< HEAD
       primary: '#000000',
       secondary: '#333333',
+=======
+      primary: '#000000',      // negro para textos normales
+      secondary: '#333333',    // charcoal para secundarios
+>>>>>>> d17412464299edbfbfac2d8a286d0447e5b90f02
     },
   },
   typography: {
@@ -39,6 +61,10 @@ export const lightTheme = createTheme({
     },
   },
   components: {
+<<<<<<< HEAD
+=======
+    // --- botones ---
+>>>>>>> d17412464299edbfbfac2d8a286d0447e5b90f02
     MuiButtonBase: {
       styleOverrides: {
         root: {
@@ -54,6 +80,7 @@ export const lightTheme = createTheme({
           fontSize: '1.1rem',
           justifyContent: 'flex-start',
           padding: '8px 16px',
+<<<<<<< HEAD
           border: '1px solid #1976d2',
           borderRadius: '8px',
           color: '#ffffff',
@@ -61,10 +88,38 @@ export const lightTheme = createTheme({
           '&:hover': {
             backgroundColor: '#115293',
             borderColor: '#0d47a1',
+=======
+          borderRadius: '8px',
+        },
+        containedPrimary: {
+          color: '#ffffff',
+          backgroundColor: '#0078D4',
+          border: '1px solid #0078D4',
+          '&:hover': {
+            backgroundColor: '#005A9E',
+            borderColor: '#004C87',
+          },
+        },
+        containedSecondary: {
+          color: '#ffffff',
+          backgroundColor: '#1B2845',
+          border: '1px solid #1B2845',
+          '&:hover': {
+            backgroundColor: '#151F36',
+          },
+        },
+        containedWarning: {
+          color: '#000000',
+          backgroundColor: '#EEA243',
+          border: '1px solid #EEA243',
+          '&:hover': {
+            backgroundColor: '#D99130',
+>>>>>>> d17412464299edbfbfac2d8a286d0447e5b90f02
           },
         },
       },
     },
+<<<<<<< HEAD
     MuiMenuItem: {
       styleOverrides: {
         root: {
@@ -76,6 +131,72 @@ export const lightTheme = createTheme({
           padding: '8px 16px',
           '&:hover': {
             backgroundColor: '#e3f2fd',
+=======
+
+    // --- menu desplegable ---
+  MuiMenuItem: {
+    styleOverrides: {
+      root: {
+        fontSize: '1.1rem',
+        fontWeight: 500,
+        borderRadius: '6px',
+        margin: '4px 0',
+        padding: '8px 16px',
+        backgroundColor: '#0078D4', // mismo color que botones
+        color: '#ffffff',           // texto blanco por defecto
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+
+        // hover destacado: gris claro o ligeramente más claro que azul
+        '&:hover': {
+          backgroundColor: '#3399FF', // azul más claro que contraste con el fondo
+          color: '#1B2845',           // texto azul oscuro al hover
+          '& .MuiSvgIcon-root': { color: '#1B2845' }, // iconos también azul oscuro
+        },
+
+        // opción seleccionada / activa
+        '&.Mui-selected, &.RaMenuItemLink-active': {
+          backgroundColor: '#EEA243', // fondo amarillo para seleccionado
+          color: '#1B2845',           // texto azul oscuro
+          '& .MuiListItemText-root, & .MuiTypography-root': {
+            color: '#1B2845',
+          },
+          '& .MuiListItemIcon-root, & .MuiSvgIcon-root': {
+            color: '#1B2845',
+          },
+        },
+      },
+    },
+  },
+
+
+    // --- header ---
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#0078D4', // azul principal como en el login
+          color: '#ffffff',           // textos blancos
+        },
+      },
+    },
+
+    // --- textfields ---
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiInputBase-input': {
+            color: '#1b1b1b', // texto ingresado negro/charcoal
+          },
+          '& .MuiInputLabel-root': {
+            color: '#1b1b1b', // label negro
+          },
+          '& .MuiOutlinedInput-root': {
+            backgroundColor: '#ffffff',
+            '& fieldset': { borderColor: '#0078D4' },
+            '&:hover fieldset': { borderColor: '#1B2845' },
+            '&.Mui-focused fieldset': { borderColor: '#0078D4' },
+>>>>>>> d17412464299edbfbfac2d8a286d0447e5b90f02
           },
         },
       },
@@ -83,6 +204,11 @@ export const lightTheme = createTheme({
   },
 });
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> d17412464299edbfbfac2d8a286d0447e5b90f02
 export const darkTheme = createTheme({
   ...defaultTheme,
   palette: {
@@ -150,16 +276,35 @@ export const darkTheme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          color: '#ffffff',
           fontSize: '1.1rem',
           fontWeight: 500,
           borderRadius: '6px',
           margin: '4px 0',
           padding: '8px 16px',
-          backgroundColor: 'transparent',
+          backgroundColor: '#1B2845', // fondo gris oscuro del menú
+          color: '#ffffff', // texto blanco por defecto
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+
           '&:hover': {
-            backgroundColor: '#2c2c2c',
+            backgroundColor: '#2c2c2c', // hover: gris intermedio (no muy claro)
             color: '#ffffff',
+            '& .MuiSvgIcon-root': {
+              color: '#ffffff',
+            },
+          },
+
+          // estado seleccionado / activo: fondo blanco, texto e íconos azul oscuro
+          '&.Mui-selected, &.RaMenuItemLink-active': {
+            backgroundColor: '#ffffff', // fondo blanco al seleccionar
+            color: '#1B2845', // texto azul oscuro sobre blanco
+            '& .MuiListItemText-root, & .MuiTypography-root': {
+              color: '#1B2845',
+            },
+            '& .MuiListItemIcon-root, & .MuiSvgIcon-root': {
+              color: '#1B2845',
+            },
           },
         },
       },

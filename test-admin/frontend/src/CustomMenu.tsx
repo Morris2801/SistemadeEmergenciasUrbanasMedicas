@@ -9,15 +9,22 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 const CustomMenu = (props) => {
     const { permissions } = usePermissions();
 
+    // colores
+    const azulOscuro = '#1B2845';
+    const azulClaro = '#0078D4';
+    const textoBlanco = '#f2f2f2';
+
     return (
-        <Box sx={{ backgroundColor: '#bfbfbfff', rounded: 2, height: '100%', justifyContent: 'center', alignItems: 'center', marginTop: '22px'}}>
-            <Box sx={{ textAlign: 'center', p: 2, justifyContent: 'center', alignItems: 'center' }}>
-                <img
-                    src='../src/logo.jpg'
-                    alt="LogoCuaji"
-                    style={{ maxWidth: '100%', height: 'auto', borderRadius: '30px', marginTop: '30px'}}
-                />
-            </Box>
+        <Box sx={{
+            backgroundColor: azulOscuro,
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: '22px',
+            borderRadius: 2,
+            alignContent: "center",
+            justifyContent:"space-evenly",
+        }}>
             <Menu {...props}>
                 {permissions === 'admin' && (
                     <Box>

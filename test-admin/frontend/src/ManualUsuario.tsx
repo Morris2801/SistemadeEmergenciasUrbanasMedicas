@@ -11,12 +11,13 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Alert
+  Alert, useTheme
 } from "@mui/material";
 import { usePermissions } from "react-admin";
 
 const ManualUsuario: React.FC = () => {
   const { permissions, isLoading } = usePermissions();
+  const theme = useTheme();
 
   if (isLoading) {
     return (
@@ -41,19 +42,19 @@ const ManualUsuario: React.FC = () => {
         mx: "auto",
         p: 4,
         fontFamily: "Roboto, sans-serif",
-        color: "#222",
+        color: theme.palette.text.primary,
       }}
     >
-      <Typography variant="h4" gutterBottom fontWeight="bold">
+      <Typography variant="h4" gutterBottom fontWeight="bold" sx={{color: theme.palette.text.primary}}>
         Manual de Usuario del Sistema de Atención Prehospitalaria y Emergencias Urbanas
       </Typography>
 
       <Divider sx={{ my: 3 }} />
 
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom  sx={{color: theme.palette.text.primary}}>
         Índice
       </Typography>
-      <List dense>
+      <List dense  sx={{color: theme.palette.text.primary}}>
         {[
           "Introducción",
           "Roles de Usuario",
@@ -78,10 +79,10 @@ const ManualUsuario: React.FC = () => {
       <Divider sx={{ my: 3 }} />
 
       {/* Introducción */}
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom  sx={{color: theme.palette.text.primary}}>
         Introducción
       </Typography>
-      <Typography paragraph>
+      <Typography sx={{color: theme.palette.text.primary}} paragraph>
         Este sistema permite registrar, consultar y administrar información relacionada con
         <strong> emergencias urbanas </strong> y <strong> atención prehospitalaria </strong> para la
         <strong> Alcaldía de Cuajimalpa</strong>. Cada usuario tiene funciones específicas definidas
@@ -91,7 +92,7 @@ const ManualUsuario: React.FC = () => {
       <Divider sx={{ my: 3 }} />
 
       {/* Roles */}
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom  sx={{color: theme.palette.text.primary}}>
         Roles de Usuario
       </Typography>
       <Table>

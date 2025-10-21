@@ -10,12 +10,47 @@ const turnoChoices = [
     { id: 'Sábado, Domingo y festivos - 8pm a 8am', name: 'Sábado, Domingo y festivos - 8pm a 8am' },
 ];
 
+const UserFilters = [
+    <TextInput
+        key="q"
+        label="Buscar por nombre o usuario"
+        source="q"
+        alwaysOn
+        sx={{ minWidth: 250 }}
+    />,
+    <SelectInput
+        key="tipo"
+        label="Tipo de Usuario"
+        source="tipo"
+        alwaysOn
+        choices={[
+            { id: "admin", name: 'Administrador' },
+            { id: "jefe", name: "Jefe de Turno" },
+            { id: "paramedico", name: "Paramédico" },
+            { id: "operador", name: "Operador" },
+        ]}
+        sx={{ minWidth: 180 }}
+    />,
+    <SelectInput
+        key="turno"
+        label="Turno"
+        source="turno"
+        alwaysOn
+        choices={turnoChoices}
+        sx={{ minWidth: 200 }}
+    />,
+];
+
+
 export const UserList = () => {
     const isSmall = useMediaQuery<Theme>((theme) =>
         theme.breakpoints.down("sm")
     );
     return (
-        <List>
+        <List
+            filters={UserFilters}
+            sort={{ field: 'name', order: 'ASC' }}
+        >
             {isSmall ? (
                 <SimpleList
                     primaryText={(record) => record.username}
@@ -24,7 +59,6 @@ export const UserList = () => {
                 />
             ) : (
                 <DataTable>
-                    <DataTable.Col source="id" label="ID" />
                     <DataTable.Col source="username" label="Usuario" />
                     <DataTable.Col source="name" label="Nombre" />
                     <DataTable.Col source="tipo" label="Tipo" />
