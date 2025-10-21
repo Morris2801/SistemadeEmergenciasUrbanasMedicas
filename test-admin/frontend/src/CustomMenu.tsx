@@ -7,7 +7,7 @@ import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 
 const CustomMenu = (props) => {
-    const { permissions } = usePermissions(); 
+    const { permissions } = usePermissions();
 
     return (
         <Box sx={{ backgroundColor: '#bfbfbfff', rounded: 2, height: '100%', justifyContent: 'center', alignItems: 'center', marginTop: '22px'}}>
@@ -21,21 +21,175 @@ const CustomMenu = (props) => {
             <Menu {...props}>
                 {permissions === 'admin' && (
                     <Box>
-                        <MenuItemLink to="/dashboard" primaryText="Dashboard" leftIcon={<DashboardIcon />} />
-                        <MenuItemLink to="/users" primaryText="Usuarios" leftIcon={<UserIcon />} />
-                        <MenuItemLink to="/medicForm" primaryText="Em. Prehospitalarias" leftIcon={<MedicalInformationIcon />} />
-                        <MenuItemLink to="/urbanForm" primaryText="Em. Urbanas" leftIcon={<EngineeringIcon />} />
-                        <MenuItemLink to="/estadisticas" primaryText="Estadísticas" leftIcon={<BarChartIcon />} />
+                        <Box sx={{ mb: 2, padding: 1, }}>
+                            <MenuItemLink
+                                to="/dashboard"
+                                primaryText="Dashboard"
+                                leftIcon={<DashboardIcon sx={{ color: textoBlanco }} />}
+                                sx={{
+                                    color: textoBlanco,
+                                    height: '10%',
+                                    '&.Mui-selected': {
+                                        backgroundColor: azulClaro,
+                                        color: textoBlanco,
+                                        '& .MuiSvgIcon-root': {
+                                            color: textoBlanco,
+                                        },
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: '#ffffff',
+                                        color: azulOscuro,
+                                        '& .MuiSvgIcon-root': { color: azulOscuro },
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box sx={{ mb: 2 , padding: 1}}>
+                            <MenuItemLink
+                                to="/users"
+                                primaryText="Usuarios"
+                                leftIcon={<UserIcon sx={{ color: textoBlanco }} />}
+                                sx={{
+                                    color: textoBlanco,
+                                    '&.Mui-selected': {
+                                        backgroundColor: azulClaro,
+                                        color: textoBlanco,
+                                        '& .MuiSvgIcon-root': { color: textoBlanco },
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: '#ffffff',
+                                        color: azulOscuro,
+                                        '& .MuiSvgIcon-root': { color: azulOscuro },
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box sx={{ mb: 2, padding: 1}}>
+                            <MenuItemLink
+                                to="/medicForm"
+                                primaryText="Em. Prehospitalarias"
+                                leftIcon={<MedicalInformationIcon sx={{ color: textoBlanco }} />}
+                                sx={{
+                                    color: textoBlanco,
+                                    '&.Mui-selected': {
+                                        backgroundColor: azulClaro,
+                                        color: textoBlanco,
+                                        '& .MuiSvgIcon-root': { color: textoBlanco },
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: '#ffffff',
+                                        color: azulOscuro,
+                                        '& .MuiSvgIcon-root': { color: azulOscuro },
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box sx={{ mb: 2, padding: 1}}>
+                            <MenuItemLink
+                                to="/urbanForm"
+                                primaryText="Em. Urbanas"
+                                leftIcon={<EngineeringIcon sx={{ color: textoBlanco }} />}
+                                sx={{
+                                    color: textoBlanco,
+                                    '&.Mui-selected': {
+                                        backgroundColor: azulClaro,
+                                        color: textoBlanco,
+                                        '& .MuiSvgIcon-root': { color: textoBlanco },
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: '#ffffff',
+                                        color: azulOscuro,
+                                        '& .MuiSvgIcon-root': { color: azulOscuro },
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box sx={{ mb: 2, padding: 1}}>
+                            <MenuItemLink
+                                to="/estadisticas"
+                                primaryText="Estadísticas"
+                                leftIcon={<BarChartIcon sx={{ color: textoBlanco }} />}
+                                sx={{
+                                    color: textoBlanco,
+                                    '&.Mui-selected': {
+                                        backgroundColor: azulClaro,
+                                        color: textoBlanco,
+                                        '& .MuiSvgIcon-root': { color: textoBlanco },
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: '#ffffff',
+                                        color: azulOscuro,
+                                        '& .MuiSvgIcon-root': { color: azulOscuro },
+                                    },
+                                }}
+                            />
+                        </Box>
                     </Box>
                 )}
-                {(permissions === 'jefe') && (
+                {permissions === 'jefe' && (
                     <Box>
-                        <MenuItemLink to="/estadisticas" primaryText="Estadísticas" leftIcon={<BarChartIcon />} />
-                        <MenuItemLink to="/medicForm" primaryText="Em. Prehospitalarias" leftIcon={<MedicalInformationIcon />} />
-                        <MenuItemLink to="/urbanForm" primaryText="Em. Urbanas" leftIcon={<EngineeringIcon />} />
+                        <Box sx={{ mb: 2, padding: 1}}>
+                            <MenuItemLink
+                                to="/estadisticas"
+                                primaryText="Estadísticas"
+                                leftIcon={<BarChartIcon sx={{ color: textoBlanco }} />}
+                                sx={{
+                                    color: textoBlanco,
+                                    '&.Mui-selected': {
+                                        backgroundColor: azulClaro,
+                                        color: textoBlanco,
+                                        '& .MuiSvgIcon-root': { color: textoBlanco },
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: '#ffffff',
+                                        color: azulOscuro,
+                                        '& .MuiSvgIcon-root': { color: azulOscuro },
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box sx={{ mb: 2 , padding: 1}}>
+                            <MenuItemLink
+                                to="/medicForm"
+                                primaryText="Em. Prehospitalarias"
+                                leftIcon={<MedicalInformationIcon sx={{ color: textoBlanco }} />}
+                                sx={{
+                                    color: textoBlanco,
+                                    '&.Mui-selected': {
+                                        backgroundColor: azulClaro,
+                                        color: textoBlanco,
+                                        '& .MuiSvgIcon-root': { color: textoBlanco },
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: '#ffffff',
+                                        color: azulOscuro,
+                                        '& .MuiSvgIcon-root': { color: azulOscuro },
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box sx={{ mb: 2 , padding: 1}}>
+                            <MenuItemLink
+                                to="/urbanForm"
+                                primaryText="Em. Urbanas"
+                                leftIcon={<EngineeringIcon sx={{ color: textoBlanco }} />}
+                                sx={{
+                                    color: textoBlanco,
+                                    '&.Mui-selected': {
+                                        backgroundColor: azulClaro,
+                                        color: textoBlanco,
+                                        '& .MuiSvgIcon-root': { color: textoBlanco },
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: '#ffffff',
+                                        color: azulOscuro,
+                                        '& .MuiSvgIcon-root': { color: azulOscuro },
+                                    },
+                                }}
+                            />
+                        </Box>
                     </Box>
                 )}
-                
             </Menu>
         </Box>
     );
