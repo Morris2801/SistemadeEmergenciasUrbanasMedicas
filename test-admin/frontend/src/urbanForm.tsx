@@ -1,4 +1,5 @@
 // src/urbanForm.tsx
+import React from 'react';
 import {
   Create,
   List,
@@ -31,6 +32,8 @@ import {
 } from 'react-admin';
 import { useNavigate } from 'react-router-dom';
 import { Button, useMediaQuery, Theme, Paper, Typography, Grid, Box } from '@mui/material';
+import { useSaveContent } from "./hooks/useSaveContent"; 
+import { useImageInputPreview } from "./hooks/useImageInputPreview";
 
 // Formato completo: YYYY-MM-DD HH:mm
 const formatDateTime = (date?: string | Date) => {
@@ -65,6 +68,19 @@ const formatDateYMD = (date?: string | Date) => {
   return `${yyyy}-${month}-${dd}`;
 };
 
+const useUnique = () => {
+  const generateUniqueFolio = React.useCallback(() => {
+    const date = new Date();
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    const random = Math.floor(1000 + Math.random() * 9000); // 4 dígitos aleatorios
+    return `URB-${y}${m}${d}-${random}`;
+  }, []);
+
+  return React.useMemo(() => generateUniqueFolio(), [generateUniqueFolio]);
+};
+
 const turnoChoices = [
     { id: 'Lunes a Viernes - 8am a 3pm', name: 'Lunes a Viernes - 8am a 3pm' },
     { id: 'Lunes a Viernes - 3pm a 9pm', name: 'Lunes a Viernes - 3pm a 9pm' },
@@ -74,8 +90,18 @@ const turnoChoices = [
     { id: 'Sábado, Domingo y festivos - 8pm a 8am', name: 'Sábado, Domingo y festivos - 8pm a 8am' },
 ];
 
+
+const FormSaver = () => {
+    useSaveContent("urbanFormDraft");
+    return null;
+};
+
+
 const UrbanFormImproved = () => {
   const navigate = useNavigate();
+  const uniqueFolio = useUnique();
+
+   const { previewUrls, handlePreview } = useImageInputPreview();
 
   return (
     <SimpleForm>
@@ -90,7 +116,13 @@ const UrbanFormImproved = () => {
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <TextInput source="folio" label="Folio" validate={required()} fullWidth />
+           <TextInput
+              source="folio"
+              label="Folio"
+              validate={required()}
+              fullWidth
+              defaultValue={uniqueFolio}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <DateTimeInput source="fecha_hora" label="Día, fecha y hora" validate={required()} fullWidth />
@@ -162,7 +194,7 @@ const UrbanFormImproved = () => {
             <TextInput source="observaciones" label="Observaciones" multiline fullWidth />
           </Grid>
           <Grid item xs={12}>
-            <FileInput source="fotos" label="Fotografías" accept="image/*" multiple>
+            <FileInput source="fotos" label="Fotografías" accept="image/*" multiple onChange={handlePreview} >
               <ImageField source="src" title="Fotografía" />
             </FileInput>
           </Grid>
@@ -177,7 +209,9 @@ const UrbanFormImproved = () => {
           </Grid>
         </Grid>
       </Paper>
+      <FormSaver />
     </SimpleForm>
+
   );
 };
 
@@ -273,6 +307,7 @@ export const UrbanFormCreate = () => {
       mutationOptions={{
         onSuccess: () => {
           notify('Reporte guardado', { type: 'success' });
+          localStorage.removeItem("urbanFormDraft");
           redirect('/selector');
         },
         onError: () => {
