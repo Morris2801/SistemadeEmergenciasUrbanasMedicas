@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { usePermissions, useDataProvider } from "react-admin";
 import { Radar } from 'react-chartjs-2';
 import { RadarController, RadialLinearScale } from 'chart.js';
+import {useMediaQuery, Theme} from '@mui/material'
 
 ChartJS.register(RadarController, RadialLinearScale);
 
@@ -68,6 +69,24 @@ interface DashboardStats {
     criticalCases: number;
 }
 
+const countBySex = (forms: any[]) => {
+  const counts = {
+    masculino: 0,
+    femenino: 0,
+    otro: 0,
+  };
+
+  forms.forEach((form) => {
+    const sexo = (form.sexo_paciente || '').toLowerCase();
+
+    if (sexo === 'masculino') counts.masculino++;
+    else if (sexo === 'femenino') counts.femenino++;
+    else counts.otro++;
+  });
+
+  return counts;
+};
+
 const formatDateTime = (date?: string | Date) => {
   if (!date) return 'Sin fecha';
   const d = new Date(date);
@@ -114,6 +133,7 @@ const countCriticalConditions = (forms: any[]) => {
 };
 
 export const Dashboard: React.FC = () => {
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
     const { permissions } = usePermissions();
     const dataProvider = useDataProvider();
     const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -300,11 +320,54 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
                 </Grid>
             </Grid>
 
+            <Typography variant="h4" gutterBottom>
+                Gestionamiento
+            </Typography>
+ {/* Quick Actions */}
+                <Grid item xs={12}>
+                    <Card>
+                        <CardHeader title="Acciones Rápidas" />
+                        <CardContent>
+                            <Box display="flex" gap={2} flexWrap="wrap" box = '80%' alignItems={'center'}>
+                                <Chip 
+                                    label="Nuevo Reporte Médico" 
+                                    color="primary" 
+                                    onClick={() => window.location.href = '/#/medicForm/create'}
+                                    clickable
+                                />
+                                <Chip 
+                                    label="Nueva Emergencia Urbana" 
+                                    color="secondary" 
+                                    onClick={() => window.location.href = '/#/urbanForm/create'}
+                                    clickable
+                                />
+                                <Chip 
+                                    label="Gestionar Usuarios" 
+                                    color="info" 
+                                    onClick={() => window.location.href = '/#/users'}
+                                    clickable
+                                />
+                                <Chip 
+                                    label="Ver Estadísticas" 
+                                    color="success" 
+                                    onClick={() => window.location.href = '/#/estadisticas'}
+                                    clickable
+                                />
+                            </Box>
+                            
+                        </CardContent>
+                    </Card>
+                </Grid>
+                
+            <Typography variant="h4" gutterBottom>
+                Panel de Control - Atención Prehospitalaria
+            </Typography>
+
             {/* Recent Activity */}
             <Grid container spacing={3}>
                 {/* Recent Medical Forms */}
                 {stats?.recentMedicForms && stats.recentMedicForms.length > 0 && (
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={4}>
                         <Card>
                             <CardHeader title="Reportes Médicos Recientes" />
                             <CardContent>
@@ -341,131 +404,15 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
                     </Grid>
                 )}
 
-                {/* Recent Urban Forms */}
-                {stats?.recentUrbanForms && stats.recentUrbanForms.length > 0 && (
                     <Grid item xs={12} md={6}>
-                        <Card>
-                            <CardHeader title="Emergencias Urbanas Recientes" />
-                            <CardContent>
-                                <TableContainer>
-                                    <Table size="small">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell>Folio</TableCell>
-                                                <TableCell>Tipo</TableCell>
-                                                <TableCell>Turno</TableCell>
-                                                <TableCell>Fecha y Hora</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {stats.recentUrbanForms.slice(0, 5).map((form) => (
-                                                <TableRow key={form.id}>
-                                                    <TableCell>{form.folio}</TableCell>
-                                                    <TableCell>{form.tipo_servicio || 'N/A'}</TableCell>
-                                                    <TableCell>{form.turno || 'N/A'}</TableCell>
-                                                    <TableCell>{formatDateTime(form.fecha_hora)}</TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                )}
-
-                {/* Quick Actions */}
-                <Grid item xs={12}>
-                    <Card>
-                        <CardHeader title="Acciones Rápidas" />
-                        <CardContent>
-                            <Box display="flex" gap={2} flexWrap="wrap">
-                                <Chip 
-                                    label="Nuevo Reporte Médico" 
-                                    color="primary" 
-                                    onClick={() => window.location.href = '/#/medicForm/create'}
-                                    clickable
-                                />
-                                <Chip 
-                                    label="Nueva Emergencia Urbana" 
-                                    color="secondary" 
-                                    onClick={() => window.location.href = '/#/urbanForm/create'}
-                                    clickable
-                                />
-                                <Chip 
-                                    label="Gestionar Usuarios" 
-                                    color="info" 
-                                    onClick={() => window.location.href = '/#/users'}
-                                    clickable
-                                />
-                                <Chip 
-                                    label="Ver Estadísticas" 
-                                    color="success" 
-                                    onClick={() => window.location.href = '/#/estadisticas'}
-                                    clickable
-                                />
-                            </Box>
-                            
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} sx={{ mt: 3 }}>
-    <Grid item xs={12} md={6}>
-        <Card>
-            <CardHeader title="Comparativa de Formularios" />
-            <CardContent>
-              <Box sx={{ width: 400, height: 300 }}>
-                <Bar
-                    data={{
-                        labels: ['Reportes Médicos', 'Emergencias Urbanas'],
-                        datasets: [
-                            {
-                                label: 'Cantidad Total',
-                                data: [
-                                    stats?.totalMedicForms || 0,
-                                    stats?.totalUrbanForms || 0,
-                                ],
-                                backgroundColor: [
-                                    'rgba(75, 192, 192, 0.6)',
-                                    'rgba(255, 99, 132, 0.6)',
-                                ],
-                                borderColor: [
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                ],
-                                borderWidth: 1,
-                            },
-                        ],
-                    }}
-                    options={{
-                        responsive: true,
-                        plugins: {
-                            legend: { position: 'top' },
-                            title: { display: true, text: 'Total de Formularios por Tipo' },
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: { stepSize: 1 },
-                            },
-                        },
-                    }}
-                />
-                </Box>
-            </CardContent>
-        </Card>
-    </Grid>
-
-    <Grid item xs={12} md={6}>
         <Card>
             <CardHeader title="Tendencia de Reportes Médicos" />
             <CardContent>
-              <Box sx={{ width: 400, height: 300 }}>
+              <Box sx={{ width: 400, height: 225 }}>
                 <Line
                     data={{
                         labels: stats?.recentMedicForms.map((form) =>
-                            (form.fechaCronometria || form.fecha || '').split('T')[0]
+                           formatDateTime(form.fechaCronometria || form.fecha || '')
                         ) || [],
                         datasets: [
                             {
@@ -533,8 +480,50 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
                 </CardContent>
         </Card>
     </Grid>
-    
-    <Grid item xs={12} md={4}>
+
+<Grid item xs={12} md={6}>
+  <Card>
+    <CardHeader title="Reportes Médicos por Sexo del Paciente" />
+    <CardContent>
+      <Box sx={{ width: '100%', height: 500, display: 'flex', alignItems: 'center', alignContent: 'center' }}>
+        <Bar
+          data={{
+            labels: ['Masculino', 'Femenino', 'Otro / No Especificado'],
+            datasets: [
+              {
+                label: 'Cantidad',
+                data: Object.values(countBySex(stats?.recentMedicForms || [])),
+                backgroundColor: [
+                  'rgba(54, 162, 235, 0.7)',    
+                  'rgba(255, 99, 132, 0.7)',   
+                  'rgba(201, 203, 207, 0.7)',   
+                ],
+                borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(201, 203, 207, 1)',
+                ],
+                borderWidth: 1,
+              },
+            ],
+          }}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              title: { display: true, text: 'Reportes por Sexo del Paciente' },
+            },
+            scales: {
+              y: { beginAtZero: true, ticks: { stepSize: 1 } },
+            },
+          }}
+        />
+      </Box>
+    </CardContent>
+  </Card>
+</Grid>
+
+<Grid item xs={12} md={4}>
         <Card>
             <CardHeader title="Casos Críticos vs No Críticos en Reportes Médicos" />
             <CardContent>
@@ -575,9 +564,136 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
 
 <Grid item xs={12} md={6}>
     <Card>
+        <CardHeader title="Distribución de Turnos en Reportes Médicos (Radar)" />
+        <CardContent>
+            <Box sx={{ width: '100%', height: 300 }}>
+                <Radar
+                    data={{
+                        labels: Object.keys(countByTurno(stats?.recentMedicForms || [])),
+                        datasets: [
+                            {
+                                label: 'Ocurrencias',
+                                data: Object.values(countByTurno(stats?.recentMedicForms || [])),
+                                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                                borderColor: 'rgba(255, 159, 64, 1)',
+                                pointBackgroundColor: 'rgba(255, 159, 64, 1)',
+                            },
+                        ],
+                    }}
+                    options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1,
+                                },
+                            },
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Turnos con Más Ocurrencias (Radar)',
+                            },
+                        },
+                    }}
+                />
+            </Box>
+        </CardContent>
+    </Card>
+</Grid>
+          <Typography variant="h4" gutterBottom>
+                Panel de Control - Emergencia Urbana
+            </Typography>
+
+                {/* Recent Urban Forms */}
+                {stats?.recentUrbanForms && stats.recentUrbanForms.length > 0 && (
+                    <Grid item xs={12} md={6}>
+                        <Card>
+                            <CardHeader title="Emergencias Urbanas Recientes" />
+                            <CardContent>
+                                <TableContainer>
+                                    <Table size="small">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>Folio</TableCell>
+                                                <TableCell>Tipo</TableCell>
+                                                <TableCell>Turno</TableCell>
+                                                <TableCell>Fecha y Hora</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {stats.recentUrbanForms.slice(0, 5).map((form) => (
+                                                <TableRow key={form.id}>
+                                                    <TableCell>{form.folio}</TableCell>
+                                                    <TableCell>{form.tipo_servicio || 'N/A'}</TableCell>
+                                                    <TableCell>{form.turno || 'N/A'}</TableCell>
+                                                    <TableCell>{formatDateTime(form.fecha_hora)}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                )}
+
+            <Grid container spacing={3} sx={{ mt: 3 }}>
+    <Grid item xs={12} md={6}>
+        <Card>
+            <CardHeader title="Comparativa de Formularios" />
+            <CardContent>
+              <Box sx={{ width: 400, height: 300 }}>
+                <Bar
+                    data={{
+                        labels: ['Reportes Médicos', 'Emergencias Urbanas'],
+                        datasets: [
+                            {
+                                label: 'Cantidad Total',
+                                data: [
+                                    stats?.totalMedicForms || 0,
+                                    stats?.totalUrbanForms || 0,
+                                ],
+                                backgroundColor: [
+                                    'rgba(75, 192, 192, 0.6)',
+                                    'rgba(255, 99, 132, 0.6)',
+                                ],
+                                borderColor: [
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                ],
+                                borderWidth: 1,
+                            },
+                        ],
+                    }}
+                    options={{
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'top' },
+                            title: { display: true, text: 'Total de Formularios por Tipo' },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { stepSize: 1 },
+                            },
+                        },
+                    }}
+                />
+                </Box>
+            </CardContent>
+        </Card>
+    </Grid>
+
+    
+
+<Grid item xs={12} md={6}>
+    <Card>
         <CardHeader title="Distribución de Turnos en Emergencias Urbanas (Radar)" />
         <CardContent>
-            <Box sx={{ width: '100%', height: 400 }}>
+            <Box sx={{ width: '100%', height: 300 }}>
                 <Radar
                     data={{
                         labels: Object.keys(countByTurno(stats?.recentUrbanForms || [])),
@@ -615,47 +731,7 @@ const StatCard = ({ title, value, icon, color = "primary" }: any) => (
     </Card>
 </Grid>
 
-<Grid item xs={12} md={6}>
-    <Card>
-        <CardHeader title="Distribución de Turnos en Reportes Médicos (Radar)" />
-        <CardContent>
-            <Box sx={{ width: '100%', height: 400 }}>
-                <Radar
-                    data={{
-                        labels: Object.keys(countByTurno(stats?.recentMedicForms || [])),
-                        datasets: [
-                            {
-                                label: 'Ocurrencias',
-                                data: Object.values(countByTurno(stats?.recentMedicForms || [])),
-                                backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                                borderColor: 'rgba(255, 159, 64, 1)',
-                                pointBackgroundColor: 'rgba(255, 159, 64, 1)',
-                            },
-                        ],
-                    }}
-                    options={{
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            r: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 1,
-                                },
-                            },
-                        },
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Turnos con Más Ocurrencias (Radar)',
-                            },
-                        },
-                    }}
-                />
-            </Box>
-        </CardContent>
-    </Card>
-</Grid>
+            </Grid>
 
 </Grid>
         </Box>
