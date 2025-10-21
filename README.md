@@ -1,10 +1,10 @@
-# 🧾 Manual de Usuario del Sistema de Atención Prehospitalaria y Emergencias Urbanas
+# Manual de Usuario del Sistema de Atención Prehospitalaria y Emergencias Urbanas
 
-## 📚 Índice
+## Índice
 1. [Introducción](#introducción)
 2. [Roles de Usuario](#roles-de-usuario)
 3. [Accesos por Rol](#accesos-por-rol)
-4. [Instrucciones de Acceso](#🖥️-instrucciones-de-acceso)
+4. [Instrucciones de Acceso](#instrucciones-de-acceso)
 5. [Guía de Uso por Rol](#👣-guía-de-uso-por-rol)
 6. [Explicación de la Interfaz](#🧭-explicación-de-la-interfaz)
 7. [Gestión de Datos](#💾-gestión-de-datos)
@@ -17,24 +17,24 @@
 
 ---
 
-## 🩺 Introducción
+## Introducción
 Este sistema permite registrar, consultar y administrar información relacionada con **emergencias urbanas** y **atención prehospitalaria** para la **alcaldía de Cuajimalpa**.  
 Cada usuario tiene funciones específicas definidas por su rol dentro del sistema.
 
 ---
 
-## 👥 Roles de Usuario
+## Roles de Usuario
 
 | Rol | Descripción |
 |-----|--------------|
-| 🧑‍⚕ **Paramédico** | Puede crear y consultar reportes de emergencias. |
-| 👨‍✈ **Jefe de Turno** | Visualiza todos los reportes registrados, sin editar. |
-| 🧑‍💼 **Administrador** | Acceso total a reportes, estadísticas y gestión de usuarios. |
-| 📞 **Operador** | Responsable del ingreso inicial de datos (dependiendo de implementación). |
+|  **Paramédico** | Puede crear y consultar reportes de emergencias. |
+|  **Jefe de Turno** | Visualiza todos los reportes registrados, sin editar. |
+|  **Administrador** | Acceso total a reportes, estadísticas y gestión de usuarios. |
+|  **Operador** | Responsable del ingreso inicial de datos (dependiendo de implementación). |
 
 ---
 
-## 🔐 Accesos por Rol
+## Accesos por Rol
 
 | Funcionalidad | Admin | Paramedico | Jefe de Turno | Operador |
 |----------------|:------:|:-----------:|:--------------:|:----------:|
@@ -46,32 +46,32 @@ Cada usuario tiene funciones específicas definidas por su rol dentro del sistem
 
 ---
 
-## 🖥️ Instrucciones de Acceso
+##  Instrucciones de Acceso
 
-### 🔗 Cómo ingresar al sistema
+###  Cómo ingresar al sistema
 El sistema se encuentra disponible a través del navegador web en la siguiente dirección:  
-👉 **http://127.0.0.1:5173/**  
+ **http://127.0.0.1:5173/**  
 
 También puede abrirse como aplicación local desde la interfaz de desarrollo (React + Vite).
 
-### ⚙️ Requisitos técnicos
+###  Requisitos técnicos
 - **Navegador recomendado:** Google Chrome (v110+) o Microsoft Edge  
 - **Conexión:** estable a Internet o red local  
 - **Cuenta de usuario:** proporcionada por el Administrador  
 
-### 🔐 Proceso de inicio de sesión
+###  Proceso de inicio de sesión
 1. Ingrese a la URL del sistema.  
 2. Escriba su usuario y contraseña.  
 3. Presione el botón **“Iniciar sesión”**.  
 4. Si las credenciales son correctas, accederá al panel principal.  
 
-💡 *Recuperación de contraseña:* comuníquese con el Administrador del sistema para restablecerla desde el módulo de usuarios.
+ *Recuperación de contraseña:* comuníquese con el Administrador del sistema para restablecerla desde el módulo de usuarios.
 
 ---
 
-## 👣 Guía de Uso por Rol
+##  Guía de Uso por Rol
 
-### 👨‍⚕️ **Paramédico**
+### **Paramédico**
 1. Desde el panel principal, seleccione **“Emergencia Médica”**.  
 2. Haga clic en **“Crear nuevo reporte”**.  
 3. Complete los campos del formulario:
@@ -83,7 +83,7 @@ También puede abrirse como aplicación local desde la interfaz de desarrollo (R
 
 ---
 
-### 🧑‍💼 **Administrador**
+###  **Administrador**
 - Ingrese a **“Panel de control” → “Usuarios”**.  
 - Puede:
   - Crear, editar o eliminar usuarios.  
@@ -93,7 +93,7 @@ También puede abrirse como aplicación local desde la interfaz de desarrollo (R
 
 ---
 
-### 📞 **Operador**
+###  **Operador**
 1. Entre al módulo **“Emergencias” → “Nuevo registro”**.  
 2. Capture los datos iniciales:
    - Folio, turno, hora y dirección del evento.  
@@ -102,7 +102,7 @@ También puede abrirse como aplicación local desde la interfaz de desarrollo (R
 
 ---
 
-### 🚒 **Jefe de Turno**
+###  **Jefe de Turno**
 1. Ingrese al menú **“Reportes”**.  
 2. Use los filtros superiores (fecha, operador, prioridad, condición).  
 3. Visualice los reportes con el botón 👁️ **Ver**, despúes aparecera la opción de editar si es necesario.
@@ -110,16 +110,16 @@ También puede abrirse como aplicación local desde la interfaz de desarrollo (R
 
 ---
 
-## 🧭 Explicación de la Interfaz
+##  Explicación de la Interfaz
 
-### 🧩 Menú principal
+###  Menú principal
 - **Inicio:** vuelve al selector de módulos.  
 - **Emergencia Médica:** reportes del personal paramédico.  
 - **Emergencia Urbana:** reportes de protección civil o bomberos.  
 - **Usuarios (solo admin):** gestión de cuentas.  
 - **Salir:** cerrar sesión.  
 
-### 🎨 Significado de iconos y colores
+###  Significado de iconos y colores
 
 | Ícono / Color | Significado |
 |---------------|-------------|
@@ -127,20 +127,20 @@ También puede abrirse como aplicación local desde la interfaz de desarrollo (R
 | 👁️ | Ver detalles del reporte |
 | ✏️ | Editar reporte existente |
 
-### 🧭 Navegación
+###  Navegación
 - Los módulos se abren en pestañas o secciones laterales.  
 - Los filtros permiten buscar por folio, operador o fecha.  
 - El diseño es **responsivo**, adaptándose a vista móvil o escritorio.
 
 ---
 
-## 💾 Gestión de Datos
+##  Gestión de Datos
 
 ### ✅ Guardar un reporte
 - Complete todos los campos obligatorios (*).  
 - Presione **Guardar**.  
 - Aparecerá el mensaje:  
-  `✅ Reporte guardado correctamente.`
+  `Reporte guardado correctamente.`
 
 ### ✏️ Editar o eliminar
 - Use el botón **Editar** desde el listado.  
@@ -150,32 +150,32 @@ También puede abrirse como aplicación local desde la interfaz de desarrollo (R
 - Use el botón **Exportar CSV** (parte superior derecha).  
 - Se descargará un archivo compatible con **Excel** o **Google Sheets**.
 
-### ⚠️ Si se cierra sesión sin guardar
+### !!! Si se cierra sesión sin guardar
 Los cambios **no se conservan**.  
 El sistema guarda la información **solo al presionar “Guardar”**.
 
 ---
 
-## ⚠️ Errores Comunes y Soluciones
+##  Errores Comunes y Soluciones
 
 | Problema | Posible causa | Solución |
 |-----------|----------------|-----------|
-| ❌ No se guarda un reporte | Campos obligatorios vacíos | Verificar los campos marcados con * |
-| 🚫 “401 Unauthorized” | Sesión expirada o token inválido | Cerrar sesión y volver a iniciar |
-| 🌐 Error de conexión | Internet inestable o backend caído | Revisar conexión o reiniciar servidor Node |
-| 📦 Exportar CSV no descarga | Navegador bloquea pop-ups | Permitir descargas automáticas |
-| 🔄 Página se queda cargando | Backend o BD sin respuesta | Revisar consola del servidor (nodemon) |
+|  No se guarda un reporte | Campos obligatorios vacíos | Verificar los campos marcados con * |
+|  “401 Unauthorized” | Sesión expirada o token inválido | Cerrar sesión y volver a iniciar |
+|  Error de conexión | Internet inestable o backend caído | Revisar conexión o reiniciar servidor Node |
+|  Exportar CSV no descarga | Navegador bloquea pop-ups | Permitir descargas automáticas |
+|  Página se queda cargando | Backend o BD sin respuesta | Revisar consola del servidor (nodemon) |
 
 ---
 
-## 🚑 Módulo: Atención Prehospitalaria
+##  Módulo: Atención Prehospitalaria
 *(Sección resumida para contexto — ver formulario completo en documentación técnica)*  
 
 Permite registrar y gestionar la atención médica, incluyendo datos de servicio, paciente, parto, causas clínicas o traumáticas, evaluación inicial y secundaria, traslado, tratamiento, observaciones y datos legales.
 
 ---
 
-## 🚒 Módulo: Emergencias Urbanas
+##  Módulo: Emergencias Urbanas
 Gestiona eventos como incendios, colapsos o explosiones.  
 Campos principales:
 - Folio  
@@ -190,7 +190,7 @@ Campos principales:
 
 ---
 
-## ⚙️ Módulo: Administración
+##  Módulo: Administración
 Permite:
 - Gestionar usuarios y roles  
 - Consultar estadísticas generales  
@@ -198,12 +198,12 @@ Permite:
 
 ---
 
-## 🩺 Formulario Médico - Detalle del Reporte
+##  Formulario Médico - Detalle del Reporte
 Integra todos los campos clínicos y operativos necesarios para la atención prehospitalaria y registro de emergencias.
 
 ---
 
-## 🛠️ Soporte Técnico
+##  Soporte Técnico
 Para incidencias técnicas, errores o recuperación de acceso, comuníquese con el **Administrador del sistema** o con el **equipo de soporte técnico** de la alcaldía.
 
 ---
