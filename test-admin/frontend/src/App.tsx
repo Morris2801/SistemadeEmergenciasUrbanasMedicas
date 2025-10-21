@@ -23,6 +23,7 @@ import { MedicFormCreate, MedicFormEdit, MedicFormShow, MedicFormList } from './
 import { UserList, UserEdit, UserShow, UserCreate } from './users';
 import { UrbanFormCreate, UrbanFormShow, UrbanFormList, UrbanFormEdit} from './urbanForm';
 import Selector from './selector';
+import ManualUsuario from './ManualUsuario';
 
 
 // Iconos
@@ -49,6 +50,7 @@ export const App = () => (
         <CustomRoutes>
             <Route path="/selector" element={<Selector />} />
             <Route path="/registrarse" element={<Registrarse />} />
+            <Route path="/manual" element={<ManualUsuario />} /> 
         </CustomRoutes>
         
         <Resource name="dashboard" list={Dashboard} icon={DashboardIcon} />
