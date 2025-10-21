@@ -783,32 +783,41 @@ db.medicForm.insertMany([
 
 
 db.users.insertMany([
+   {
+    _id: ObjectId('68f6e265d8552917ed3f705b'),
+    username: 'amilkis',
+    password: '$argon2id$v=19$m=19456,t=2,p=1$QQ6E+yioOY1JsQl0mFA1fQ$/OrU0F11hP7TgtSsA/2+VOZFNZIFR9sIL+PWkeOjJ/s',
+    name: 'Amilka Daniela Lopez',
+    tipo: 'paramedico',
+    turno: 'Lunes a Viernes - 8am a 3pm',
+    phone: '5555555555'
+  },
   {
-    _id: ObjectId('68e8607c1343ac03563780dd'),
-    username: 'mau',
-    password: '$argon2id$v=19$m=19456,t=2,p=1$GLkuIE8AN3OSioCScZcylA$uEXtXDaZ50u8DLGyWGu7G+ZXbiGvg/V8PCAMPrE3Dvs',
-    name: 'Mauricio Monroy',
+    _id: ObjectId('68f6e2c1d8552917ed3f705c'),
+    username: 'maurice',
+    password: '$argon2id$v=19$m=19456,t=2,p=1$RVrWH3CL2ZY21iR6u6/Z8w$B38DAQomXRQLOroGsk3+c/9woc8g1iYDni+LNaivA3U',
+    name: 'Mauricio Emilio Monroy ',
     tipo: 'admin',
-    turno: "Lunes, Miércoles y Viernes 9pm - 8 am",
-    phone: '5554052794'
+    turno: 'Lunes a Viernes - 8am a 3pm',
+    phone: '1111111111'
   },
   {
-    _id: ObjectId('68e860c41343ac03563780de'),
-    username: 'amilka',
-    password: '$argon2id$v=19$m=19456,t=2,p=1$I6mmBvcJE5ePrGsvbTND3w$jM31uZPQIUZ0beSQ8NWiFwj5P/CwkanAl7BChw/k2sc',
-    name: 'Amilka Lopez',
-    tipo: "paramedico",
-    turno: 'Sábado, Domingo y festivos 8 am a 8pm',
-    phone: '11111111111111'
-  },
-  {
-    _id: ObjectId('68e875bc1ab23f6559828354'),
-    username: 'maria',
-    password: '$argon2id$v=19$m=19456,t=2,p=1$6eYtXI6o5AAjiuvNl49JIA$k8kaFBQX8F9mnPFq6E7mea6Vwz3Auk5jCuD9vKuyV10',
-    name: 'María Rivera',
+    _id: ObjectId('68f6e400d8552917ed3f7077'),
+    username: 'maryyyy',
+    password: '$argon2id$v=19$m=19456,t=2,p=1$6NbT1tKF7+CDP56Mkidw5A$2l5jiaj6bRPmAT5mAvkpuFnMndGfYnjskugboui8yhw',
+    name: 'Maria Rivera',
     tipo: 'jefe',
-    turno: 'Sábado, Domingo y festivos 8pm a 8am',
-    phone: '2222222222222'
+    turno: 'Lunes a Viernes - 8am a 3pm',
+    phone: '2222222222'
+  },
+  {
+    _id: ObjectId('68f6e78dd8552917ed3f7079'),
+    username: 'johnny',
+    password: '$argon2id$v=19$m=19456,t=2,p=1$v+UYCJOYDXu7CvhMmCwYDA$9OczTL4WvdIXiHGI2w+DyHsPr5and4VzirGsU2XEcDE',
+    name: 'Jonathan Vazquez',
+    tipo: 'paramedico',
+    turno: 'Lunes a Viernes - 8am a 3pm',
+    phone: '8888888888'
   }, 
   {
   username: 'juanp',
