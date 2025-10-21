@@ -14,7 +14,22 @@ const Registrarse: React.FC = () => {
         setDatos({ ...datos, [event.target.name]: event.target.value });
     };
 
+    const validarPassword = (password: string) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{9,}$/;
+        return regex.test(password);
+    };
+
     const handleSendData = async () => {
+        if (!datos.username || !datos.password || !datos.name) {
+            alert('Por favor completa todos los campos obligatorios');
+            return;
+        }
+
+        if (!validarPassword(datos.password)) {
+            alert('La contraseña debe tener al menos 9 caracteres, una mayúscula, una minúscula y un número.');
+            return;
+        }
+        
         console.log(import.meta.env.VITE_BACKEND)
         const request=await new Request(import.meta.env.VITE_BACKEND+"/registrarse",{
             method: 'POST',
