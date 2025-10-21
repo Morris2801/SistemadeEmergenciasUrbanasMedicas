@@ -358,11 +358,6 @@ export const UrbanFormList = () => {
 
   return (
     <>
-      <Box mb={2} sx={{ p: 1 }}>
-        <Button variant="outlined" color="secondary" onClick={() => navigate('/selector')}>
-          ← Volver 
-        </Button>
-      </Box>
       <List 
         title="Listado de Formularios Urbanos"
         filters={UrbanFormFilters}
