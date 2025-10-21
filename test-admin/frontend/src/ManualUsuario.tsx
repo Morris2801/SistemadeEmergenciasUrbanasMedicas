@@ -14,10 +14,23 @@ import {
   Alert, useTheme
 } from "@mui/material";
 import { usePermissions } from "react-admin";
+import { Button } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 const ManualUsuario: React.FC = () => {
   const { permissions, isLoading } = usePermissions();
   const theme = useTheme();
+
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    if (window.history.length > 2) {
+      navigate(-1);
+    } else {
+      navigate("/selector");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -45,6 +58,21 @@ const ManualUsuario: React.FC = () => {
         color: theme.palette.text.primary,
       }}
     >
+      <Button
+        variant="contained"
+        startIcon={<ArrowBackIcon />}
+        onClick={handleBack}
+        sx={{
+          mb: 3,
+          backgroundColor: theme.palette.primary.main,
+          "&:hover": {
+            backgroundColor: theme.palette.primary.dark,
+          },
+        }}
+      >
+        Regresar
+      </Button>
+
       <Typography variant="h4" gutterBottom fontWeight="bold" sx={{color: theme.palette.text.primary}}>
         Manual de Usuario del Sistema de Atención Prehospitalaria y Emergencias Urbanas
       </Typography>
