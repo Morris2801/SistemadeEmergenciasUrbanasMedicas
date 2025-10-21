@@ -39,14 +39,13 @@ const formatDateYMD = (date?: string | Date) => {
 };
 
 const turnoChoices = [
-    { id: 'Lunes a Viernes - 8am a 3pm', name: 'Lunes a Viernes - 8am a 3pm' },
-    { id: 'Lunes a Viernes - 3pm a 9pm', name: 'Lunes a Viernes - 3pm a 9pm' },
-    { id: 'Lunes, Miércoles y Viernes - 9pm a 8am', name: 'Lunes, Miércoles y Viernes - 9pm a 8am' },
-    { id: 'Martes, Jueves y Domingo - 9pm a 8am' , name: 'Martes, Jueves y Domingo - 9pm a 8am' },
-    { id: 'Sábado, Domingo y festivos - 8am a 8pm', name: 'Sábado, Domingo y festivos - 8am a 8pm' },
-    { id: 'Sábado, Domingo y festivos - 8pm a 8am', name: 'Sábado, Domingo y festivos - 8pm a 8am' },
+    { id: 'Lunes a Viernes 8am - 3pm', name: 'Lunes a Viernes 8am - 3pm' },
+    { id: 'Lunes a Viernes 3pm - 9pm', name: 'Lunes a Viernes 3pm - 9pm' },
+    { id: 'Lunes, Miércoles y Viernes 9pm - 8 am', name: 'Lunes, Miércoles y Viernes 9pm - 8 am' },
+    { id: 'Martes, Jueves y Domingo 9pm - 8am', name: 'Martes, Jueves y Domingo 9pm - 8am' },
+    { id: 'Sábado, Domingo y festivos 8am a 8pm', name: 'Sábado, Domingo y festivos 8am - 8pm' },
+    { id: 'Sábado, Domingo y festivos 8pm a 8am', name: 'Sábado, Domingo y festivos 8pm - 8am' },
 ];
-
 export const MedicFormCreate = () => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
     const navigate = useNavigate();
@@ -1499,20 +1498,11 @@ const MedicFormFilters = [
             { id: "Roberto García", name: "Roberto García" },
             { id: "Pedro Chávez", name: "Pedro Chávez" },
             { id: "Jesús Ochoa", name: "Jesús Ochoa" },
-        ]}
-        sx={{ minWidth: 180 }}
-    />,
-    <SelectInput
-        key="socorrista"
-        label="Paramédico"
-        source="socorrista"
-        alwaysOn
-        choices={[
-            { id: "María López", name: "María López" },
-            { id: "Carlos Ruiz", name: "Carlos Ruiz" },
-            { id: "Laura Montes", name: "Laura Montes" },
-            { id: "Ana Torres", name: "Ana Torres" },
-            { id: "Mónica Gil", name: "Mónica Gil" },
+            { id: "Luis Ramírez", name: "Luis Ramírez" },
+            { id: "Ana García", name: "Ana García" },
+            { id: "Verónica Luna", name: "Verónica Luna" },
+            { id: "Marcos Díaz", name: "Marcos Díaz" },
+            { id: "Esteban Moreno", name: "Esteban Moreno" }
         ]}
         sx={{ minWidth: 180 }}
     />,
@@ -1541,13 +1531,6 @@ const MedicFormFilters = [
             { id: "negro", name: "Negro" },
         ]}
         sx={{ minWidth: 160 }}
-    />,
-    <DateInput
-        key="fecha"
-        label="Fecha del servicio"
-        source="fecha"
-        alwaysOn
-        sx={{ minWidth: 180 }}
     />,
 ];
 

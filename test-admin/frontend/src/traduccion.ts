@@ -17,6 +17,9 @@ const mensajesEspanol = {
             add_filter: 'Agregar filtro',
             remove_filter: 'Quitar filtro',
             clear_input_value: 'Limpiar valor',
+            toggle_theme: 'Cambiar tema',
+            remove_all_filters: 'Quitar filtros',
+            save_query: 'Guardar consulta actual como...'
         },
         boolean: {
             true: 'Sí',
@@ -122,6 +125,10 @@ const mensajesEspanol = {
             'Clear filters': 'Limpiar filtros',
             save_current_query: 'Guardar consulta actual',
         },
+
+        auth: {
+            user_menu: 'Perfil',
+        }
     },
 };
 

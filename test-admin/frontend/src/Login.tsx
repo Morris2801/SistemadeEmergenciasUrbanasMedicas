@@ -2,8 +2,11 @@ import * as React from "react";
 import { useLogin, useNotify, useRedirect } from "react-admin";
 import { Box, Paper, Typography, Button, TextField } from "@mui/material";
 import logoHorizontal from "./assets/logo-horizontal-blanco.png";
+import {useMediaQuery, Theme} from '@mui/material'
+
 
 const CustomLogin = () => {
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
     const login = useLogin();
     const notify = useNotify();
     const redirect = useRedirect();

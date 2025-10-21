@@ -17,8 +17,10 @@ import { usePermissions } from "react-admin";
 import { Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import {useMediaQuery, Theme} from '@mui/material'
 
 const ManualUsuario: React.FC = () => {
+  const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
   const { permissions, isLoading } = usePermissions();
   const theme = useTheme();
 

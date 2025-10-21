@@ -5,8 +5,10 @@ import UserIcon from '@mui/icons-material/Group';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import EngineeringIcon from '@mui/icons-material/Engineering';
+import {useMediaQuery, Theme} from '@mui/material'
 
 const CustomMenu = (props) => {
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
     const { permissions } = usePermissions();
 
     // colores
