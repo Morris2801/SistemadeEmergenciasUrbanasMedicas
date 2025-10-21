@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { AppBar, CustomRoutes, Admin, DataProvider } from 'react-admin';
-import { Box, Typography, useMediaQuery, IconButton, Tooltip } from '@mui/material';
+import { Box, useMediaQuery, IconButton, Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useNavigate } from 'react-router-dom';
 import ManualUsuario from './ManualUsuario';
+import logoHorizontal from "./assets/logo-horizontal-blanco.png";
 
 const CustomAppBar = (props) => {
     const [currentTime, setCurrentTime] = React.useState(new Date());
@@ -20,42 +21,46 @@ const CustomAppBar = (props) => {
     }, []);
 
     return (
-        
         <AppBar
             sx={{
-                height: isSmall ? '12%' : isMedium ? '10%' : '8%', 
-                justifyContent: 'space-between', 
+                height: isSmall ? '12%' : isMedium ? '10%' : '8%',
+                justifyContent: 'space-between',
                 flexDirection: 'row',
                 alignItems: 'center',
-                padding: isSmall ? '8px' : '16px', 
+                padding: isSmall ? '8px' : '16px',
             }}
             {...props}
         >
-            <Typography
+            {/* Logo horizontal */}
+            <Box
+                component="img"
+                src={logoHorizontal}
+                alt="Logo Cuajimalpa"
                 sx={{
-                    flexGrow: 1,
+                    height: isSmall ? 30 : isMedium ? 40 : 50, 
+                    width: 'auto',
                     ml: 2,
-                    letterSpacing: isSmall ? '0.1em' : '0.2em', 
-                    fontWeight: '700',
-                    fontSize: isSmall ? '0.8rem' : isMedium ? '1.0rem' : '1.5rem', 
-                    color: '#ffff',
-                    marginRight: '10px',
-                    fontFamily: 'Roboto, sans-serif'
+                    flexShrink: 0,
                 }}
-            >
-                Protección Civil - Cuajimalpa de Morelos
-            </Typography>
+            />
 
+            {/* Espacio vacío flexible, modificable */}
+            <Box sx={{
+                flexGrow: 1,   // empuja el reloj a la derecha
+                minWidth: isSmall ? 16 : 32, // puedes ajustar el tamaño mínimo
+            }} />
+
+            {/* Reloj */}
             <Box sx={{ mr: 2 }}>
-                <Typography
+                <Box
                     sx={{
-                        fontSize: isSmall ? '1rem' : '1.2rem', 
-                        color: '#ffff',
-                        marginRight: '10px'
+                        fontSize: isSmall ? '1rem' : '1.2rem',
+                        color: '#ffffff',
+                        whiteSpace: 'nowrap',
                     }}
                 >
                     {currentTime.toLocaleDateString()} {currentTime.toLocaleTimeString()}
-                </Typography>
+                </Box>
             </Box>
 
             <Tooltip title="Manual de Usuario">

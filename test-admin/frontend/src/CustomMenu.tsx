@@ -9,33 +9,175 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 const CustomMenu = (props) => {
     const { permissions } = usePermissions(); 
 
+    // colores
+    const azulOscuro = '#1B2845';
+    const azulClaro = '#0078D4';
+    const textoBlanco = '#f2f2f2';
+
     return (
-        <Box sx={{ backgroundColor: '#bfbfbfff', rounded: 2, height: '100%', justifyContent: 'center', alignItems: 'center', marginTop: '22px'}}>
-            <Box sx={{ textAlign: 'center', p: 2, justifyContent: 'center', alignItems: 'center' }}>
-                <img
-                    src='../src/logo.jpg'
-                    alt="LogoCuaji"
-                    style={{ maxWidth: '100%', height: 'auto', borderRadius: '30px', marginTop: '30px'}}
-                />
-            </Box>
+        <Box sx={{ 
+            backgroundColor: azulOscuro,
+            height: '100%', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            marginTop: '22px',
+            borderRadius: 2
+        }}>
             <Menu {...props}>
                 {permissions === 'admin' && (
                     <Box>
-                        <MenuItemLink to="/dashboard" primaryText="Dashboard" leftIcon={<DashboardIcon />} />
-                        <MenuItemLink to="/users" primaryText="Usuarios" leftIcon={<UserIcon />} />
-                        <MenuItemLink to="/medicForm" primaryText="Em. Prehospitalarias" leftIcon={<MedicalInformationIcon />} />
-                        <MenuItemLink to="/urbanForm" primaryText="Em. Urbanas" leftIcon={<EngineeringIcon />} />
-                        <MenuItemLink to="/estadisticas" primaryText="Estadísticas" leftIcon={<BarChartIcon />} />
+                        <MenuItemLink
+                            to="/dashboard"
+                            primaryText="Dashboard"
+                            leftIcon={<DashboardIcon sx={{ color: textoBlanco }} />}
+                            sx={{
+                                color: textoBlanco,
+                                '&.Mui-selected': {
+                                    backgroundColor: azulClaro,
+                                    color: textoBlanco,
+                                    '& .MuiSvgIcon-root': {
+                                        color: textoBlanco,
+                                    },
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    color: azulOscuro,
+                                    '& .MuiSvgIcon-root': { color: azulOscuro },
+                                },
+                            }}
+                        />
+                        <MenuItemLink
+                            to="/users"
+                            primaryText="Usuarios"
+                            leftIcon={<UserIcon sx={{ color: textoBlanco }} />}
+                            sx={{
+                                color: textoBlanco,
+                                '&.Mui-selected': {
+                                    backgroundColor: azulClaro,
+                                    color: textoBlanco,
+                                    '& .MuiSvgIcon-root': { color: textoBlanco },
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    color: azulOscuro,
+                                    '& .MuiSvgIcon-root': { color: azulOscuro },
+                                },
+                            }}
+                        />
+                        <MenuItemLink
+                            to="/medicForm"
+                            primaryText="Em. Prehospitalarias"
+                            leftIcon={<MedicalInformationIcon sx={{ color: textoBlanco }} />}
+                            sx={{
+                                color: textoBlanco,
+                                '&.Mui-selected': {
+                                    backgroundColor: azulClaro,
+                                    color: textoBlanco,
+                                    '& .MuiSvgIcon-root': { color: textoBlanco },
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    color: azulOscuro,
+                                    '& .MuiSvgIcon-root': { color: azulOscuro },
+                                },
+                            }}
+                        />
+                        <MenuItemLink
+                            to="/urbanForm"
+                            primaryText="Em. Urbanas"
+                            leftIcon={<EngineeringIcon sx={{ color: textoBlanco }} />}
+                            sx={{
+                                color: textoBlanco,
+                                '&.Mui-selected': {
+                                    backgroundColor: azulClaro,
+                                    color: textoBlanco,
+                                    '& .MuiSvgIcon-root': { color: textoBlanco },
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    color: azulOscuro,
+                                    '& .MuiSvgIcon-root': { color: azulOscuro },
+                                },
+                            }}
+                        />
+                        <MenuItemLink
+                            to="/estadisticas"
+                            primaryText="Estadísticas"
+                            leftIcon={<BarChartIcon sx={{ color: textoBlanco }} />}
+                            sx={{
+                                color: textoBlanco,
+                                '&.Mui-selected': {
+                                    backgroundColor: azulClaro,
+                                    color: textoBlanco,
+                                    '& .MuiSvgIcon-root': { color: textoBlanco },
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    color: azulOscuro,
+                                    '& .MuiSvgIcon-root': { color: azulOscuro },
+                                },
+                            }}
+                        />
                     </Box>
                 )}
-                {(permissions === 'jefe') && (
+                {permissions === 'jefe' && (
                     <Box>
-                        <MenuItemLink to="/estadisticas" primaryText="Estadísticas" leftIcon={<BarChartIcon />} />
-                        <MenuItemLink to="/medicForm" primaryText="Em. Prehospitalarias" leftIcon={<MedicalInformationIcon />} />
-                        <MenuItemLink to="/urbanForm" primaryText="Em. Urbanas" leftIcon={<EngineeringIcon />} />
+                        <MenuItemLink
+                            to="/estadisticas"
+                            primaryText="Estadísticas"
+                            leftIcon={<BarChartIcon sx={{ color: textoBlanco }} />}
+                            sx={{
+                                color: textoBlanco,
+                                '&.Mui-selected': {
+                                    backgroundColor: azulClaro,
+                                    color: textoBlanco,
+                                    '& .MuiSvgIcon-root': { color: textoBlanco },
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    color: azulOscuro,
+                                    '& .MuiSvgIcon-root': { color: azulOscuro },
+                                },
+                            }}
+                        />
+                        <MenuItemLink
+                            to="/medicForm"
+                            primaryText="Em. Prehospitalarias"
+                            leftIcon={<MedicalInformationIcon sx={{ color: textoBlanco }} />}
+                            sx={{
+                                color: textoBlanco,
+                                '&.Mui-selected': {
+                                    backgroundColor: azulClaro,
+                                    color: textoBlanco,
+                                    '& .MuiSvgIcon-root': { color: textoBlanco },
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    color: azulOscuro,
+                                    '& .MuiSvgIcon-root': { color: azulOscuro },
+                                },
+                            }}
+                        />
+                        <MenuItemLink
+                            to="/urbanForm"
+                            primaryText="Em. Urbanas"
+                            leftIcon={<EngineeringIcon sx={{ color: textoBlanco }} />}
+                            sx={{
+                                color: textoBlanco,
+                                '&.Mui-selected': {
+                                    backgroundColor: azulClaro,
+                                    color: textoBlanco,
+                                    '& .MuiSvgIcon-root': { color: textoBlanco },
+                                },
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    color: azulOscuro,
+                                    '& .MuiSvgIcon-root': { color: azulOscuro },
+                                },
+                            }}
+                        />
                     </Box>
                 )}
-                
             </Menu>
         </Box>
     );
