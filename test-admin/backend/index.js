@@ -76,7 +76,6 @@ app.get("/medicForm", async (req, res) => {
         if (_sort && _order) {
             sort[_sort] = _order.toLowerCase() === "asc" ? 1 : -1;
         } else {
-            // Default sort
             sort.fecha = -1; 
         }
 
@@ -532,7 +531,6 @@ app.post("/login", async (req, res) => {
         res.sendStatus(401);
     }
 })
-
 /*
 app.listen(PORT, () => {
     connectToDB();

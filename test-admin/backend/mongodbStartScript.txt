@@ -394,7 +394,7 @@ db.medicForm.insertMany([
     },
     {
     folio: "T‑20250920‑006",
-    turno: "Martes, Jueves y Sábado 9pm ‑ 8 am",
+    turno: "Martes, Jueves y Sábado 9pm - 8 am",
     fecha: new Date("2025-09-20"),
     hora_llamada: "21:10",
     hora_traslado: "21:35",
@@ -470,7 +470,7 @@ db.medicForm.insertMany([
   },
   {
     folio: "E‑20250921‑007",
-    turno: "Lunes a Viernes 8am ‑ 3pm",
+    turno: "Lunes a Viernes 8am - 3pm",
     fecha: new Date("2025-09-21"),
     hora_llamada: "11:05",
     hora_traslado: "11:20",
@@ -628,7 +628,7 @@ db.medicForm.insertMany([
   },
   {
     folio: "E‑20250923‑009",
-    turno: "Lunes a Viernes 3pm ‑ 9pm",
+    turno: "Lunes a Viernes 3pm - 9pm",
     fecha: new Date("2025-09-23"),
     hora_llamada: "15:40",
     hora_traslado: "16:00",
@@ -705,7 +705,7 @@ db.medicForm.insertMany([
   },
   {
     folio: "T‑20250924‑010",
-    turno: "Miércoles y Viernes 8am ‑ 3pm",
+    turno: "Miércoles y Viernes 8am - 3pm",
     fecha: new Date("2025-09-24"),
     hora_llamada: "10:20",
     hora_traslado: "10:40",
@@ -736,7 +736,7 @@ db.medicForm.insertMany([
     derechohabiencia: "Privada",
     telefono: "5544332211",
     ocupacion: "Ingeniero",
-    agente_causal: "bicycle",
+    agente_causal: "bicicleta",
     agente_causal_otro: "Caída de bicicleta de montaña",
     nivel_consciencia: "dolor",
     deglucion: "presente",
@@ -789,7 +789,7 @@ db.users.insertMany([
     password: '$argon2id$v=19$m=19456,t=2,p=1$QQ6E+yioOY1JsQl0mFA1fQ$/OrU0F11hP7TgtSsA/2+VOZFNZIFR9sIL+PWkeOjJ/s',
     name: 'Amilka Daniela Lopez',
     tipo: 'paramedico',
-    turno: 'Lunes a Viernes - 8am a 3pm',
+    turno: 'Lunes a Viernes 8am - 3pm',
     phone: '5555555555'
   },
   {
@@ -798,7 +798,7 @@ db.users.insertMany([
     password: '$argon2id$v=19$m=19456,t=2,p=1$RVrWH3CL2ZY21iR6u6/Z8w$B38DAQomXRQLOroGsk3+c/9woc8g1iYDni+LNaivA3U',
     name: 'Mauricio Emilio Monroy ',
     tipo: 'admin',
-    turno: 'Lunes a Viernes - 8am a 3pm',
+    turno: 'Lunes a Viernes 8am - 3pm',
     phone: '1111111111'
   },
   {
@@ -807,7 +807,7 @@ db.users.insertMany([
     password: '$argon2id$v=19$m=19456,t=2,p=1$6NbT1tKF7+CDP56Mkidw5A$2l5jiaj6bRPmAT5mAvkpuFnMndGfYnjskugboui8yhw',
     name: 'Maria Rivera',
     tipo: 'jefe',
-    turno: 'Lunes a Viernes - 8am a 3pm',
+    turno: 'Lunes a Viernes 8am - 3pm',
     phone: '2222222222'
   },
   {
@@ -816,7 +816,7 @@ db.users.insertMany([
     password: '$argon2id$v=19$m=19456,t=2,p=1$v+UYCJOYDXu7CvhMmCwYDA$9OczTL4WvdIXiHGI2w+DyHsPr5and4VzirGsU2XEcDE',
     name: 'Jonathan Vazquez',
     tipo: 'paramedico',
-    turno: 'Lunes a Viernes - 8am a 3pm',
+    turno: 'Lunes a Viernes 8am - 3pm',
     phone: '8888888888'
   }, 
   {
@@ -840,7 +840,7 @@ db.users.insertMany([
   password: '$argon2id$v=19$m=19456,t=2,p=1$3HfL5P+qQk+yVJCS8M29oQ$0Uq16h3pmG9Hj3SLckvK9TtCEo3EqbXrJxfF3OvWZ9s',
   name: 'Carlos Ramírez',
   tipo: 'operador',
-  turno: 'Lunes Miércoles y Viernes 9pm - 8am',
+  turno: 'Lunes, Miércoles y Viernes 9pm - 8am',
   phone: '2299911122233'
 },
 {
@@ -848,7 +848,7 @@ db.users.insertMany([
   password: '$argon2id$v=19$m=19456,t=2,p=1$Sk2Bf9QShyxUPduvXwKFlA$paEx0bEYN9vobqzHzXkZWqNRCKVAI8LBdR0mNNdkew4',
   name: 'Sofía Blanco',
   tipo: 'jefe',
-  turno: 'Martes Jueves y Domingo 9pm - 8am',
+  turno: 'Martes, Jueves y Domingo 9pm - 8am',
   phone: '2277778888999'
 },
 {
@@ -856,7 +856,7 @@ db.users.insertMany([
   password: '$argon2id$v=19$m=19456,t=2,p=1$a2yU81EToWAde60Unzq23A$eS8hkb3b0Z4Z5yqSmB14nWJYZCaxKkTQDoLt23rHndA',
   name: 'Diego Zamora',
   tipo: 'operador',
-  turno: 'Sábado Domingo y días festivos 8am - 8pm',
+  turno: 'Sábado, Domingo y días festivos 8am - 8pm',
   phone: '2266665555444'
 },
 {
@@ -864,7 +864,7 @@ db.users.insertMany([
   password: '$argon2id$v=19$m=19456,t=2,p=1$ZVWjUvK0pQYxnN80gR+aUQ$9f7/1b7dEWrQ7xrOp1G7prBz3EK3dcI0SS0MTVskMF4',
   name: 'Mariana Méndez',
   tipo: 'paramédico',
-  turno: 'Sábado Domingo y días festivos 8pm - 8am',
+  turno: 'Sábado, Domingo y días festivos 8pm - 8am',
   phone: '2244443333222'
 },
 {
@@ -986,7 +986,7 @@ db.urbanForm.insertMany([
     {
     folio: "URB‑2025‑0006",
     fecha_hora: new Date("2025-09-11"),
-    turno: "Lunes, Miércoles y Viernes 9pm ‑ 8 am",
+    turno: "Lunes, Miércoles y Viernes 9pm - 8 am",
     personal_a_cargo: "Ing. María Hernández",
     modo_activacion: "llamada",
     tipo_servicio: "Derrame de Aceite en Vía Pública",
@@ -1008,7 +1008,7 @@ db.urbanForm.insertMany([
   {
     folio: "URB‑2025‑0007",
     fecha_hora: new Date("2025-09-12"),
-    turno: "Lunes a Viernes 8am ‑ 3pm",
+    turno: "Lunes a Viernes 8am - 3pm",
     personal_a_cargo: "Téc. Carlos Martínez",
     modo_activacion: "oficio",
     tipo_servicio: "Inspección de Torre de Telecomunicaciones",
@@ -1029,7 +1029,7 @@ db.urbanForm.insertMany([
   {
     folio: "URB‑2025‑0008",
     fecha_hora: new Date("2025-09-13"),
-    turno: "Martes, Jueves y Domingo 9pm ‑ 8am",
+    turno: "Martes, Jueves y Domingo 9pm - 8am",
     personal_a_cargo: "Ing. José Almagro",
     modo_activacion: "llamada",
     tipo_servicio: "Colapso Parcial de Fachada",
@@ -1051,7 +1051,7 @@ db.urbanForm.insertMany([
   {
     folio: "URB‑2025‑0009",
     fecha_hora: new Date("2025-09-14"),
-    turno: "Lunes a Viernes 3pm ‑ 9pm",
+    turno: "Lunes a Viernes 3pm - 9pm",
     personal_a_cargo: "Téc. Sofía Vargas",
     modo_activacion: "oficio",
     tipo_servicio: "Inundación en Bodega Industrial",
@@ -1072,7 +1072,7 @@ db.urbanForm.insertMany([
   {
     folio: "URB‑2025‑0010",
     fecha_hora: new Date("2025-09-15"),
-    turno: "Lunes, Miércoles y Viernes 9pm ‑ 8 am",
+    turno: "Lunes, Miércoles y Viernes 9pm - 8 am",
     personal_a_cargo: "Ing. Mariana Soto",
     modo_activacion: "llamada",
     tipo_servicio: "Arbol Caído en Área Escolar",

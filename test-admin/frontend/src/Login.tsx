@@ -2,8 +2,11 @@ import * as React from "react";
 import { useLogin, useNotify, useRedirect } from "react-admin";
 import { Box, Paper, Typography, Button, TextField } from "@mui/material";
 import logoHorizontal from "./assets/logo-horizontal-blanco.png";
+import {useMediaQuery, Theme} from '@mui/material'
+
 
 const CustomLogin = () => {
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
     const login = useLogin();
     const notify = useNotify();
     const redirect = useRedirect();
@@ -62,7 +65,7 @@ const CustomLogin = () => {
                 backgroundPosition: "center",
             }}
         >
-            {/* Logo principal */}
+            {/* logo principal */}
             <Box sx={{ textAlign: "center", mb: 3 }}>
                 <Box
                     component="img"
@@ -181,6 +184,7 @@ const CustomLogin = () => {
                             mt: 2,
                             py: 1.2,
                             textTransform: "none",
+                            color: "#FFFFFF",
                             fontSize: "1rem",
                             fontWeight: 600,
                             backgroundColor: "#0075c5",
