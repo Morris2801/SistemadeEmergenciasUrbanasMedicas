@@ -1,3 +1,252 @@
+# Guía de Instalación: MVP para Protección Civil de Alcaldía Cuajimalpa
+
+## Guía completa de Instalación en dos computadoras
+
+Se requiere una computadora para Frontend, otra para Backend, y una tercera como cliente para acceder a "servidores", al igual que un puerto Jump.
+
+### 1. Preparación inicial en ambas computadoras
+
+1. En ambas computadoras a instalar (1 para Frontend, otra para Backend), abrir carpeta con FileExplorer donde se requiere instalar (o en Powershell, navegar al directorio con `cd PATH`)
+   - Si en File Explorer, click derecho en cualquier área de ventana sin archivo y 'Abrir en Terminal'
+
+2. Verificar instalación de Git en computadora
+   - En caso de que no exista, seguir instrucciones en https://git-scm.com/install/
+
+3. Copiar y pegar comando:
+   ```bash
+   git clone https://github.com/Morris2801/SistemadeEmergenciasUrbanasMedicas.git
+   ```
+
+### 2. Instalación de Node.js
+
+- **Si computadora es Linux**, copiar y pegar:
+  ```bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+  . "$HOME/.nvm/nvm.sh"
+  nvm install 22
+  ```
+
+- **Si computadora es Windows**: 
+  - Ir a https://nodejs.org/en/download 
+  - Click en instalador de Windows x64
+
+### 3. Actualización del repositorio
+
+Aún en terminal, escribir:
+```bash
+git pull origin main
+```
+
+### 4. Configuración de la Computadora A (Frontend)
+
+En terminal copiar y pegar:
+
+```bash
+cd SistemadeEmergenciasUrbanasMedicas\test-admin\frontend\
+npm install package.json
+openssl genrsa -out frontend.key 4096
+openssl req -x509 -new -key frontend.key -out frontend.crt -days 365
+```
+
+Crear archivo `.env`:
+```bash
+nano .env
+```
+Escribir: `VITE_BACKEND=https://localhost:3000`
+Cerrar y guardar con CTRL+X y guardar con nombre '.env'
+
+Continuar con:
+```bash
+cd src
+npm run dev
+```
+Debería aparecer mensaje de éxito por parte de VITE y ruta de localhost:5173
+
+### 5. Configuración de la Computadora B (Backend)
+
+En terminal copiar y pegar:
+
+```bash
+cd SistemadeEmergenciasUrbanasMedicas\test-admin\backend
+npm install package.json
+openssl genrsa -out backend.key 4096
+openssl req -x509 -new -key backend.key -out backend.crt -days 365
+```
+
+Crear archivo `.env`:
+```bash
+nano .env
+```
+Escribir:
+```
+DB=mongodb://127.0.0.1:27017/medic_app
+JWTKEY=development-secret-key-12345
+```
+Cerrar y guardar con CTRL+X y guardar con nombre '.env'
+
+### 6. Configuración de base de datos
+
+1. Abrir archivo dentro de carpeta /backend llamado `mongodbStartScript.txt`, [CTRL+A, CTRL+C]
+2. En terminal de computadora B, escribir:
+   ```bash
+   sudo systemctl start mongod
+   mongosh
+   use medic_app
+   ```
+3. Copiar y pegar texto de `mongodbStartScript.txt` y [ENTER] hasta que en línea de comando aparezca 'medic_app>' de nuevo y aparezca mensaje de confirmación de inserción de objetos
+
+4. Finalizar configuración:
+   ```bash
+   npm install package.json
+   node index.js
+   ```
+   Debería aparecer mensaje de confirmación de conexión a puerto 3000 y conexión a base de datos exitosa
+
+### 7. Configuración de Computadora C (Cliente)
+
+Abrir dos terminales:
+
+**Terminal 1:**
+```bash
+ssh -L 5173:A.B.C.D:5173 jump@W.X.Y.Z
+```
+Para conectarse al jump server en la IP W.X.Y.Z, donde A.B.C.D es la dirección IP de la computadora A configurada previamente. De esta manera se crea un túnel a la computadora que está corriendo el frontend.
+
+**Terminal 2:**
+```bash
+ssh -L 3000:A.B.C.D:3000 jump@W.X.Y.Z
+```
+Para conectarse al jump server en la IP W.X.Y.Z, donde A.B.C.D es la dirección IP de la computadora B configurada previamente. De esta manera se crea un túnel a la computadora que está corriendo el backend.
+
+### 8. Acceso al sistema
+
+1. En navegador, ingresar en la barra de búsqueda `https://localhost:3000`
+   - Aparecerá una alerta de seguridad, es normal dado que el certificado de seguridad es auto-generado
+   - Hacer click en 'Opciones avanzadas' y en 'Conectarse de todas formas'
+   - Debería aparecer el mensaje 'Cannot GET /'
+
+2. En la barra de búsqueda, ahora escribir `https://localhost:5173`
+   - Debería cargar un momento, y finalmente llegar a la pantalla de Login
+
+---
+
+## Guía completa de Instalación en 1 sola computadora
+
+### 1. Preparación inicial
+
+1. Abrir carpeta con FileExplorer donde se requiere instalar (o en Powershell, navegar al directorio con `cd PATH`)
+   - Si en File Explorer, click derecho en cualquier área de ventana sin archivo y 'Abrir en Terminal'
+
+2. Verificar instalación de Git en computadora
+   - En caso de que no exista, seguir instrucciones en https://git-scm.com/install/
+
+3. Copiar y pegar comando:
+   ```bash
+   git clone https://github.com/Morris2801/SistemadeEmergenciasUrbanasMedicas.git
+   ```
+
+### 2. Instalación de Node.js
+
+- **Si computadora es Linux**, copiar y pegar:
+  ```bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+  . "$HOME/.nvm/nvm.sh"
+  nvm install 22
+  ```
+
+- **Si computadora es Windows**: 
+  - Ir a https://nodejs.org/en/download 
+  - Click en instalador de Windows x64
+
+### 3. Actualización del repositorio
+
+Aún en terminal, escribir:
+```bash
+git pull origin main
+```
+
+### 4. Configuración del Frontend
+
+En terminal copiar y pegar:
+
+```bash
+cd SistemadeEmergenciasUrbanasMedicas\test-admin\frontend
+npm install package.json
+openssl genrsa -out frontend.key 4096
+openssl req -x509 -new -key frontend.key -out frontend.crt -days 365
+```
+
+Crear archivo `.env`:
+```bash
+nano .env
+```
+Escribir: `VITE_BACKEND=https://localhost:3000`
+Cerrar y guardar con CTRL+X y guardar con nombre '.env'
+
+Continuar con:
+```bash
+cd src
+npm run dev
+```
+Debería aparecer mensaje de éxito por parte de VITE y ruta de localhost:5173
+
+### 5. Configuración del Backend
+
+En otra terminal, dentro del mismo directorio o carpeta, copiar y pegar:
+
+```bash
+cd SistemadeEmergenciasUrbanasMedicas\test-admin\backend
+npm install package.json
+openssl genrsa -out backend.key 4096
+openssl req -x509 -new -key backend.key -out backend.crt -days 365
+```
+
+Crear archivo `.env`:
+```bash
+nano .env
+```
+Escribir:
+```
+DB=mongodb://127.0.0.1:27017/medic_app
+JWTKEY=development-secret-key-12345
+```
+Cerrar y guardar con CTRL+X y guardar con nombre '.env'
+
+### 6. Configuración de base de datos
+
+1. Abrir archivo dentro de carpeta /backend llamado `mongodbStartScript.txt`, [CTRL+A, CTRL+C]
+2. En terminal de computadora B aún, escribir:
+   ```bash
+   sudo systemctl start mongod
+   mongosh
+   use medic_app
+   ```
+3. Copiar y pegar texto de `mongodbStartScript.txt` y [ENTER] hasta que en línea de comando aparezca 'medic_app>' de nuevo y aparezca mensaje de confirmación de inserción de objetos
+
+4. Finalizar configuración:
+   ```bash
+   npm install package.json
+   node index.js
+   ```
+   Debería aparecer mensaje de confirmación de conexión a puerto 3000 y conexión a base de datos exitosa
+
+### 7. Acceso al sistema
+
+1. En navegador, ingresar en la barra de búsqueda `https://localhost:3000`
+   - Aparecerá una alerta de seguridad, es normal dado que el certificado de seguridad es auto-generado
+   - Hacer click en 'Opciones avanzadas' y en 'Conectarse de todas formas'
+   - Debería aparecer el mensaje 'Cannot GET /'
+
+2. En la barra de búsqueda, ahora escribir `https://localhost:5173`
+   - Debería cargar un momento, y finalmente llegar a la pantalla de Login, punto en el cual ya se podrá hacer uso de la plataforma
+   - Referirse a manual de uso para más información
+
+
+
+---
+
+--- 
+
 # Manual de Usuario del Sistema de Atención Prehospitalaria y Emergencias Urbanas
 
 ## Índice
