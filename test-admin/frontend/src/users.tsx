@@ -1,5 +1,5 @@
 import { useMediaQuery, Theme } from "@mui/material";
-import { List, SimpleList, DataTable, Edit, SimpleForm, TextField, TextInput, EditButton, Show, Create, required, SelectInput, SimpleShowLayout, SelectField } from "react-admin";
+import { List, useListContext, SimpleList, DataTable, Edit, SimpleForm, TextField, TextInput, EditButton, Show, Create, required, SelectInput, SimpleShowLayout, SelectField } from "react-admin";
 const turnoChoices = [
     { id: 'Lunes a Viernes 8am - 3pm', name: 'Lunes a Viernes 8am - 3pm' },
     { id: 'Lunes a Viernes 3pm - 9pm', name: 'Lunes a Viernes 3pm - 9pm' },
@@ -8,6 +8,19 @@ const turnoChoices = [
     { id: 'Sábado, Domingo y días festivos 8am - 8pm', name: 'Sábado, Domingo y días festivos 8am - 8pm' },
     { id: 'Sábado, Domingo y días festivos 8pm - 8am', name: 'Sábado, Domingo y días festivos 8pm - 8am' },
 ];
+
+const NoResultsMessage = () => {
+    const { filterValues } = useListContext();
+    const filtersApplied = Object.keys(filterValues).length > 0;
+
+    if (filtersApplied) {
+        return <div style={{ padding: 20, fontSize: 16 }}>No se encontraron resultados con los filtros actuales.</div>;
+    }
+    return <div style={{ padding: 20, fontSize: 16 }}>No se encontraron resultados.</div>;
+};
+
+export default NoResultsMessage;
+
 
 const UserFilters = [
     <TextInput
@@ -49,6 +62,7 @@ export const UserList = () => {
         <List
             filters={UserFilters}
             sort={{ field: 'name', order: 'ASC' }}
+            empty={<NoResultsMessage />}
         >
             {isSmall ? (
                 <SimpleList

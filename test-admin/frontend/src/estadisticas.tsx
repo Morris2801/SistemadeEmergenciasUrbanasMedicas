@@ -112,9 +112,7 @@ Object.entries(operadoresPorTurnoSet).forEach(([turno, set]) => {
         });
         
         const casosCriticos = medic.filter(
-          (m: any) =>
-            m.condicion?.toLowerCase() === "critico" ||
-            m.prioridad?.toLowerCase() === "rojo"
+          (m: any) => m.prioridad?.toLowerCase() === "rojo"
         ).length;
 
         const kmRecorridosTotales = urban.reduce(
@@ -175,7 +173,7 @@ Object.entries(operadoresPorTurnoSet).forEach(([turno, set]) => {
   <Card>
     <CardHeader
       title="Estadísticas Avanzadas"
-      titleTypographyProps={{ fontWeight: 'bold' }}
+      titleTypographyProps={{ fontWeight: 'bold' }} //https://mui.com/material-ui/api/typography/
     />
     <CardContent>
       <Typography variant="h6" gutterBottom>
@@ -200,7 +198,7 @@ Object.entries(operadoresPorTurnoSet).forEach(([turno, set]) => {
 
         <ListItem>
           <ListItemText
-            primary="Casos por prioridad"
+            primary="Casos críticos o prioridad roja"
             primaryTypographyProps={{ fontWeight: 'bold' }}
             secondary={
               <Box>

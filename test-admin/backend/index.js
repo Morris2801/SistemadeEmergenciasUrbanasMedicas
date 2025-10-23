@@ -117,7 +117,7 @@ app.get("/medicForm/:id", async (req, res) => {
         res.json(mapMongoToReactAdmin(report));
     } catch (error) {
         console.error("Error fetching medicForm report:", error);
-        res.status(500).json({ error: "Server error" });
+        res.status(401).json({ error: "Server error" });
     }
 });
 
@@ -133,7 +133,7 @@ app.post("/medicForm", async (req, res) => {
         delete newReport._id;
         const result = await db.collection("medicForm").insertOne(newReport);
         const createdReport = await db.collection("medicForm").findOne({ _id: result.insertedId });
-        if (!createdReport) return res.status(500).json({ error: "Failed to retrieve created report" });
+        if (!createdReport) return res.status(401).json({ error: "Failed to retrieve created report" });
 
         await ToLog(user, "medicForm", "crear");
         res.status(201).json(mapMongoToReactAdmin(createdReport));
@@ -297,7 +297,7 @@ app.post("/urbanForm", async (req, res) => {
         delete newReport._id;
         const result = await db.collection("urbanForm").insertOne(newReport);
         const createdReport = await db.collection("urbanForm").findOne({ _id: result.insertedId });
-        if (!createdReport) return res.status(500).json({ error: "Failed to retrieve created report" });
+        if (!createdReport) return res.status(401).json({ error: "Failed to retrieve created report" });
 
         await ToLog(user, "urbanForm", "crear");
         res.status(201).json(mapMongoToReactAdmin(createdReport));

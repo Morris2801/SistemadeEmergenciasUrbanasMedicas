@@ -19,8 +19,20 @@ const mensajesEspanol = {
             clear_input_value: 'Limpiar valor',
             toggle_theme: 'Cambiar tema',
             remove_all_filters: 'Quitar filtros',
-            save_query: 'Guardar consulta actual como...'
+            save_current_query: 'Guardar consulta actual',
+            'save_current_query...': 'Guardar consulta actual...',
+            'save_current_query…': 'Guardar consulta actual…',
+            save_query: 'Guardar consulta actual...',
+
         },
+
+        saved_queries: {
+        new_label: 'Guardar consulta actual...',
+        new_dialog_title: 'Guardar esta consulta como',
+        new_dialog_content: 'Por favor, dale un nombre a la consulta',
+        query_name: "Nombre de la consulta"
+        },
+        
         boolean: {
             true: 'Sí',
             false: 'No',
@@ -52,11 +64,12 @@ const mensajesEspanol = {
             prev: 'Anterior',
             skip_nav: 'Ir al contenido',
             no_results: 'No se encontraron resultados',
-            no_more_results: 'La página número %{page} está fuera de rango. Intenta la anterior.',
-            'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
+            no_results_filters: 'No se encontraron resultados',
             'Clear filters': 'Limpiar filtros',
             clear_filters: 'Limpiar filtros',
             save_current_query: 'Guardar consulta actual',
+            'ra.navigation.no_results_filters': 'La página número %{page} está fuera de rango. Intenta la anterior.',
+            no_filtered_results: 'No se encontraron datos con los filtros actuales',
         
         },
         message: {
@@ -121,13 +134,13 @@ const mensajesEspanol = {
         filter: {
             clear: 'Limpiar filtros',
             no_results: 'No se encontraron resultados con los filtros actuales.',
-            'No results found with the current filters.': 'No se encontraron resultados con los filtros actuales.',
             'Clear filters': 'Limpiar filtros',
             save_current_query: 'Guardar consulta actual',
         },
 
         auth: {
-            user_menu: 'Perfil',
+             user_menu: 'Perfil',
+             logout: 'Cerrar sesión',
         }
     },
 };
