@@ -33,7 +33,7 @@ const CustomMenu = (props) => {
                         <Box sx={{ mb: 2, padding: 1, }}>
                             <MenuItemLink
                                 to="/dashboard"
-                                primaryText="Dashboard"
+                                primaryText="Panel de control"
                                 leftIcon={<DashboardIcon sx={{ color: textoBlanco }} />}
                                 sx={{
                                     color: textoBlanco,
@@ -76,7 +76,7 @@ const CustomMenu = (props) => {
                         <Box sx={{ mb: 2, padding: 1}}>
                             <MenuItemLink
                                 to="/medicForm"
-                                primaryText="Em. Prehospitalarias"
+                                primaryText="Prehospitalarias"
                                 leftIcon={<MedicalInformationIcon sx={{ color: textoBlanco }} />}
                                 sx={{
                                     color: textoBlanco,
@@ -96,7 +96,7 @@ const CustomMenu = (props) => {
                         <Box sx={{ mb: 2, padding: 1}}>
                             <MenuItemLink
                                 to="/urbanForm"
-                                primaryText="Em. Urbanas"
+                                primaryText="Urbanas"
                                 leftIcon={<EngineeringIcon sx={{ color: textoBlanco }} />}
                                 sx={{
                                     color: textoBlanco,
