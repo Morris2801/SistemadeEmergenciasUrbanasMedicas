@@ -395,7 +395,7 @@ También puede abrirse como aplicación local desde la interfaz de desarrollo (R
 - Use el botón **Editar** desde el listado.  
 - Solo el **Administrador** puede eliminar registros.
 
-### 📦 Exportar información
+### Exportar información
 - Use el botón **Exportar CSV** (parte superior derecha).  
 - Se descargará un archivo compatible con **Excel** o **Google Sheets**.
 
@@ -405,15 +405,21 @@ El sistema guarda la información **solo al presionar “Guardar”**.
 
 ---
 
-##  Errores Comunes y Soluciones
+## ¡¡ Errores Comunes y Soluciones !!
 
 | Problema | Posible causa | Solución |
 |-----------|----------------|-----------|
-|  No se guarda un reporte | Campos obligatorios vacíos | Verificar los campos marcados con * |
-|  “401 Unauthorized” | Sesión expirada o token inválido | Cerrar sesión y volver a iniciar |
-|  Error de conexión | Internet inestable o backend caído | Revisar conexión o reiniciar servidor Node |
-|  Exportar CSV no descarga | Navegador bloquea pop-ups | Permitir descargas automáticas |
-|  Página se queda cargando | Backend o BD sin respuesta | Revisar consola del servidor (nodemon) |
+| No se guarda un reporte | Faltan campos obligatorios | Revisar que todos los campos marcados con * estén completos antes de guardar |
+| “401 Unauthorized” | Sesión expirada o usuario no autenticado | Cerrar sesión y volver a iniciar con su usuario y contraseña |
+| Error de conexión | Internet inestable o servidor temporalmente fuera de servicio | Revisar conexión a internet o esperar unos minutos y volver a intentar |
+| Exportar CSV no descarga | El navegador bloquea descargas automáticas | Permitir descargas o pop-ups para este sitio desde la configuración del navegador |
+| La página se queda cargando | El sistema tarda en responder o hay exceso de registros | Refrescar la página o aplicar filtros de búsqueda para mostrar menos resultados |
+| No aparece un registro recién creado | Aún no se actualiza la lista | Presionar el botón de “Actualizar” o recargar la página |
+| “No se encontró el registro” | El registro fue eliminado o modificado por otro usuario | Verificar con el administrador o revisar nuevamente la lista completa |
+| Contraseña incorrecta | Error al escribir la contraseña | Revisar mayúsculas/minúsculas y volver a intentar |
+| El sistema se cierra solo | Tiempo de sesión vencido (15 minutos) | Volver a iniciar sesión; se recomienda guardar cambios con frecuencia |
+| Botón de guardar no responde | Campos con formato inválido o navegador bloqueando envío | Revisar mensajes en pantalla y validar los datos ingresados |
+
 
 ---
 
